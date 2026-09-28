@@ -56,20 +56,7 @@ struct FileBrowserView: View {
 
     private var pathBar: some View {
         HStack(spacing: 8) {
-            Button {
-                if let parent = parentPath(model.currentPath) {
-                    Task { await model.load(path: parent) }
-                }
-            } label: {
-                Image(systemName: "chevron.left")
-            }
-            .buttonStyle(.plain)
-            .disabled(model.currentPath == "/")
-            Text(model.currentPath)
-                .font(.system(.callout, design: .monospaced))
-                .foregroundStyle(.secondary)
-                .lineLimit(1)
-                .truncationMode(.middle)
+            breadcrumbView
             Spacer()
             if model.isLoading {
                 ProgressView().scaleEffect(0.6)
@@ -85,6 +72,23 @@ struct FileBrowserView: View {
             .buttonStyle(.plain)
         }
         .padding(12)
+    }
+
+    private var breadcrumbView: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 2) {
+                ForEach(Array(pathComponents(model.currentPath).enumerated()), id: \.element.fullPath) { index, component in
+                    if index > 1 {
+                        Text("/").foregroundStyle(.secondary)
+                    }
+                    BreadcrumbSegment(label: component.label) {
+                        Task { await model.load(path: component.fullPath) }
+                    }
+                }
+            }
+        }
+        .font(.system(.callout, design: .monospaced))
+        .frame(maxWidth: 360)
     }
 
     private var groupByMenu: some View {
@@ -117,11 +121,11 @@ struct FileBrowserView: View {
     private func row(for entry: AdbDirEntry) -> some View {
         HStack(spacing: 8) {
             Image(systemName: entry.isDirectory ? "folder" : "doc")
-                .font(.system(size: entry.isDirectory ? 17 : 13))
-                .frame(width: 20, height: 20)
+                .font(.system(size: entry.isDirectory ? 22 : 13))
+                .frame(width: 24, height: 20)
                 .foregroundStyle(Color.androidGreen)
             VStack(alignment: .leading, spacing: 2) {
-                Text(entry.name).font(.system(size: 12.5)).lineLimit(1)
+                RowNameText(entry.name)
                 if !entry.isDirectory {
                     Text(ByteCountFormatter.string(fromByteCount: Int64(entry.size), countStyle: .file))
                         .font(.caption)
@@ -129,6 +133,7 @@ struct FileBrowserView: View {
                 }
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.vertical, 4)
         .interactions(model: model, entry: entry)
     }
@@ -150,6 +155,11 @@ struct FileBrowserView: View {
                                     .font(.system(size: 10))
                                     .multilineTextAlignment(.center)
                                     .lineLimit(2)
+                                if !entry.isDirectory {
+                                    Text(ByteCountFormatter.string(fromByteCount: Int64(entry.size), countStyle: .file))
+                                        .font(.system(size: 9))
+                                        .foregroundStyle(.secondary)
+                                }
                             }
                             .frame(width: 96)
                             .padding(.vertical, 6)
@@ -179,11 +189,47 @@ struct FileBrowserView: View {
     }
 }
 
-/// The path one level up, or nil at the root.
-private func parentPath(_ path: String) -> String? {
-    guard path != "/" else { return nil }
-    let parent = (path as NSString).deletingLastPathComponent
-    return parent.isEmpty ? "/" : parent
+/// A file/folder row's name, tinted green on hover.
+private struct RowNameText: View {
+    let name: String
+    @State private var isHovering = false
+
+    init(_ name: String) { self.name = name }
+
+    var body: some View {
+        Text(name)
+            .font(.system(size: 12.5))
+            .lineLimit(1)
+            .foregroundStyle(isHovering ? Color.androidGreen : .primary)
+            .onHover { isHovering = $0 }
+    }
+}
+
+/// One clickable, hoverable segment of the path breadcrumb.
+private struct BreadcrumbSegment: View {
+    let label: String
+    let action: () -> Void
+    @State private var isHovering = false
+
+    var body: some View {
+        Text(label)
+            .foregroundStyle(isHovering ? Color.androidGreen : .secondary)
+            .onHover { isHovering = $0 }
+            .onTapGesture(perform: action)
+    }
+}
+
+/// Splits an absolute path like "/storage/emulated/0" into breadcrumb segments, each
+/// paired with the full path up to and including that segment. The root "/" is always
+/// the first segment, so it's just another clickable stop in the chain.
+private func pathComponents(_ path: String) -> [(label: String, fullPath: String)] {
+    var result: [(label: String, fullPath: String)] = [("/", "/")]
+    var accumulated = ""
+    for part in path.split(separator: "/") {
+        accumulated += "/\(part)"
+        result.append((String(part), accumulated))
+    }
+    return result
 }
 
 private extension View {
