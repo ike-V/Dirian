@@ -183,9 +183,45 @@ struct FileBrowserView: View {
                 .font(.caption)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
+            if let command = problem.command {
+                CommandBox(command: command)
+                    .padding(.top, 4)
+            }
         }
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+}
+
+/// A command in monospaced text with a button that copies exactly that command.
+private struct CommandBox: View {
+    let command: String
+    @State private var copied = false
+
+    var body: some View {
+        HStack(spacing: 12) {
+            Text(command)
+                .font(.system(.callout, design: .monospaced))
+                .textSelection(.enabled)
+            Button {
+                NSPasteboard.general.clearContents()
+                NSPasteboard.general.setString(command, forType: .string)
+                copied = true
+                Task {
+                    try? await Task.sleep(for: .seconds(1.5))
+                    copied = false
+                }
+            } label: {
+                Image(systemName: copied ? "checkmark" : "doc.on.doc")
+                    .foregroundStyle(Color.androidGreen)
+            }
+            .buttonStyle(.plain)
+            .help("Copy command")
+            .accessibilityLabel("Copy command")
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
+        .background(.quaternary, in: RoundedRectangle(cornerRadius: 8))
     }
 }
 

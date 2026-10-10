@@ -1,10 +1,12 @@
 import Foundation
 import AppKit
 
-/// Why nothing can be listed, shown centered in place of the file list.
+/// Why nothing can be listed, shown centered in place of the file list. A `command`, if
+/// any, is shown with a copy button for pasting into Terminal.
 struct ConnectionProblem {
     let title: String
     let detail: String
+    var command: String?
 }
 
 @MainActor
@@ -64,7 +66,8 @@ final class FileBrowserModel: ObservableObject {
             } catch AdbError.connectionFailed(_) {
                 connectionProblem = ConnectionProblem(
                     title: "The adb server isn't running",
-                    detail: "Run `adb start-server` in Terminal, then press refresh.")
+                    detail: "Run this in Terminal, then press refresh.",
+                    command: "adb start-server")
             } catch {
                 errorMessage = "\(error)"
             }
