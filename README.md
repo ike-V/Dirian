@@ -11,7 +11,7 @@ A native macOS app for browsing your Android phone's storage over USB
 - no kernel extension
 - no background daemon
 
-<img src="Screenshots/list-view.jpg" width="700" alt="Diroid listing a phone's internal storage">
+<img src="Screenshots/Screenshot2.jpg" width="700" alt="Diroid's list view of a phone's DCIM folder, with the New Folder dialog open">
 
 ## What is this?
 
@@ -23,26 +23,23 @@ Every existing solution wraps `libmtp` in a FUSE filesystem, which means a kerne
 ## Features
 
 - Browse your phone's storage like a Finder window.
-- List and Grid view groupable by Name, Size, or Date Modified
+- List and Grid views (toggle in the path bar), groupable by Name, Size, or Date Modified
 - Double-click a file to pull it and open it in the default app macOS would use for that file type
 - Right-click → **Save to…** to copy a file to a folder you choose, without opening it
 - Right-click → **Rename…** to rename or move a file or folder
 - Right-click → **Delete** to remove a file, or a folder and everything in it (with a confirmation prompt first)
-- **New Folder** (➕📁) button to create a folder in the current directory
-- **Upload** (↑) button to push local files onto the phone
+- **New Folder…** button (bottom left) to create a folder in the current directory
+- **Upload Files…** button (bottom right) to push local files onto the phone
 - Click path breadcrumbs to move to that folder.
 - The whole filesystem is browsable (permission-restricted system folders show an error)
 - **Refresh** (↻) button to reconnect after unplugging/replugging your phone
+- If the `adb` server isn't running, Diroid says so and shows the command to start it, with a copy button for pasting into Terminal
 
 ### Screenshots
 
-| Grid view | Group By: Date Modified | New Folder |
-| --- | --- | --- |
-| ![Grid/Icon view of a phone's internal storage](Screenshots/grid-view.jpg) | ![Camera roll grouped by Date Modified into Previous 7 Days / Previous 30 Days](Screenshots/Sort-by-date.jpg) | ![Creating a new folder from the toolbar](Screenshots/new-folder.jpg) |
+<img src="Screenshots/Screenshot1.jpg" width="700" alt="Grid view grouped by date, with the Group By menu and the right-click menu (Rename, Save to, Delete) open">
 
-**Overflow toolbar:**
-
-<img src="Screenshots/overflow-menu.jpg" width="700" alt="Toolbar overflow menu showing every control still reachable in a narrow window">
+Grid view, the Group By menu (top right), and the right-click menu on a file.
 
 ## Requirements
 
