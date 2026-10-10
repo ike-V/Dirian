@@ -43,14 +43,31 @@ List view, and the New Folder dialog.
 
 Grid view, the Group By menu (top right), and the right-click menu on a file.
 
+## Install
+
+With [Homebrew](https://brew.sh) (Apple silicon Macs):
+
+```bash
+brew install --cask ike-V/diroid/diroid
+```
+
+### First launch: macOS blocks it
+
+Diroid isn't signed with an Apple Developer ID or notarized yet, so macOS blocks it the first time ("Apple could not verify Diroid is free of malware"). Do one of these, once:
+
+- **Terminal:** `xattr -dr com.apple.quarantine /Applications/Diroid.app`
+- **System Settings:** try to open Diroid, then go to System Settings → Privacy & Security, scroll to **Security**, and click **Open Anyway**.
+
+Diroid also needs an `adb` server running — see Requirements.
+
 ## Requirements
 
 - macOS 13 (Ventura) or later
-- Xcode, set as the active developer directory: `sudo xcode-select -s /Applications/Xcode.app` (the Command Line Tools alone can't build SwiftUI's `@State` macro on the macOS 27 SDK)
 - An Android phone with **USB debugging** enabled: Settings → About phone → tap "Build number" 7 times to unlock Developer options → Developer options → USB debugging
-- The `adb` server running on your Mac — easiest way is Homebrew: `brew install android-platform-tools`. Diroid talks to this same background server; it doesn't shell out to the `adb` binary itself.
+- The `adb` server running on your Mac — easiest way is Homebrew: `brew install --cask android-platform-tools`. Diroid talks to this same background server; it doesn't shell out to the `adb` binary itself.
+- To build from source: Xcode, set as the active developer directory: `sudo xcode-select -s /Applications/Xcode.app` (the Command Line Tools alone can't build SwiftUI's `@State` macro on the macOS 27 SDK)
 
-## Getting started
+## Build from source
 
 ```bash
 git clone https://github.com/ike-V/Diroid.git
@@ -58,6 +75,8 @@ cd Diroid
 ./build.sh
 open Diroid.app
 ```
+
+## First run
 
 - Plug in your phone before or after launching 
 - The first time, you'll get a prompt on the phone itself asking to authorize this computer for USB debugging; accept it (check "always allow" to skip this next time).
