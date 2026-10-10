@@ -1,7 +1,7 @@
 # Diroid
 
 <p align="center">
-  <img src="Screenshots/icon.png" width="256" height="256" alt="Diroid app icon">
+  <img src="Screenshots/hero.png" width="640" alt="Diroid's app icon over its file browser window">
 </p>
 
 <p align="center"><em>Pronounced "dir-oid"</em></p>
@@ -10,8 +10,6 @@ A native macOS app for browsing your Android phone's storage over USB
 - no MTP
 - no kernel extension
 - no background daemon
-
-<img src="Screenshots/Screenshot2.jpg" width="700" alt="Diroid's list view of a phone's DCIM folder, with the New Folder dialog open">
 
 ## What is this?
 
@@ -36,6 +34,10 @@ Every existing solution wraps `libmtp` in a FUSE filesystem, which means a kerne
 - If the `adb` server isn't running, Diroid says so and shows the command to start it, with a copy button for pasting into Terminal
 
 ### Screenshots
+
+<img src="Screenshots/Screenshot2.jpg" width="700" alt="Diroid's list view of a phone's DCIM folder, with the New Folder dialog open">
+
+List view, and the New Folder dialog.
 
 <img src="Screenshots/Screenshot1.jpg" width="700" alt="Grid view grouped by date, with the Group By menu and the right-click menu (Rename, Save to, Delete) open">
 
