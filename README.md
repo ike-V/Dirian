@@ -88,4 +88,4 @@ The Android robot in the app icon is reproduced or modified from work created an
 
 ## License
 
-[MIT](LICENSE)
+All rights reserved. See [LICENSE](LICENSE).
