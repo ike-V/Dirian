@@ -27,7 +27,7 @@ class Problem(val title: String, val detail: String)
 
 private val notConnected = Problem(
     "Not connected to your Mac",
-    "Plug in the cable, open Diroid on your Mac, press the phone button in its toolbar and choose Start sharing.",
+    "Plug in the cable and open Diroid on your Mac. Click the phone icon at the top right of its window (widen the window, or look under the » menu), then press Start sharing.",
 )
 
 class BrowserModel(private val app: Application) : AndroidViewModel(app) {
@@ -43,6 +43,9 @@ class BrowserModel(private val app: Application) : AndroidViewModel(app) {
     var rootName by mutableStateOf("Mac")
         private set
     var problem by mutableStateOf<Problem?>(null)
+        private set
+    /** True once the Mac has answered, until a request fails to reach it. */
+    var connected by mutableStateOf(false)
         private set
     private var busyCount by mutableIntStateOf(0)
     val busy get() = busyCount > 0
@@ -94,6 +97,7 @@ class BrowserModel(private val app: Application) : AndroidViewModel(app) {
     }
 
     private fun report(e: Exception) {
+        if (e is IOException || (e is MacException && e.status == 401)) connected = false
         when {
             e is MacException && e.status == 401 -> problem = Problem(
                 "Sharing was restarted",
@@ -112,6 +116,7 @@ class BrowserModel(private val app: Application) : AndroidViewModel(app) {
         entries = fetched
         path = target
         problem = null
+        connected = true
         if (target.isEmpty()) rootName = io { runCatching { client.info() }.getOrDefault(rootName) }
     }
 

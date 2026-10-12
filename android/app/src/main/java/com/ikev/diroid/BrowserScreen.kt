@@ -3,6 +3,7 @@ package com.ikev.diroid
 import android.text.format.Formatter
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
@@ -24,6 +25,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.InsertDriveFile
@@ -146,7 +148,18 @@ fun BrowserScreen(
                         IconButton(onClick = model::goUp) { Icon(Icons.AutoMirrored.Filled.ArrowBack, "Up") }
                     }
                 },
-                title = { Text(model.rootName, maxLines = 1, overflow = TextOverflow.Ellipsis) },
+                title = {
+                    Column {
+                        Text(model.rootName, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        if (model.connected) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Box(Modifier.size(8.dp).background(AndroidGreen, CircleShape))
+                                Spacer(Modifier.width(6.dp))
+                                Text("Connected over USB", fontSize = 12.sp, color = AndroidGreen)
+                            }
+                        }
+                    }
+                },
                 actions = {
                     IconButton(onClick = { grid = !grid }) {
                         if (grid) Icon(Icons.AutoMirrored.Filled.ViewList, "List view")
