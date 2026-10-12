@@ -86,6 +86,11 @@ final class FileBrowserModel: ObservableObject {
             }
             currentPath = path
             entries = fetched.sorted(by: nameAscending)
+        } catch AdbError.serverError(let message) where message.contains("unauthorized") {
+            connectionProblem = ConnectionProblem(
+                title: "Allow USB debugging on your phone",
+                detail: "Tap Allow on the prompt on your phone, then press refresh. If no prompt appears, run this in Terminal, replug the phone, then press refresh.",
+                command: "adb kill-server")
         } catch {
             errorMessage = "\(error)"
         }
