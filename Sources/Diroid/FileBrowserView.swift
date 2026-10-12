@@ -6,6 +6,8 @@ struct FileBrowserView: View {
     private enum Layout { case list, grid }
 
     @StateObject private var model = FileBrowserModel()
+    @StateObject private var share = MacShareModel()
+    @State private var showShare = false
     @State private var layout = Layout.list
     @State private var groupBy = GroupByOption.none
 
@@ -37,6 +39,16 @@ struct FileBrowserView: View {
             }
             HStack {
                 Button("New Folder…") { model.makeDirectory() }
+                Spacer()
+                Button { showShare.toggle() } label: {
+                    HStack(spacing: 6) {
+                        if share.isSharing {
+                            Circle().fill(Color.androidGreen).frame(width: 7, height: 7)
+                        }
+                        Text(share.isSharing ? "Sharing to Phone" : "Share Mac to Phone…")
+                    }
+                }
+                .popover(isPresented: $showShare) { ShareView(share: share) }
                 Spacer()
                 Button("Upload Files…") { model.uploadFiles() }
             }
