@@ -9,15 +9,9 @@ struct ShareView: View {
     @ObservedObject var share: MacShareModel
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            VStack(alignment: .leading, spacing: 4) {
-                Text("Share a Mac's folder to your Android device")
-                    .font(.headline)
-                Text("The Diroid app on your Android device can browse, copy and upload files in this folder over the USB cable.")
-                    .font(.callout)
-                    .foregroundStyle(.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Share a Mac's folder to your Android device")
+                .font(.headline)
 
             folderRow
 
@@ -44,8 +38,8 @@ struct ShareView: View {
                 .disabled(share.isBusy)
             }
         }
-        .padding(20)
-        .frame(width: 360)
+        .padding(16)
+        .frame(width: 340)
     }
 
     private var folderRow: some View {
