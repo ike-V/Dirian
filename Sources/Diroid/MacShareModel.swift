@@ -5,6 +5,12 @@ import Security
 private let androidAppPackage = "com.ikev.diroid"
 private let androidAppComponent = "\(androidAppPackage)/.MainActivity"
 private struct AndroidAppMissing: Error {}
+
+/// Something the user needs to see after trying to start sharing.
+enum ShareNotice {
+    case appMissing
+    case failed(String)
+}
 private let shareRootKey = "shareRoot"
 
 /// Shares a Mac folder to an Android device: starts the file server, reverse-forwards its port over
@@ -13,9 +19,7 @@ private let shareRootKey = "shareRoot"
 final class MacShareModel: ObservableObject {
     @Published private(set) var isSharing = false
     @Published private(set) var isBusy = false
-    @Published private(set) var message: String?
-    /// The Android app isn't installed on the connected device.
-    @Published private(set) var appMissing = false
+    @Published private(set) var notice: ShareNotice?
     @Published private(set) var rootURL: URL
 
     private var server: MacFileServer?
@@ -48,8 +52,7 @@ final class MacShareModel: ObservableObject {
     func start() {
         guard !isSharing, !isBusy else { return }
         isBusy = true
-        message = nil
-        appMissing = false
+        notice = nil
         let root = rootURL
         let token = Self.makeToken()
 
@@ -80,14 +83,18 @@ final class MacShareModel: ObservableObject {
                 self.client = client
                 isSharing = true
             } catch is AndroidAppMissing {
-                appMissing = true
+                notice = .appMissing
             } catch AdbError.connectionFailed(_) {
-                message = "The adb server isn't running. Run `adb start-server` in Terminal."
+                notice = .failed("The adb server isn't running. Run `adb start-server` in Terminal.")
             } catch {
-                message = "\(error)"
+                notice = .failed("\(error)")
             }
             isBusy = false
         }
+    }
+
+    func dismissNotice() {
+        notice = nil
     }
 
     func stop() {
