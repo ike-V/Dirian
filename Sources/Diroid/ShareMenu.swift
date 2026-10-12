@@ -24,7 +24,12 @@ struct ShareMenu: View {
             Button("Choose Folder…") { share.chooseFolder() }
                 .disabled(share.isSharing || share.isBusy)
         } label: {
-            Text(share.isSharing ? "Sharing to Android" : "Share Mac to Android")
+            HStack(spacing: 6) {
+                if share.isSharing {
+                    Circle().fill(Color.androidGreen).frame(width: 7, height: 7)
+                }
+                Text(share.isSharing ? "Sharing to Android" : "Share Mac to Android")
+            }
         }
         .menuStyle(.button)
         .menuIndicator(.hidden)
