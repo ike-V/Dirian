@@ -27,7 +27,7 @@ class Problem(val title: String, val detail: String)
 
 private val notConnected = Problem(
     "Not connected to your Mac",
-    "Plug in the cable and open Diroid on your Mac. Click Share Mac to Android… at the bottom of its window, then press Start sharing.",
+    "Plug in the cable and open Diroid on your Mac. Click Share Mac to Android… at the bottom of its window, then press Start Sharing.",
 )
 
 class BrowserModel(private val app: Application) : AndroidViewModel(app) {
@@ -101,7 +101,7 @@ class BrowserModel(private val app: Application) : AndroidViewModel(app) {
         when {
             e is MacException && e.status == 401 -> problem = Problem(
                 "Sharing was restarted",
-                "Press Start sharing in Diroid on your Mac again.",
+                "Press Start Sharing in Diroid on your Mac again.",
             )
             e is IOException -> problem = notConnected
             e is ActivityNotFoundException -> error = "No app on this device can open that file. Use Save to… instead."

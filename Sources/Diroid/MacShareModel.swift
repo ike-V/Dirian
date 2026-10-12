@@ -2,7 +2,9 @@ import Foundation
 import AppKit
 import Security
 
-private let androidAppComponent = "com.ikev.diroid/.MainActivity"
+private let androidAppPackage = "com.ikev.diroid"
+private let androidAppComponent = "\(androidAppPackage)/.MainActivity"
+private struct AndroidAppMissing: Error {}
 private let shareRootKey = "shareRoot"
 
 /// Shares a Mac folder to an Android device: starts the file server, reverse-forwards its port over
@@ -12,6 +14,8 @@ final class MacShareModel: ObservableObject {
     @Published private(set) var isSharing = false
     @Published private(set) var isBusy = false
     @Published private(set) var message: String?
+    /// The Android app isn't installed on the connected device.
+    @Published private(set) var appMissing = false
     @Published private(set) var rootURL: URL
 
     private var server: MacFileServer?
@@ -45,6 +49,7 @@ final class MacShareModel: ObservableObject {
         guard !isSharing, !isBusy else { return }
         isBusy = true
         message = nil
+        appMissing = false
         let root = rootURL
         let token = Self.makeToken()
 
@@ -55,6 +60,7 @@ final class MacShareModel: ObservableObject {
                         throw AdbError.serverError("No device found. Plug in your Android device with USB debugging enabled.")
                     }
                     let client = AdbClient(serial: serial)
+                    guard try client.isPackageInstalled(androidAppPackage) else { throw AndroidAppMissing() }
                     let server = MacFileServer(root: root, token: token)
                     try server.start()
                     do {
@@ -65,6 +71,7 @@ final class MacShareModel: ObservableObject {
                             intExtras: ["port": Int(MacFileServer.port)])
                     } catch {
                         server.stop()
+                        try? client.removeReverse(port: MacFileServer.port)
                         throw error
                     }
                     return (server, client)
@@ -72,6 +79,8 @@ final class MacShareModel: ObservableObject {
                 self.server = server
                 self.client = client
                 isSharing = true
+            } catch is AndroidAppMissing {
+                appMissing = true
             } catch AdbError.connectionFailed(_) {
                 message = "The adb server isn't running. Run `adb start-server` in Terminal."
             } catch {

@@ -343,6 +343,12 @@ struct AdbClient {
         try conn.readHostStatus()   // adbd confirmed it
     }
 
+    /// Whether `package` is installed on the device.
+    func isPackageInstalled(_ package: String) throws -> Bool {
+        let (_, output) = try runShellCommand("pm list packages \(shellQuoted(package))")
+        return output.split(separator: "\n").contains { $0.trimmingCharacters(in: .whitespaces) == "package:\(package)" }
+    }
+
     /// Opens `component` (package/activity) on the Android device with string and int extras.
     func startActivity(_ component: String, stringExtras: [String: String], intExtras: [String: Int]) throws {
         var command = "am start -n \(shellQuoted(component))"
