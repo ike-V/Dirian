@@ -4,7 +4,7 @@ import Security
 
 private let androidAppPackage = "com.ikev.diroid"
 private let androidAppComponent = "\(androidAppPackage)/.MainActivity"
-private struct AndroidAppMissing: Error {}
+private struct AndroidAppMissing: Error { let client: AdbClient }
 
 /// Something the user needs to see after trying to start sharing.
 enum ShareNotice {
@@ -24,6 +24,8 @@ final class MacShareModel: ObservableObject {
 
     private var server: MacFileServer?
     private var client: AdbClient?
+    /// The device that was missing the app, so its install links can be opened there.
+    private var deviceMissingApp: AdbClient?
 
     init() {
         if let saved = UserDefaults.standard.string(forKey: shareRootKey) {
@@ -63,7 +65,7 @@ final class MacShareModel: ObservableObject {
                         throw AdbError.serverError("No device found. Plug in your Android device with USB debugging enabled.")
                     }
                     let client = AdbClient(serial: serial)
-                    guard try client.isPackageInstalled(androidAppPackage) else { throw AndroidAppMissing() }
+                    guard try client.isPackageInstalled(androidAppPackage) else { throw AndroidAppMissing(client: client) }
                     let server = MacFileServer(root: root, token: token)
                     try server.start()
                     do {
@@ -82,7 +84,8 @@ final class MacShareModel: ObservableObject {
                 self.server = server
                 self.client = client
                 isSharing = true
-            } catch is AndroidAppMissing {
+            } catch let missing as AndroidAppMissing {
+                deviceMissingApp = missing.client
                 notice = .appMissing
             } catch AdbError.connectionFailed(_) {
                 notice = .failed("The adb server isn't running. Run `adb start-server` in Terminal.")
@@ -90,6 +93,18 @@ final class MacShareModel: ObservableObject {
                 notice = .failed("\(error)")
             }
             isBusy = false
+        }
+    }
+
+    /// Opens a link on the Android device that is missing the app.
+    func openOnDevice(_ url: URL) {
+        guard let device = deviceMissingApp else { return }
+        Task {
+            do {
+                try await Task.detached { try device.openURL(url.absoluteString) }.value
+            } catch {
+                notice = .failed("\(error)")
+            }
         }
     }
 

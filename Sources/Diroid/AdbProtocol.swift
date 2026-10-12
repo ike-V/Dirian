@@ -349,6 +349,14 @@ struct AdbClient {
         return output.split(separator: "\n").contains { $0.trimmingCharacters(in: .whitespaces) == "package:\(package)" }
     }
 
+    /// Opens `url` on the Android device (e.g. a Google Play page opens in the Play Store app).
+    func openURL(_ url: String) throws {
+        let (exitCode, output) = try runShellCommand("am start -a android.intent.action.VIEW -d \(shellQuoted(url))")
+        guard exitCode == 0, !output.contains("Error") else {
+            throw AdbError.serverError(output.isEmpty ? "could not open the link on the Android device" : output)
+        }
+    }
+
     /// Opens `component` (package/activity) on the Android device with string and int extras.
     func startActivity(_ component: String, stringExtras: [String: String], intExtras: [String: Int]) throws {
         var command = "am start -n \(shellQuoted(component))"

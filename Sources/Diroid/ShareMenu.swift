@@ -39,8 +39,8 @@ struct ShareMenu: View {
             set: { isPresented in if !isPresented { share.dismissNotice() } }
         )) {
             if case .appMissing = share.notice {
-                Button("Get It on Google Play") { NSWorkspace.shared.open(googlePlayURL) }
-                Button("Download the APK") { NSWorkspace.shared.open(releasesURL) }
+                Button("Open Google Play on Android") { share.openOnDevice(googlePlayURL) }
+                Button("Download the APK on Android") { share.openOnDevice(releasesURL) }
                 Button("Cancel", role: .cancel) {}
             } else {
                 Button("OK", role: .cancel) {}
@@ -58,7 +58,7 @@ struct ShareMenu: View {
     private var alertMessage: String {
         switch share.notice {
         case .appMissing:
-            return "Install it, then choose Start Sharing again. You can still browse your Android device from this Mac without it."
+            return "Install it on your Android device, then choose Start Sharing again. You can still browse your Android device from this Mac without it."
         case .failed(let message):
             return message
         case nil:
