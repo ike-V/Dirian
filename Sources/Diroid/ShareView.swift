@@ -1,14 +1,14 @@
 import SwiftUI
 
-/// Popover for sharing a Mac folder to the phone.
+/// Popover for sharing a Mac folder to an Android device.
 struct ShareView: View {
     @ObservedObject var share: MacShareModel
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Share a Mac folder to your phone")
+            Text("Share a Mac folder to your Android device")
                 .font(.headline)
-            Text("The Diroid app on your phone can browse, copy and upload files in this folder over the USB cable.")
+            Text("The Diroid app on your Android device can browse, copy and upload files in this folder over the USB cable.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
 

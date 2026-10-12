@@ -58,7 +58,7 @@ final class FileBrowserModel: ObservableObject {
                 guard let serial = serials.first else {
                     connectionProblem = ConnectionProblem(
                         title: "No device found",
-                        detail: "Plug in your phone with USB debugging enabled, then press refresh.")
+                        detail: "Plug in your Android device with USB debugging enabled, then press refresh.")
                     return
                 }
                 client = AdbClient(serial: serial)
@@ -88,8 +88,8 @@ final class FileBrowserModel: ObservableObject {
             entries = fetched.sorted(by: nameAscending)
         } catch AdbError.serverError(let message) where message.contains("unauthorized") {
             connectionProblem = ConnectionProblem(
-                title: "Allow USB debugging on your phone",
-                detail: "Tap Allow on the prompt on your phone, then press refresh. If no prompt appears, run this in Terminal, replug the phone, then press refresh.",
+                title: "Allow USB debugging on your Android device",
+                detail: "Tap Allow on the prompt on your Android device, then press refresh. If no prompt appears, run this in Terminal, replug the device, then press refresh.",
                 command: "adb kill-server")
         } catch {
             errorMessage = "\(error)"
@@ -158,10 +158,10 @@ final class FileBrowserModel: ObservableObject {
         let alert = NSAlert()
         if entry.isDirectory {
             alert.messageText = "Delete \"\(entry.name)\" and everything inside it?"
-            alert.informativeText = "This permanently deletes the folder and all its contents from your phone. This can't be undone."
+            alert.informativeText = "This permanently deletes the folder and all its contents from your Android device. This can't be undone."
         } else {
             alert.messageText = "Delete \"\(entry.name)\"?"
-            alert.informativeText = "This permanently deletes the file from your phone. This can't be undone."
+            alert.informativeText = "This permanently deletes the file from your Android device. This can't be undone."
         }
         alert.alertStyle = .warning
         alert.addButton(withTitle: "Delete")

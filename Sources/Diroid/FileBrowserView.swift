@@ -45,7 +45,7 @@ struct FileBrowserView: View {
                         if share.isSharing {
                             Circle().fill(Color.androidGreen).frame(width: 7, height: 7)
                         }
-                        Text(share.isSharing ? "Sharing to Phone" : "Share Mac to Phone…")
+                        Text(share.isSharing ? "Sharing to Android" : "Share Mac to Android…")
                     }
                 }
                 .popover(isPresented: $showShare) { ShareView(share: share) }

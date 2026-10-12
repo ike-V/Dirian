@@ -432,7 +432,7 @@ private fun EntryMenu(expanded: Boolean, entry: Entry, actions: EntryActions, on
         DropdownMenuItem(text = { Text("Rename…") }, onClick = { onDismiss(); actions.rename(entry) })
         if (!entry.isDirectory) {
             DropdownMenuItem(text = { Text("Save to…") }, onClick = { onDismiss(); actions.saveTo(entry, false) })
-            DropdownMenuItem(text = { Text("Move to phone…") }, onClick = { onDismiss(); actions.saveTo(entry, true) })
+            DropdownMenuItem(text = { Text("Move to this device…") }, onClick = { onDismiss(); actions.saveTo(entry, true) })
         }
         DropdownMenuItem(
             text = { Text("Delete", color = MaterialTheme.colorScheme.error) },

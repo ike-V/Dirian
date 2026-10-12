@@ -321,9 +321,9 @@ struct AdbClient {
         try runQuietShellCommand("mv -n \(shellQuoted(path)) \(shellQuoted(newPath))")
     }
 
-    // MARK: - Reverse forwarding (phone -> Mac)
+    // MARK: - Reverse forwarding (Android -> Mac)
 
-    /// `adb reverse tcp:port tcp:port`: connections to the phone's localhost:port arrive at the
+    /// `adb reverse tcp:port tcp:port`: connections to the Android device's localhost:port arrive at the
     /// Mac's localhost:port. Replaces an existing reverse for the same port.
     func reverse(port: UInt16) throws {
         try runReverseService("reverse:forward:tcp:\(port);tcp:\(port)")
@@ -343,14 +343,14 @@ struct AdbClient {
         try conn.readHostStatus()   // adbd confirmed it
     }
 
-    /// Opens `component` (package/activity) on the phone with string and int extras.
+    /// Opens `component` (package/activity) on the Android device with string and int extras.
     func startActivity(_ component: String, stringExtras: [String: String], intExtras: [String: Int]) throws {
         var command = "am start -n \(shellQuoted(component))"
         for (key, value) in stringExtras { command += " --es \(shellQuoted(key)) \(shellQuoted(value))" }
         for (key, value) in intExtras { command += " --ei \(shellQuoted(key)) \(value)" }
         let (exitCode, output) = try runShellCommand(command)
         guard exitCode == 0, !output.contains("Error") else {
-            throw AdbError.serverError(output.isEmpty ? "could not open the app on the phone" : output)
+            throw AdbError.serverError(output.isEmpty ? "could not open the app on the Android device" : output)
         }
     }
 

@@ -19,7 +19,7 @@ private struct HTTPRequest {
     let bodyStart: [UInt8]
 }
 
-/// A minimal HTTP/1.1 file server on 127.0.0.1, reached from the phone through `adb reverse`.
+/// A minimal HTTP/1.1 file server on 127.0.0.1, reached from the Android device through `adb reverse`.
 ///
 /// Every request needs the bearer token, and every path is relative to, and confined to, `root`.
 ///   GET /info                       -> {"name": ...}

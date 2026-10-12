@@ -27,7 +27,7 @@ class Problem(val title: String, val detail: String)
 
 private val notConnected = Problem(
     "Not connected to your Mac",
-    "Plug in the cable and open Diroid on your Mac. Click the phone icon at the top right of its window (widen the window, or look under the » menu), then press Start sharing.",
+    "Plug in the cable and open Diroid on your Mac. Click Share Mac to Android… at the bottom of its window, then press Start sharing.",
 )
 
 class BrowserModel(private val app: Application) : AndroidViewModel(app) {
@@ -104,7 +104,7 @@ class BrowserModel(private val app: Application) : AndroidViewModel(app) {
                 "Press Start sharing in Diroid on your Mac again.",
             )
             e is IOException -> problem = notConnected
-            e is ActivityNotFoundException -> error = "No app on this phone can open that file. Use Save to… instead."
+            e is ActivityNotFoundException -> error = "No app on this device can open that file. Use Save to… instead."
             else -> error = e.message ?: e.toString()
         }
     }
@@ -163,7 +163,7 @@ class BrowserModel(private val app: Application) : AndroidViewModel(app) {
                 io { client.delete(source) }
                 load(path)
             }
-            message = if (move) "Moved ${entry.name} to your phone" else "Saved ${entry.name}"
+            message = if (move) "Moved ${entry.name} to this device" else "Saved ${entry.name}"
         }
     }
 

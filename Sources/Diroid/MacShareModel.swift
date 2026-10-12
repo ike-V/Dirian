@@ -2,11 +2,11 @@ import Foundation
 import AppKit
 import Security
 
-private let phoneAppComponent = "com.ikev.diroid/.MainActivity"
+private let androidAppComponent = "com.ikev.diroid/.MainActivity"
 private let shareRootKey = "shareRoot"
 
-/// Shares a Mac folder to the phone: starts the file server, reverse-forwards its port over
-/// ADB, and opens the phone app with the access token.
+/// Shares a Mac folder to an Android device: starts the file server, reverse-forwards its port over
+/// ADB, and opens the Android app with the access token.
 @MainActor
 final class MacShareModel: ObservableObject {
     @Published private(set) var isSharing = false
@@ -35,7 +35,7 @@ final class MacShareModel: ObservableObject {
         panel.allowsMultipleSelection = false
         panel.directoryURL = rootURL
         panel.prompt = "Share"
-        panel.message = "Choose the folder your phone can browse"
+        panel.message = "Choose the folder your Android device can browse"
         guard panel.runModal() == .OK, let url = panel.url else { return }
         rootURL = url
         UserDefaults.standard.set(url.path, forKey: shareRootKey)
@@ -52,7 +52,7 @@ final class MacShareModel: ObservableObject {
             do {
                 let (server, client) = try await Task.detached { () throws -> (MacFileServer, AdbClient) in
                     guard let serial = try AdbClient.listDeviceSerials().first else {
-                        throw AdbError.serverError("No device found. Plug in your phone with USB debugging enabled.")
+                        throw AdbError.serverError("No device found. Plug in your Android device with USB debugging enabled.")
                     }
                     let client = AdbClient(serial: serial)
                     let server = MacFileServer(root: root, token: token)
@@ -60,7 +60,7 @@ final class MacShareModel: ObservableObject {
                     do {
                         try client.reverse(port: MacFileServer.port)
                         try client.startActivity(
-                            phoneAppComponent,
+                            androidAppComponent,
                             stringExtras: ["token": token],
                             intExtras: ["port": Int(MacFileServer.port)])
                     } catch {

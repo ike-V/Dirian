@@ -6,36 +6,36 @@
 
 <p align="center"><em>Pronounced "dir-oid"</em></p>
 
-A native macOS app for browsing your Android phone's storage over USB
+A native macOS app for browsing your Android device's storage over USB
 - no MTP
 - no kernel extension
 - no background daemon
 
 ## What is this?
 
-- macOS has no built-in way to see an Android phone's files when you plug it in over USB. 
+- macOS has no built-in way to see an Android device's files when you plug it in over USB. 
 Every existing solution wraps `libmtp` in a FUSE filesystem, which means a kernel extension, kernel-level trust, and (in practice) a lot of flakiness getting it to actually mount.
 - Diroid uses Android's USB debugging protocol (ADB) directly to the local `adb` server the same way Android Studio's "Device File Explorer" does but reimplemented from scratch in Swift.
 - No `adb` binary shelled out to, no third-party libraries, no elevated privileges, no daemons running in the background.
 
 ## Features
 
-- Browse your phone's storage like a Finder window.
+- Browse your Android device's storage like a Finder window.
 - List and Grid views (toggle in the path bar), groupable by Name, Size, or Date Modified
 - Double-click a file to pull it and open it in the default app macOS would use for that file type
 - Right-click → **Save to…** to copy a file to a folder you choose, without opening it
 - Right-click → **Rename…** to rename or move a file or folder
 - Right-click → **Delete** to remove a file, or a folder and everything in it (with a confirmation prompt first)
 - **New Folder…** button (bottom left) to create a folder in the current directory
-- **Upload Files…** button (bottom right) to push local files onto the phone
+- **Upload Files…** button (bottom right) to push local files onto the Android device
 - Click path breadcrumbs to move to that folder.
 - The whole filesystem is browsable (permission-restricted system folders show an error)
-- **Refresh** (↻) button to reconnect after unplugging/replugging your phone
+- **Refresh** (↻) button to reconnect after unplugging/replugging your Android device
 - If the `adb` server isn't running, Diroid says so and shows the command to start it, with a copy button for pasting into Terminal
 
 ### Screenshots
 
-<img src="Screenshots/Screenshot2.jpg" width="700" alt="Diroid's list view of a phone's DCIM folder, with the New Folder dialog open">
+<img src="Screenshots/Screenshot2.jpg" width="700" alt="Diroid's list view of an Android device's DCIM folder, with the New Folder dialog open">
 
 List view, and the New Folder dialog.
 
@@ -63,7 +63,7 @@ Diroid also needs an `adb` server running — see Requirements.
 ## Requirements
 
 - macOS 13 (Ventura) or later
-- An Android phone with **USB debugging** enabled: Settings → About phone → tap "Build number" 7 times to unlock Developer options → Developer options → USB debugging
+- An Android device with **USB debugging** enabled: Settings → About phone (or About tablet) → tap "Build number" 7 times to unlock Developer options → Developer options → USB debugging
 - The `adb` server running on your Mac — easiest way is Homebrew: `brew install --cask android-platform-tools`. Diroid talks to this same background server; it doesn't shell out to the `adb` binary itself.
 - To build from source: Xcode, set as the active developer directory: `sudo xcode-select -s /Applications/Xcode.app` (the Command Line Tools alone can't build SwiftUI's `@State` macro on the macOS 27 SDK)
 
@@ -78,8 +78,8 @@ open Diroid.app
 
 ## First run
 
-- Plug in your phone before or after launching 
-- The first time, you'll get a prompt on the phone itself asking to authorize this computer for USB debugging; accept it (check "always allow" to skip this next time).
+- Plug in your Android device before or after launching 
+- The first time, you'll get a prompt on the Android device itself asking to authorize this computer for USB debugging; accept it (check "always allow" to skip this next time).
 - If you unplug/replug while the app is already open, hit the refresh (↻) button.
 
 ## Credits
