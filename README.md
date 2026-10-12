@@ -6,7 +6,7 @@
 
 <p align="center"><em>Pronounced "dir-oid"</em></p>
 
-A native macOS app for browsing your Android device's storage over USB
+A native macOS app for browsing your Android device's storage over USB, and for sharing a Mac folder back to it
 - no MTP
 - no kernel extension
 - no background daemon
@@ -43,6 +43,24 @@ List view, and the New Folder dialog.
 
 Grid view, the Group By menu (top right), and the right-click menu on a file.
 
+## Share Mac to Android
+
+Browse a Mac folder from the Android device, over the same USB cable.
+
+1. Install the Diroid app on the Android device (see [Install](#install)).
+2. In Diroid, click **Share Mac to Android** in the bottom bar, then **Start Sharing**. **Choose Folder…** picks the folder (default: iCloud Drive).
+3. The Diroid app opens on the Android device showing that folder: list or grid, group by, open files, **Save to…** or **Move to this device…**, **Upload** (copy or move), rename, new folder, delete.
+
+The button reads **● Sharing to Android** while sharing; **Stop Sharing** ends it.
+
+- **How it works:** Diroid serves the folder from a small HTTP server on the Mac's loopback address (127.0.0.1:47615) and exposes it to the Android device with `adb reverse`, over the same adb server connection. No network or Wi-Fi involved.
+- **Locked down:** `adb reverse` opens the port to every app on the Android device, so each request needs a random token that Diroid passes to the app when it launches it, and a new one is made every time sharing starts. Only the chosen folder is served; symlinks leading outside it are hidden.
+- **Nothing is overwritten:** an upload with a taken name is renamed ("name (1)"). Deleting from the Android device moves the item to the Mac's Trash.
+- **App not installed:** Diroid says so and offers to open the app's Google Play page or the APK download on the Android device.
+- **Limits:** USB only, one device at a time (the first one adb lists), and sharing stops when Diroid quits or the cable is unplugged.
+
+Browsing the Android device from the Mac doesn't need the Android app.
+
 ## Install
 
 With [Homebrew](https://brew.sh) (Apple silicon Macs):
@@ -60,11 +78,27 @@ Diroid isn't signed with an Apple Developer ID or notarized yet, so macOS blocks
 
 Diroid also needs an `adb` server running — see Requirements.
 
+### Android app
+
+Only needed for [Share Mac to Android](#share-mac-to-android). Neither link works yet:
+
+- [Google Play](https://play.google.com/store/apps/details?id=com.ikev.diroid): not published yet
+- [GitHub Releases](https://github.com/ike-V/Diroid/releases/latest): APK, first release pending
+
+Or build it (Android SDK and Gradle, or Android Studio) and install it:
+
+```bash
+cd android
+gradle assembleDebug
+adb install -r app/build/outputs/apk/debug/app-debug.apk
+```
+
 ## Requirements
 
 - macOS 13 (Ventura) or later
 - An Android device with **USB debugging** enabled: Settings → About phone (or About tablet) → tap "Build number" 7 times to unlock Developer options → Developer options → USB debugging
 - The `adb` server running on your Mac — easiest way is Homebrew: `brew install --cask android-platform-tools`. Diroid talks to this same background server; it doesn't shell out to the `adb` binary itself.
+- For Share Mac to Android: the Diroid app on the Android device (Android 8.0 or later)
 - To build from source: Xcode, set as the active developer directory: `sudo xcode-select -s /Applications/Xcode.app` (the Command Line Tools alone can't build SwiftUI's `@State` macro on the macOS 27 SDK)
 
 ## Build from source
