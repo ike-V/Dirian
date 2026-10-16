@@ -307,6 +307,16 @@ struct AdbClient {
         }
     }
 
+    /// The name set in Settings → About phone, else the model code; nil if neither is readable.
+    func deviceName() throws -> String? {
+        for command in ["settings get global device_name", "getprop ro.product.model"] {
+            let (exitCode, output) = try runShellCommand(command)
+            let name = output.trimmingCharacters(in: .whitespacesAndNewlines)
+            if exitCode == 0, !name.isEmpty, name != "null" { return name }
+        }
+        return nil
+    }
+
     /// `rm -f`/`rm -rf` via shell; sync has no delete.
     func delete(_ path: String, recursive: Bool) throws {
         try runQuietShellCommand("rm \(recursive ? "-rf" : "-f") \(shellQuoted(path))")

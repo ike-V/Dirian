@@ -19,6 +19,10 @@ final class FileBrowserModel: ObservableObject {
     @Published private(set) var isLoading = false
     @Published private(set) var errorMessage: String?
     @Published private(set) var connectionProblem: ConnectionProblem?
+    /// The connected device's name, for the sidebar's root entry.
+    @Published private(set) var deviceName = "Internal Storage"
+    /// Names of the visible folders directly under `rootPath`, for the sidebar.
+    @Published private(set) var sidebarFolders: [String] = []
 
     private var client: AdbClient?
 
@@ -61,7 +65,9 @@ final class FileBrowserModel: ObservableObject {
                         detail: "Plug in your Android device with USB debugging enabled, then press refresh.")
                     return
                 }
-                client = AdbClient(serial: serial)
+                let newClient = AdbClient(serial: serial)
+                client = newClient
+                deviceName = (try? await Task.detached { try newClient.deviceName() }.value) ?? "Internal Storage"
                 await load(path: Self.rootPath)
             } catch AdbError.connectionFailed(_) {
                 connectionProblem = ConnectionProblem(
@@ -86,6 +92,9 @@ final class FileBrowserModel: ObservableObject {
             }
             currentPath = path
             entries = fetched.sorted(by: nameAscending)
+            if path == Self.rootPath {
+                sidebarFolders = entries.filter { $0.isDirectory && !$0.name.hasPrefix(".") }.map(\.name)
+            }
         } catch AdbError.serverError(let message) where message.contains("unauthorized") {
             connectionProblem = ConnectionProblem(
                 title: "Allow USB debugging on your Android device",

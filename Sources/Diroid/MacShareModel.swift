@@ -38,7 +38,17 @@ final class MacShareModel: ObservableObject {
         }
     }
 
-    func chooseFolder() {
+    /// Not sharing: choose a folder, then share it. Sharing: stop.
+    func toggle() {
+        if isSharing {
+            stop()
+        } else if !isBusy, chooseFolder() {
+            start()
+        }
+    }
+
+    /// Asks for the folder to share; false if cancelled.
+    private func chooseFolder() -> Bool {
         let panel = NSOpenPanel()
         panel.canChooseDirectories = true
         panel.canChooseFiles = false
@@ -46,9 +56,10 @@ final class MacShareModel: ObservableObject {
         panel.directoryURL = rootURL
         panel.prompt = "Share"
         panel.message = "Choose the folder your Android device can browse"
-        guard panel.runModal() == .OK, let url = panel.url else { return }
+        guard panel.runModal() == .OK, let url = panel.url else { return false }
         rootURL = url
         UserDefaults.standard.set(url.path, forKey: shareRootKey)
+        return true
     }
 
     func start() {

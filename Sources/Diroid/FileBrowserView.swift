@@ -15,8 +15,54 @@ struct FileBrowserView: View {
     }
 
     var body: some View {
+        NavigationSplitView {
+            sidebar
+                .navigationSplitViewColumnWidth(min: 150, ideal: 190, max: 260)
+        } detail: {
+            browser
+        }
+        .frame(minWidth: 720, minHeight: 420)
+        .modifier(ShareAlerts(share: share))
+        .onAppear { model.connectAndLoadRoot() }
+        .alert("Error", isPresented: Binding(
+            get: { model.errorMessage != nil },
+            set: { isPresented in if !isPresented { model.clearError() } }
+        )) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(model.errorMessage ?? "")
+        }
+    }
+
+    /// Internal storage and its top-level folders; highlights the one currently open.
+    private var sidebar: some View {
+        List {
+            sidebarRow(model.deviceName, symbol: "iphone", path: FileBrowserModel.rootPath)
+            Section("Folders") {
+                ForEach(model.sidebarFolders, id: \.self) { name in
+                    sidebarRow(name, symbol: "folder", path: "\(FileBrowserModel.rootPath)/\(name)")
+                }
+            }
+        }
+        .listStyle(.sidebar)
+    }
+
+    private func sidebarRow(_ title: String, symbol: String, path: String) -> some View {
+        Label {
+            Text(title)
+        } icon: {
+            Image(systemName: symbol).foregroundStyle(Color.androidGreen)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.vertical, 3)
+        .padding(.horizontal, 6)
+        .background(model.currentPath == path ? Color.androidGreen.opacity(0.18) : .clear, in: RoundedRectangle(cornerRadius: 6))
+        .contentShape(Rectangle())
+        .onTapGesture { Task { await model.load(path: path) } }
+    }
+
+    private var browser: some View {
         VStack(spacing: 0) {
-            pathBar
             Group {
                 if let problem = model.connectionProblem {
                     connectionProblemView(problem)
@@ -36,62 +82,76 @@ struct FileBrowserView: View {
                     gridView
                 }
             }
-            HStack {
-                Button("New Folder…") { model.makeDirectory() }
-                Spacer()
-                ShareMenu(share: share)
-                Spacer()
-                Button("Upload Files…") { model.uploadFiles() }
-            }
-            .padding(12)
+            Divider()
+            breadcrumbView
+                .padding(.horizontal, 12)
+                .padding(.vertical, 7)
         }
-        .frame(minWidth: 500, minHeight: 420)
-        .onAppear { model.connectAndLoadRoot() }
-        .alert("Error", isPresented: Binding(
-            get: { model.errorMessage != nil },
-            set: { isPresented in if !isPresented { model.clearError() } }
-        )) {
-            Button("OK", role: .cancel) {}
-        } message: {
-            Text(model.errorMessage ?? "")
+        .frame(minWidth: 500)
+        .navigationTitle("")
+        .toolbar {
+            ToolbarItem(placement: .navigation) {
+                Button { model.connectAndLoadRoot() } label: {
+                    Label("Refresh", systemImage: "arrow.clockwise")
+                }
+                .help("Refresh")
+            }
+            ToolbarItem(placement: .primaryAction) {
+                if model.isLoading {
+                    ProgressView().scaleEffect(0.6)
+                }
+            }
+            .glassBackgroundHidden()
+            ToolbarItem(placement: .primaryAction) { layoutButton("list.bullet", .list) }
+            ToolbarItem(placement: .primaryAction) { layoutButton("square.grid.2x2", .grid) }
+            ToolbarItem(placement: .primaryAction) { groupByMenu }
+            gap
+            ToolbarItem(placement: .primaryAction) {
+                Button { model.makeDirectory() } label: {
+                    Label("New Folder…", systemImage: "folder.badge.plus")
+                }
+                .help("New Folder…")
+            }
+            gap
+            ToolbarItem(placement: .primaryAction) {
+                Button { model.uploadFiles() } label: {
+                    Label("Upload Files…", systemImage: "square.and.arrow.up")
+                }
+                .help("Upload Files…")
+            }
+            gap
+            ToolbarItem(placement: .primaryAction) { ShareButton(share: share) }
         }
     }
 
-    private var pathBar: some View {
-        HStack(spacing: 8) {
-            breadcrumbView
-            Spacer()
-            if model.isLoading {
-                ProgressView().scaleEffect(0.6)
-            }
-            HStack(spacing: 2) {
-                layoutButton("list.bullet", .list)
-                layoutButton("square.grid.2x2", .grid)
-            }
-            groupByMenu
-            Button { model.connectAndLoadRoot() } label: {
-                Image(systemName: "arrow.clockwise")
-            }
-            .buttonStyle(.plain)
+    /// Splits the toolbar's glass into separate groups (macOS 26+).
+    @ToolbarContentBuilder
+    private var gap: some ToolbarContent {
+        if #available(macOS 26, *) {
+            ToolbarSpacer(.fixed, placement: .primaryAction)
         }
-        .padding(12)
     }
 
     private var breadcrumbView: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 2) {
-                ForEach(Array(pathComponents(model.currentPath).enumerated()), id: \.element.fullPath) { index, component in
-                    if index > 1 {
-                        Text("/").foregroundStyle(.secondary)
-                    }
-                    BreadcrumbSegment(label: component.label) {
-                        Task { await model.load(path: component.fullPath) }
+        ScrollViewReader { proxy in
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 2) {
+                    ForEach(Array(pathComponents(model.currentPath).enumerated()), id: \.element.fullPath) { index, component in
+                        if index > 1 {
+                            Text("/").foregroundStyle(.secondary)
+                        }
+                        BreadcrumbSegment(label: component.label) {
+                            Task { await model.load(path: component.fullPath) }
+                        }
                     }
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .onChange(of: model.currentPath) { path in
+                proxy.scrollTo(path, anchor: .trailing)
             }
         }
         .font(.system(.callout, design: .monospaced))
-        .frame(maxWidth: 360)
     }
 
     private var groupByMenu: some View {
@@ -103,30 +163,38 @@ struct FileBrowserView: View {
             }
             .pickerStyle(.inline)
         } label: {
-            Image(systemName: "square.grid.3x1.below.line.grid.1x2")
-                .foregroundStyle(groupBy == .none ? .secondary : Color.androidGreen)
-                .frame(width: 24, height: 22)
+            Label {
+                Text("Group")
+            } icon: {
+                HStack(spacing: 3) {
+                    Image(systemName: "square.grid.3x1.below.line.grid.1x2")
+                    Image(systemName: "chevron.down").font(.system(size: 8, weight: .bold))
+                }
+            }
+            .foregroundStyle(groupBy == .none ? Color.primary : Color.androidGreen)
         }
-        .menuStyle(.borderlessButton)
-        .fixedSize()
+        .menuIndicator(.hidden)
+        .help("Group By")
     }
 
     private func layoutButton(_ symbol: String, _ value: Layout) -> some View {
         Button { layout = value } label: {
-            Image(systemName: symbol)
-                .foregroundStyle(layout == value ? Color.androidGreen : .secondary)
-                .frame(width: 28, height: 22)
-                .background(layout == value ? Color.androidGreen.opacity(0.18) : .clear, in: RoundedRectangle(cornerRadius: 5))
+            Label(value == .list ? "List" : "Grid", systemImage: symbol)
+                .foregroundStyle(layout == value ? Color.androidGreen : Color.primary)
         }
-        .buttonStyle(.plain)
+        .help(value == .list ? "List View" : "Grid View")
+    }
+
+    private func iconStyle(for entry: AdbDirEntry) -> AnyShapeStyle {
+        entry.isDirectory ? AnyShapeStyle(LinearGradient.androidFolder) : AnyShapeStyle(Color.androidGreen)
     }
 
     private func row(for entry: AdbDirEntry) -> some View {
         HStack(spacing: 8) {
-            Image(systemName: entry.isDirectory ? "folder" : "doc")
+            Image(systemName: entry.isDirectory ? "folder.fill" : "doc")
                 .font(.system(size: entry.isDirectory ? 22 : 13))
                 .frame(width: 24, height: 20)
-                .foregroundStyle(Color.androidGreen)
+                .foregroundStyle(iconStyle(for: entry))
             VStack(alignment: .leading, spacing: 2) {
                 RowNameText(entry.name)
                 if !entry.isDirectory {
@@ -151,9 +219,9 @@ struct FileBrowserView: View {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 96, maximum: 96), spacing: 12)], spacing: 16) {
                         ForEach(group.entries) { entry in
                             VStack(spacing: 4) {
-                                Image(systemName: entry.isDirectory ? "folder" : "doc")
+                                Image(systemName: entry.isDirectory ? "folder.fill" : "doc")
                                     .font(.system(size: 40))
-                                    .foregroundStyle(Color.androidGreen)
+                                    .foregroundStyle(iconStyle(for: entry))
                                 Text(entry.name)
                                     .font(.system(size: 10))
                                     .multilineTextAlignment(.center)
@@ -269,6 +337,18 @@ private func pathComponents(_ path: String) -> [(label: String, fullPath: String
         result.append((String(part), accumulated))
     }
     return result
+}
+
+private extension ToolbarContent {
+    /// Hides the macOS 26 Liquid Glass background behind a toolbar item; no-op earlier.
+    @ToolbarContentBuilder
+    func glassBackgroundHidden() -> some ToolbarContent {
+        if #available(macOS 26, *) {
+            self.sharedBackgroundVisibility(.hidden)
+        } else {
+            self
+        }
+    }
 }
 
 private extension View {

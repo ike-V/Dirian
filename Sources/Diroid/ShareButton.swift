@@ -4,8 +4,9 @@ import SwiftUI
 private let googlePlayURL = URL(string: "https://play.google.com/store/apps/details?id=com.ikev.diroid")!
 private let releasesURL = URL(string: "https://github.com/ike-V/Diroid/releases/latest")!
 
-/// Bottom-bar menu for sharing a Mac's folder to an Android device.
-struct ShareMenu: View {
+/// Toolbar button that picks a Mac folder and shares it to an Android device, or stops sharing;
+/// green while sharing.
+struct ShareButton: View {
     @ObservedObject var share: MacShareModel
 
     private var folderName: String {
@@ -13,28 +14,25 @@ struct ShareMenu: View {
     }
 
     var body: some View {
-        Menu {
-            if share.isSharing {
-                Button("Stop Sharing") { share.stop() }
-            } else {
-                Button("Start Sharing “\(folderName)”") { share.start() }
-                    .disabled(share.isBusy)
-            }
-            Divider()
-            Button("Choose Folder…") { share.chooseFolder() }
-                .disabled(share.isSharing || share.isBusy)
-        } label: {
-            HStack(spacing: 6) {
-                if share.isSharing {
-                    Circle().fill(Color.androidGreen).frame(width: 7, height: 7)
-                }
-                Text(share.isSharing ? "Sharing to Android" : "Share Mac to Android")
-            }
+        Button { share.toggle() } label: {
+            Label(share.isSharing ? "Stop Sharing" : "Share Mac to Android", systemImage: "laptopcomputer")
+                .symbolRenderingMode(.monochrome)
+                .foregroundStyle(share.isSharing ? Color.androidGreen : Color.primary)
         }
-        .menuStyle(.button)
-        .menuIndicator(.hidden)
-        .fixedSize()
-        .alert(alertTitle, isPresented: Binding(
+        .disabled(share.isBusy)
+        .help(share.isSharing
+              ? "Stop sharing “\(folderName)” to Android"
+              : "Choose a folder to share to Android")
+    }
+}
+
+/// Alerts for share failures and the missing Android app. Applied outside the toolbar,
+/// where alerts present reliably.
+struct ShareAlerts: ViewModifier {
+    @ObservedObject var share: MacShareModel
+
+    func body(content: Content) -> some View {
+        content.alert(alertTitle, isPresented: Binding(
             get: { share.notice != nil },
             set: { isPresented in if !isPresented { share.dismissNotice() } }
         )) {
