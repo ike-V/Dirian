@@ -14,28 +14,6 @@ It needs no MTP, no kernel extension and no background process of its own.
 - **An Android device with USB debugging turned on**, plugged in over USB.
 - **Dirian for Android (optional).** There is an Android app, and only [Share Mac to Android](#share-mac-to-android) needs it. Browsing, uploading, downloading, renaming, deleting and everything else in Dirian work without it.
 
-## Screenshots
-
-<img src="Screenshots/recent.png" width="700" alt="Dirian's Recent view: files from the last 7 days grouped by date, with the sidebar's Recent, Images, Videos, Audio, Documents and Downloads shortcuts and the Folders list">
-
-The sidebar shortcuts, here Recent, grouped by date.
-
-<img src="Screenshots/camera-grid.png" width="700" alt="Dirian's grid view of an Android device's DCIM/Camera folder grouped by date, with the path bar at the bottom">
-
-Grid view, and the path bar at the bottom.
-
-<img src="Screenshots/group-by.png" width="700" alt="Dirian's Group By menu (None, Name, Size, Date Modified) open from the toolbar">
-
-The Group By menu in the toolbar.
-
-<img src="Screenshots/context-menu.png" width="700" alt="Dirian's right-click menu on a file, showing Rename, Save to and Delete">
-
-The right-click menu on a file.
-
-<img src="Screenshots/new-folder.png" width="700" alt="Dirian's list view of the Documents folder with the New Folder dialog open">
-
-List view, and the New Folder dialog.
-
 ## Why Dirian?
 
 macOS can't show an Android device's files when you plug it in over USB. Existing tools wrap `libmtp` in a FUSE filesystem, which needs a kernel extension and is often unreliable to mount.
@@ -49,7 +27,21 @@ Dirian talks to the `adb` server you already run, using Android's USB debugging 
 - Browse your Android device's storage like a Finder window. The whole filesystem is browsable, and permission-restricted system folders show an error.
 - A sidebar shows the device's name and its top-level folders, which you can collapse.
 - The sidebar shortcuts Recent, Images, Videos, Audio, Documents and Downloads list matching files from the device's common folders, newest first. Recent covers the last 7 days.
+
+<img src="Screenshots/recent.png" width="700" alt="Dirian's Recent view: files from the last 7 days grouped by date, with the sidebar's Recent, Images, Videos, Audio, Documents and Downloads shortcuts and the Folders list">
+
+The sidebar shortcuts, here Recent, grouped by date.
+
 - List and Grid views, groupable by Name, Size or Date Modified.
+
+<img src="Screenshots/camera-grid.png" width="700" alt="Dirian's grid view of an Android device's DCIM/Camera folder grouped by date, with the path bar at the bottom">
+
+Grid view, and the path bar at the bottom.
+
+<img src="Screenshots/group-by.png" width="700" alt="Dirian's Group By menu (None, Name, Size, Date Modified) open from the toolbar">
+
+The Group By menu in the toolbar.
+
 - The path bar at the bottom shows where you are. Click any segment to jump to that folder.
 
 ### Manage files
@@ -58,7 +50,17 @@ Dirian talks to the `adb` server you already run, using Android's USB debugging 
 - Right-click → **Save to…** copies a file to a folder you choose, without opening it.
 - Right-click → **Rename…** renames or moves a file or folder.
 - Right-click → **Delete** removes a file, or a folder and everything in it, after a confirmation prompt.
+
+<img src="Screenshots/context-menu.png" width="700" alt="Dirian's right-click menu on a file, showing Rename, Save to and Delete">
+
+The right-click menu on a file.
+
 - **New Folder…** creates a folder in the current directory.
+
+<img src="Screenshots/new-folder.png" width="700" alt="Dirian's list view of the Documents folder with the New Folder dialog open">
+
+List view, and the New Folder dialog.
+
 - **Upload Files…** pushes local files onto the Android device.
 
 ### Connection
