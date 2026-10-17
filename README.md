@@ -21,7 +21,7 @@ Every existing solution wraps `libmtp` in a FUSE filesystem, which means a kerne
 ## Features
 
 - Browse your Android device's storage like a Finder window.
-- A sidebar with your device's name and its top-level folders
+- A sidebar with your device's name, its top-level folders (collapsible), and Recent, Images, Videos, Audio, Documents and Downloads shortcuts that list matching files from the device's common folders, newest first (Recent covers the last 7 days)
 - List and Grid views (toggle in the toolbar), groupable by Name, Size, or Date Modified
 - Double-click a file to pull it and open it in the default app macOS would use for that file type
 - Right-click → **Save to…** to copy a file to a folder you choose, without opening it
