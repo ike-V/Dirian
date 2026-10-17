@@ -2,7 +2,7 @@ import SwiftUI
 
 // Placeholders until the Android app is published.
 private let googlePlayURL = URL(string: "https://play.google.com/store/apps/details?id=com.ikev.dirian")!
-private let releasesURL = URL(string: "https://github.com/ike-V/Dirian/releases/latest")!
+private let androidAppURL = URL(string: "https://github.com/ike-V/Dirian#dirian-for-android")!
 
 /// Toolbar button that picks a Mac folder and shares it to an Android device, or stops sharing;
 /// green while sharing.
@@ -38,7 +38,7 @@ struct ShareAlerts: ViewModifier {
         )) {
             if case .appMissing = share.notice {
                 Button("Open Google Play on Android") { share.openOnDevice(googlePlayURL) }
-                Button("Download the APK on Android") { share.openOnDevice(releasesURL) }
+                Button("Get the APK on Android") { share.openOnDevice(androidAppURL) }
                 Button("Cancel", role: .cancel) {}
             } else {
                 Button("OK", role: .cancel) {}
