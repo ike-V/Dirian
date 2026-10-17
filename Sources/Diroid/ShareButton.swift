@@ -2,7 +2,7 @@ import SwiftUI
 
 // Placeholders until the Android app is published.
 private let googlePlayURL = URL(string: "https://play.google.com/store/apps/details?id=com.ikev.diroid")!
-private let releasesURL = URL(string: "https://github.com/ike-V/Diroid/releases/latest")!
+private let releasesURL = URL(string: "https://github.com/ike-V/Dirian/releases/latest")!
 
 /// Toolbar button that picks a Mac folder and shares it to an Android device, or stops sharing;
 /// green while sharing.
