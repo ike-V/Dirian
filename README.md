@@ -70,14 +70,16 @@ With [Homebrew](https://brew.sh) (Apple silicon Macs):
 brew install --cask ike-V/diroid/diroid
 ```
 
+Version 0.2.0 renames the app from Diroid to Dirian. `brew upgrade --cask diroid` replaces the old app.
+
 ### First launch: macOS blocks it
 
-Diroid isn't signed with an Apple Developer ID or notarized yet, so macOS blocks it the first time ("Apple could not verify Diroid is free of malware"). Do one of these, once:
+Dirian isn't signed with an Apple Developer ID or notarized yet, so macOS blocks it the first time ("Apple could not verify Dirian is free of malware"). Do one of these, once:
 
-- **Terminal:** `xattr -dr com.apple.quarantine /Applications/Diroid.app`
-- **System Settings:** try to open Diroid, then go to System Settings → Privacy & Security, scroll to **Security**, and click **Open Anyway**.
+- **Terminal:** `xattr -dr com.apple.quarantine /Applications/Dirian.app`
+- **System Settings:** try to open Dirian, then go to System Settings → Privacy & Security, scroll to **Security**, and click **Open Anyway**.
 
-Diroid also needs an `adb` server running — see Requirements.
+Dirian also needs an `adb` server running — see Requirements.
 
 ### Android app
 
