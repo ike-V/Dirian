@@ -79,6 +79,15 @@ Dirian can share a Mac folder to the Android device over the same USB cable, so 
 2. In Dirian, click **Share Mac to Android** in the toolbar and choose the folder to share. The picker opens in iCloud Drive the first time, then at your last folder. Sharing starts when you pick it.
 3. Dirian for Android opens on the device showing that folder: list or grid, group by, open files, **Save to…** or **Move to this device…**, **Upload** (copy or move), rename, new folder and delete.
 
+<p align="center">
+  <img src="Screenshots/android-list.png" width="200" alt="Dirian for Android showing a shared Mac folder in list view, with Connected over USB under the title">
+  <img src="Screenshots/android-grid.png" width="200" alt="Dirian for Android showing the shared folder in grid view">
+  <img src="Screenshots/android-group-by.png" width="200" alt="Dirian for Android's Group By menu with None, Name, Size and Date Modified">
+  <img src="Screenshots/android-file-menu.png" width="200" alt="Dirian for Android's file menu with Rename, Save to, Move to this device and Delete">
+</p>
+
+Dirian for Android showing a shared Mac folder: list view, grid view, the Group By menu and a file's menu.
+
 While sharing, the button turns green and reads **Stop Sharing**. Click it to end. To share a different folder, stop and click again.
 
 ### How it works
