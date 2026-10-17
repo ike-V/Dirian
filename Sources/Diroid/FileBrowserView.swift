@@ -140,7 +140,7 @@ struct FileBrowserView: View {
                         if index > 1 {
                             Text("/").foregroundStyle(.secondary)
                         }
-                        BreadcrumbSegment(label: component.label) {
+                        BreadcrumbSegment(label: component.label, isCurrent: component.fullPath == model.currentPath) {
                             Task { await model.load(path: component.fullPath) }
                         }
                     }
@@ -312,15 +312,16 @@ private struct RowNameText: View {
     }
 }
 
-/// One clickable, hoverable segment of the path breadcrumb.
+/// One clickable, hoverable segment of the path breadcrumb; the current folder stays green.
 private struct BreadcrumbSegment: View {
     let label: String
+    let isCurrent: Bool
     let action: () -> Void
     @State private var isHovering = false
 
     var body: some View {
         Text(label)
-            .foregroundStyle(isHovering ? Color.androidGreen : .secondary)
+            .foregroundStyle(isCurrent || isHovering ? Color.androidGreen : .secondary)
             .onHover { isHovering = $0 }
             .onTapGesture(perform: action)
     }
