@@ -63,6 +63,7 @@ Dirian talks to the `adb` server you already run, using Android's USB debugging 
 
 ### Connection
 
+- With more than one device connected, a switcher beside the device name in the sidebar chooses which one to browse and share to. Dirian remembers your choice.
 - **Refresh** (↻) reconnects after you unplug and replug the device.
 - If the `adb` server isn't running, Dirian says so and shows the command to start it, with a copy button for pasting into Terminal.
 
@@ -87,7 +88,7 @@ While sharing, the button turns green and reads **Stop Sharing**. Click it to en
 
 - **Nothing is overwritten:** an upload with a taken name is renamed ("name (1)"). Deleting from the Android device moves the item to the Mac's Trash.
 - **App not installed:** if Dirian for Android isn't installed, Dirian says so and offers to open its Google Play page or the APK download on the Android device.
-- **Limits:** USB only, one device at a time (the first one adb lists), and sharing stops when Dirian quits or the cable is unplugged.
+- **Limits:** USB only, one device at a time (the one selected in the sidebar), and sharing stops when Dirian quits or the cable is unplugged.
 
 ## Install
 
