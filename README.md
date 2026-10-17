@@ -21,16 +21,17 @@ Every existing solution wraps `libmtp` in a FUSE filesystem, which means a kerne
 ## Features
 
 - Browse your Android device's storage like a Finder window.
-- List and Grid views (toggle in the path bar), groupable by Name, Size, or Date Modified
+- A sidebar with your device's name and its top-level folders
+- List and Grid views (toggle in the toolbar), groupable by Name, Size, or Date Modified
 - Double-click a file to pull it and open it in the default app macOS would use for that file type
 - Right-click → **Save to…** to copy a file to a folder you choose, without opening it
 - Right-click → **Rename…** to rename or move a file or folder
 - Right-click → **Delete** to remove a file, or a folder and everything in it (with a confirmation prompt first)
-- **New Folder…** button (bottom left) to create a folder in the current directory
-- **Upload Files…** button (bottom right) to push local files onto the Android device
-- Click path breadcrumbs to move to that folder.
+- **New Folder…** toolbar button to create a folder in the current directory
+- **Upload Files…** toolbar button to push local files onto the Android device
+- The path bar at the bottom shows where you are; click any segment to jump to that folder
 - The whole filesystem is browsable (permission-restricted system folders show an error)
-- **Refresh** (↻) button to reconnect after unplugging/replugging your Android device
+- **Refresh** (↻) toolbar button to reconnect after unplugging/replugging your Android device
 - If the `adb` server isn't running, Diroid says so and shows the command to start it, with a copy button for pasting into Terminal
 
 ### Screenshots
@@ -48,10 +49,10 @@ Grid view, the Group By menu (top right), and the right-click menu on a file.
 Browse a Mac folder from the Android device, over the same USB cable.
 
 1. Install the Diroid app on the Android device (see [Install](#install)).
-2. In Diroid, click **Share Mac to Android** in the bottom bar, then **Start Sharing**. **Choose Folder…** picks the folder (default: iCloud Drive).
+2. In Diroid, click **Share Mac to Android** in the toolbar and choose the folder to share. The picker opens in iCloud Drive the first time, then at your last folder. Sharing starts when you pick it.
 3. The Diroid app opens on the Android device showing that folder: list or grid, group by, open files, **Save to…** or **Move to this device…**, **Upload** (copy or move), rename, new folder, delete.
 
-The button reads **● Sharing to Android** while sharing; **Stop Sharing** ends it.
+While sharing, the button turns green and reads **Stop Sharing**; click it to end. To share a different folder, stop and click again.
 
 - **How it works:** Diroid serves the folder from a small HTTP server on the Mac's loopback address (127.0.0.1:47615) and exposes it to the Android device with `adb reverse`, over the same adb server connection. No network or Wi-Fi involved.
 - **Locked down:** `adb reverse` opens the port to every app on the Android device, so each request needs a random token that Diroid passes to the app when it launches it, and a new one is made every time sharing starts. Only the chosen folder is served; symlinks leading outside it are hidden.
@@ -107,7 +108,7 @@ adb install -r app/build/outputs/apk/debug/app-debug.apk
 git clone https://github.com/ike-V/Diroid.git
 cd Diroid
 ./build.sh
-open Diroid.app
+open Dirian.app
 ```
 
 ## First run
