@@ -99,7 +99,7 @@ final class MacShareModel: ObservableObject {
                 deviceMissingApp = missing.client
                 notice = .appMissing
             } catch AdbError.connectionFailed(_) {
-                notice = .failed("The adb server isn't running. Run `adb start-server` in Terminal.")
+                notice = .failed("The adb server isn't running. Dirian needs adb, which is included with Android Studio's platform-tools. Run `adb start-server` in Terminal.")
             } catch {
                 notice = .failed("\(error)")
             }

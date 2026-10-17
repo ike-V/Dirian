@@ -84,7 +84,7 @@ final class FileBrowserModel: ObservableObject {
             } catch AdbError.connectionFailed(_) {
                 connectionProblem = ConnectionProblem(
                     title: "The adb server isn't running",
-                    detail: "Run this in Terminal, then press refresh.",
+                    detail: "Dirian needs adb, the Android Debug Bridge. It's included with Android Studio (in the SDK's platform-tools), or install it with: brew install --cask android-platform-tools. Then run this in Terminal and press refresh.",
                     command: "adb start-server")
             } catch {
                 errorMessage = "\(error)"

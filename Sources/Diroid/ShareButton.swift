@@ -49,14 +49,14 @@ struct ShareAlerts: ViewModifier {
     }
 
     private var alertTitle: String {
-        if case .appMissing = share.notice { return "Dirian Isn't Installed on Your Android Device" }
+        if case .appMissing = share.notice { return "Dirian for Android Isn't Installed on Your Device" }
         return "Couldn't Start Sharing"
     }
 
     private var alertMessage: String {
         switch share.notice {
         case .appMissing:
-            return "Install it on your Android device, then choose Start Sharing again. You can still browse your Android device from this Mac without it."
+            return "Dirian for Android is only needed for sharing a Mac folder to your Android device. Install it, then click Share Mac to Android again. Everything else in Dirian works without it."
         case .failed(let message):
             return message
         case nil:
