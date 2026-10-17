@@ -95,7 +95,7 @@ Dirian also needs an `adb` server running — see Requirements.
 
 Only needed for [Share Mac to Android](#share-mac-to-android). Neither link works yet:
 
-- [Google Play](https://play.google.com/store/apps/details?id=com.ikev.diroid): not published yet
+- [Google Play](https://play.google.com/store/apps/details?id=com.ikev.dirian): not published yet
 - [GitHub Releases](https://github.com/ike-V/Dirian/releases/latest): APK, first release pending
 
 Or build it (Android SDK and Gradle, or Android Studio) and install it:

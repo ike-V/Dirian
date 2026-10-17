@@ -1,4 +1,4 @@
-package com.ikev.diroid
+package com.ikev.dirian
 
 import android.text.format.Formatter
 import androidx.activity.compose.BackHandler
@@ -75,7 +75,7 @@ val AndroidGreen = Color(0xFF3DDC84)
 private val Background = Color(0xFF1A1A1A)
 
 @Composable
-fun DiroidTheme(content: @Composable () -> Unit) {
+fun DirianTheme(content: @Composable () -> Unit) {
     MaterialTheme(
         colorScheme = darkColorScheme(
             primary = AndroidGreen,

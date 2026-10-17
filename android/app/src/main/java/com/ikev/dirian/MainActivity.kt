@@ -1,4 +1,4 @@
-package com.ikev.diroid
+package com.ikev.dirian
 
 import android.content.Context
 import android.content.Intent
@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
         )
         acceptToken(intent)
         setContent {
-            DiroidTheme {
+            DirianTheme {
                 BrowserScreen(
                     model = model,
                     onPickUpload = { deleteAfter ->

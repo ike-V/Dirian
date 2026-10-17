@@ -2,7 +2,7 @@ import Foundation
 import AppKit
 import Security
 
-private let androidAppPackage = "com.ikev.diroid"
+private let androidAppPackage = "com.ikev.dirian"
 private let androidAppComponent = "\(androidAppPackage)/.MainActivity"
 private struct AndroidAppMissing: Error { let client: AdbClient }
 

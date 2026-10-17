@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.ikev.diroid"
+    namespace = "com.ikev.dirian"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.ikev.diroid"
+        applicationId = "com.ikev.dirian"
         minSdk = 26
         targetSdk = 35
         versionCode = 1

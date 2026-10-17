@@ -11,5 +11,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Diroid"
+rootProject.name = "Dirian"
 include(":app")

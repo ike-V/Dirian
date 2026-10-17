@@ -1,4 +1,4 @@
-package com.ikev.diroid
+package com.ikev.dirian
 
 import android.net.Uri
 import org.json.JSONArray

@@ -1,4 +1,4 @@
-package com.ikev.diroid
+package com.ikev.dirian
 
 import java.time.Instant
 import java.time.LocalDate
