@@ -4,8 +4,6 @@
   <img src="Screenshots/hero.png" width="640" alt="Dirian's app icon over its file browser window">
 </p>
 
-<p align="center"><em>Pronounced "dir-ee-an"</em></p>
-
 Dirian is a native macOS app for browsing an Android device's files over USB. It can also share a selected directory back to the Android device.
 
 It needs no MTP, no kernel extension and no background process of its own.
