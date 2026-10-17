@@ -193,11 +193,13 @@ private let sIfDir: UInt32 = 0o040000
 private func adbModeIsDirectory(_ mode: UInt32) -> Bool { mode & sIfFmt == sIfDir }
 
 struct AdbDirEntry: Identifiable {
-    var id: String { name }
+    var id: String { fullPath ?? name }
     let name: String
     let isDirectory: Bool
     let size: Int32
     let modified: Date
+    /// Set for category search results, where the name alone doesn't say where the file is.
+    var fullPath: String? = nil
 }
 
 /// ADB client for one device. Each call opens and closes its own connection.
@@ -315,6 +317,60 @@ struct AdbClient {
             if exitCode == 0, !name.isEmpty, name != "null" { return name }
         }
         return nil
+    }
+
+    /// Files of `category` from the phone's media index, which is what Android's Files app uses: about a
+    /// second, where walking the storage through Android's storage layer takes several. Walks the storage
+    /// instead when the index has nothing.
+    func categoryFiles(_ category: FileCategory, under root: String, limit: Int) throws -> [AdbDirEntry] {
+        let since = Int(Date().timeIntervalSince1970) - (category.days ?? 0) * 86400
+        let query = category.indexQuery(since: since)
+        let inFolders = "(" + category.folders.map { "_data LIKE '\(root)/\($0)/%'" }.joined(separator: " OR ") + ")"
+        let filter = [query.filter, inFolders].compactMap { $0 }.joined(separator: " AND ")
+        let command = "content query --uri content://media/external/\(query.path) --projection _size:date_modified:_data"
+            + " --where \"\(filter)\" --sort 'date_modified DESC' 2>/dev/null | head -\(limit)"   // the index rejects LIMIT in the sort
+        let (_, output) = try runShellCommand(command)
+        let indexed = output.split(separator: "\n").compactMap(Self.entry(fromIndexRow:))
+        if !indexed.isEmpty { return indexed }
+        return try findFiles(in: category.folders.map { "\(root)/\($0)" }, extensions: category.extensions, days: category.days, limit: limit)
+    }
+
+    /// Parses `Row: 0 _size=123, date_modified=456, _data=/path`; the path comes last because it may contain commas.
+    private static func entry(fromIndexRow line: Substring) -> AdbDirEntry? {
+        let row = line.hasSuffix("\r") ? line.dropLast() : line
+        guard row.hasPrefix("Row: "),
+              let size = row.range(of: " _size="), let date = row.range(of: ", date_modified="), let data = row.range(of: ", _data="),
+              size.upperBound <= date.lowerBound, date.upperBound <= data.lowerBound,
+              let seconds = TimeInterval(row[date.upperBound..<data.lowerBound]) else { return nil }
+        let path = String(row[data.upperBound...])
+        return AdbDirEntry(
+            name: (path as NSString).lastPathComponent, isDirectory: false,
+            size: Int32(clamping: Int64(row[size.upperBound..<date.lowerBound]) ?? 0),
+            modified: Date(timeIntervalSince1970: seconds), fullPath: path)
+    }
+
+    /// Regular files under `folders` whose names end in one of `extensions` (any file when empty), skipping
+    /// hidden paths, newest first. `days` limits it to files changed that recently.
+    func findFiles(in folders: [String], extensions: [String], days: Int?, limit: Int) throws -> [AdbDirEntry] {
+        var command = "find " + folders.map(shellQuoted).joined(separator: " ") + " -type f"
+        if !extensions.isEmpty {
+            command += " \\( " + extensions.map { "-iname '*.\($0)'" }.joined(separator: " -o ") + " \\)"
+        }
+        if let days { command += " -mtime -\(days)" }
+        command += " -not -path '*/Android/*' -not -path '*/.*' -exec stat -c '%s|%Y|%n' {} + 2>/dev/null"
+
+        let (_, output) = try runShellCommand(command)
+        var entries: [AdbDirEntry] = []
+        for rawLine in output.split(separator: "\n") {
+            let line = rawLine.hasSuffix("\r") ? rawLine.dropLast() : rawLine
+            let parts = line.split(separator: "|", maxSplits: 2, omittingEmptySubsequences: false)
+            guard parts.count == 3, let size = Int64(parts[0]), let seconds = TimeInterval(parts[1]) else { continue }
+            let path = String(parts[2])
+            entries.append(AdbDirEntry(
+                name: (path as NSString).lastPathComponent, isDirectory: false, size: Int32(clamping: size),
+                modified: Date(timeIntervalSince1970: seconds), fullPath: path))
+        }
+        return Array(entries.sorted { $0.modified > $1.modified }.prefix(limit))
     }
 
     /// `rm -f`/`rm -rf` via shell; sync has no delete.

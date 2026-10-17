@@ -19,6 +19,8 @@ final class FileBrowserModel: ObservableObject {
     @Published private(set) var isLoading = false
     @Published private(set) var errorMessage: String?
     @Published private(set) var connectionProblem: ConnectionProblem?
+    /// The sidebar category being shown (a search across the whole storage), or nil when browsing a folder.
+    @Published private(set) var category: FileCategory?
     /// The connected device's name, for the sidebar's root entry.
     @Published private(set) var deviceName = "Internal Storage"
     /// Names of the visible folders directly under `rootPath`, for the sidebar.
@@ -37,6 +39,11 @@ final class FileBrowserModel: ObservableObject {
         return base == "/" ? "/\(name)" : "\(base)/\(name)"
     }
 
+    /// Where `entry` lives: its own path for category results, else the current folder.
+    private func path(for entry: AdbDirEntry) -> String {
+        entry.fullPath ?? childPath(entry.name)
+    }
+
     /// Runs `operation`, reporting any error via `errorMessage`.
     private func catching(_ operation: () async throws -> Void) async {
         do {
@@ -50,8 +57,13 @@ final class FileBrowserModel: ObservableObject {
     private func mutate(_ operation: @escaping @Sendable () throws -> Void) async {
         await catching {
             try await Task.detached(operation: operation).value
-            await load(path: currentPath)
+            await reload()
         }
+    }
+
+    /// Reloads the folder or category currently shown.
+    private func reload() async {
+        if let category { await loadCategory(category) } else { await load(path: currentPath) }
     }
 
     func connectAndLoadRoot() {
@@ -91,6 +103,7 @@ final class FileBrowserModel: ObservableObject {
                 try await Task.detached { try client.checkDirectoryAccess(path) }.value
             }
             currentPath = path
+            category = nil
             entries = fetched.sorted(by: nameAscending)
             if path == Self.rootPath {
                 sidebarFolders = entries.filter { $0.isDirectory && !$0.name.hasPrefix(".") }.map(\.name)
@@ -106,8 +119,24 @@ final class FileBrowserModel: ObservableObject {
         isLoading = false
     }
 
+    /// Lists the files of `category` from the whole storage, newest first.
+    func loadCategory(_ category: FileCategory) async {
+        guard let client else { return }
+        isLoading = true
+        errorMessage = nil
+        let root = Self.rootPath
+        do {
+            let found = try await Task.detached { try client.categoryFiles(category, under: root, limit: 300) }.value
+            self.category = category
+            entries = found
+        } catch {
+            errorMessage = "\(error)"
+        }
+        isLoading = false
+    }
+
     func open(entry: AdbDirEntry) {
-        let fullPath = childPath(entry.name)
+        let fullPath = path(for: entry)
         if entry.isDirectory {
             Task { await load(path: fullPath) }
             return
@@ -145,7 +174,7 @@ final class FileBrowserModel: ObservableObject {
 
         guard panel.runModal() == .OK, let destinationFolder = panel.url else { return }
 
-        let remotePath = childPath(entry.name)
+        let remotePath = path(for: entry)
         Task {
             await catching {
                 let data = try await Task.detached { try client.readFile(remotePath) }.value
@@ -177,7 +206,7 @@ final class FileBrowserModel: ObservableObject {
         alert.addButton(withTitle: "Cancel")
         guard alert.runModal() == .alertFirstButtonReturn else { return }
 
-        let remotePath = childPath(entry.name)
+        let remotePath = path(for: entry)
         let isDirectory = entry.isDirectory
         Task {
             await mutate {
@@ -192,8 +221,8 @@ final class FileBrowserModel: ObservableObject {
         guard let newName = Self.promptForText(title: "Rename \"\(entry.name)\"", actionTitle: "Rename", defaultValue: entry.name),
               newName != entry.name else { return }
 
-        let oldPath = childPath(entry.name)
-        let newPath = childPath(newName)
+        let oldPath = path(for: entry)
+        let newPath = childPath(newName, in: (oldPath as NSString).deletingLastPathComponent)
         Task {
             await mutate {
                 try client.rename(oldPath, to: newPath)
@@ -203,7 +232,7 @@ final class FileBrowserModel: ObservableObject {
 
     /// Prompts for a name and creates a new folder in the current directory.
     func makeDirectory() {
-        guard let client else { return }
+        guard let client, category == nil else { return }
 
         let existingNames = Set(entries.map(\.name))
         let defaultName = Self.uniqueName(for: "New Folder") { existingNames.contains($0) }
@@ -219,7 +248,7 @@ final class FileBrowserModel: ObservableObject {
 
     /// Pushes user-picked local files into the current directory, suffixing names on collision.
     func uploadFiles() {
-        guard let client else { return }
+        guard let client, category == nil else { return }
 
         let panel = NSOpenPanel()
         panel.canChooseFiles = true

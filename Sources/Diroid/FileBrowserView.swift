@@ -9,6 +9,7 @@ struct FileBrowserView: View {
     @StateObject private var share = MacShareModel()
     @State private var layout = Layout.list
     @State private var groupBy = GroupByOption.none
+    @AppStorage("sidebarFoldersExpanded") private var foldersExpanded = true
 
     private var groups: [EntryGroup] {
         groupedEntries(model.entries, by: groupBy)
@@ -34,20 +35,50 @@ struct FileBrowserView: View {
         }
     }
 
-    /// Internal storage and its top-level folders; highlights the one currently open.
+    /// The device, Android-style categories, and a collapsible list of its top-level folders.
     private var sidebar: some View {
         List {
             sidebarRow(model.deviceName, symbol: "iphone", path: FileBrowserModel.rootPath)
-            Section("Folders") {
-                ForEach(model.sidebarFolders, id: \.self) { name in
-                    sidebarRow(name, symbol: "folder", path: "\(FileBrowserModel.rootPath)/\(name)")
+            Section {
+                ForEach(FileCategory.allCases) { category in
+                    sidebarItem(category.rawValue, symbol: category.symbol, selected: model.category == category) {
+                        groupBy = .dateModified
+                        Task { await model.loadCategory(category) }
+                    }
                 }
+                sidebarRow("Downloads", symbol: "arrow.down.circle", path: "\(FileBrowserModel.rootPath)/Download")
+            }
+            Section {
+                if foldersExpanded {
+                    ForEach(model.sidebarFolders, id: \.self) { name in
+                        sidebarRow(name, symbol: "folder", path: "\(FileBrowserModel.rootPath)/\(name)")
+                    }
+                }
+            } header: {
+                Button { withAnimation(.easeInOut(duration: 0.15)) { foldersExpanded.toggle() } } label: {
+                    HStack(spacing: 4) {
+                        Text("Folders")
+                        Image(systemName: "chevron.right")
+                            .font(.caption2.weight(.bold))
+                            .rotationEffect(.degrees(foldersExpanded ? 90 : 0))
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)   // the whole header row stays clickable
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
             }
         }
         .listStyle(.sidebar)
     }
 
+    /// A sidebar row for a folder; selected only while that folder (not a category) is open.
     private func sidebarRow(_ title: String, symbol: String, path: String) -> some View {
+        sidebarItem(title, symbol: symbol, selected: model.category == nil && model.currentPath == path) {
+            Task { await model.load(path: path) }
+        }
+    }
+
+    private func sidebarItem(_ title: String, symbol: String, selected: Bool, action: @escaping () -> Void) -> some View {
         Label {
             Text(title)
         } icon: {
@@ -56,9 +87,9 @@ struct FileBrowserView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.vertical, 3)
         .padding(.horizontal, 6)
-        .background(model.currentPath == path ? Color.androidGreen.opacity(0.18) : .clear, in: RoundedRectangle(cornerRadius: 6))
+        .background(selected ? Color.androidGreen.opacity(0.18) : .clear, in: RoundedRectangle(cornerRadius: 6))
         .contentShape(Rectangle())
-        .onTapGesture { Task { await model.load(path: path) } }
+        .onTapGesture(perform: action)
     }
 
     private var browser: some View {
@@ -83,9 +114,18 @@ struct FileBrowserView: View {
                 }
             }
             Divider()
-            breadcrumbView
-                .padding(.horizontal, 12)
-                .padding(.vertical, 7)
+            Group {
+                if let category = model.category {
+                    Text(category.rawValue)
+                        .font(.system(.callout, design: .monospaced))
+                        .foregroundStyle(Color.androidGreen)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                } else {
+                    breadcrumbView
+                }
+            }
+            .padding(.horizontal, 12)
+            .padding(.vertical, 7)
         }
         .frame(minWidth: 500)
         .navigationTitle("")
@@ -110,6 +150,7 @@ struct FileBrowserView: View {
                 Button { model.makeDirectory() } label: {
                     Label("New Folder…", systemImage: "folder.badge.plus")
                 }
+                .disabled(model.category != nil)
                 .help("New Folder…")
             }
             gap
@@ -117,6 +158,7 @@ struct FileBrowserView: View {
                 Button { model.uploadFiles() } label: {
                     Label("Upload Files…", systemImage: "square.and.arrow.up")
                 }
+                .disabled(model.category != nil)
                 .help("Upload Files…")
             }
             gap
@@ -189,6 +231,15 @@ struct FileBrowserView: View {
         entry.isDirectory ? AnyShapeStyle(LinearGradient.androidFolder) : AnyShapeStyle(Color.androidGreen)
     }
 
+    /// The size, plus the folder a category result is in.
+    private func caption(for entry: AdbDirEntry) -> String {
+        let size = ByteCountFormatter.string(fromByteCount: Int64(entry.size), countStyle: .file)
+        guard let path = entry.fullPath else { return size }
+        let folder = (path as NSString).deletingLastPathComponent
+            .dropFirst(FileBrowserModel.rootPath.count).drop { $0 == "/" }
+        return "\(size) · \(folder.isEmpty ? "Internal storage" : String(folder))"
+    }
+
     private func row(for entry: AdbDirEntry) -> some View {
         HStack(spacing: 8) {
             Image(systemName: entry.isDirectory ? "folder.fill" : "doc")
@@ -198,7 +249,7 @@ struct FileBrowserView: View {
             VStack(alignment: .leading, spacing: 2) {
                 RowNameText(entry.name)
                 if !entry.isDirectory {
-                    Text(ByteCountFormatter.string(fromByteCount: Int64(entry.size), countStyle: .file))
+                    Text(caption(for: entry))
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
