@@ -24,7 +24,11 @@ struct FileBrowserView: View {
         }
         .frame(minWidth: 720, minHeight: 420)
         .modifier(ShareAlerts(share: share))
-        .onAppear { model.connectAndLoadRoot() }
+        .onAppear {
+            share.selectedSerial = { [weak model] in model?.selectedSerial }
+            model.connectAndLoadRoot()
+            model.startWatchingDevices()
+        }
         .alert("Error", isPresented: Binding(
             get: { model.errorMessage != nil },
             set: { isPresented in if !isPresented { model.clearError() } }
@@ -38,7 +42,7 @@ struct FileBrowserView: View {
     /// The device, Android-style categories, and a collapsible list of its top-level folders.
     private var sidebar: some View {
         List {
-            sidebarRow(model.deviceName, symbol: "iphone", path: FileBrowserModel.rootPath)
+            deviceRow
             Section {
                 ForEach(FileCategory.allCases) { category in
                     sidebarItem(category.rawValue, symbol: category.symbol, selected: model.category == category) {
@@ -69,6 +73,32 @@ struct FileBrowserView: View {
             }
         }
         .listStyle(.sidebar)
+    }
+
+    /// The device's root folder, with a switcher beside it when more than one device is connected.
+    private var deviceRow: some View {
+        HStack(spacing: 0) {
+            sidebarRow(model.deviceName, symbol: "iphone", path: FileBrowserModel.rootPath)
+            if model.devices.count > 1 {
+                Menu {
+                    Picker("Device", selection: Binding(
+                        get: { model.selectedSerial ?? "" },
+                        set: { model.selectDevice($0) }
+                    )) {
+                        ForEach(model.devices) { device in
+                            Text(model.label(for: device)).tag(device.serial)
+                        }
+                    }
+                    .pickerStyle(.inline)
+                } label: {
+                    Image(systemName: "chevron.up.chevron.down")
+                }
+                .menuStyle(.borderlessButton)
+                .menuIndicator(.hidden)
+                .fixedSize()
+                .help("Switch device")
+            }
+        }
     }
 
     /// A sidebar row for a folder; selected only while that folder (not a category) is open.

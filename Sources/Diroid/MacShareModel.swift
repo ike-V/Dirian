@@ -5,6 +5,9 @@ import Security
 private let androidAppPackage = "com.ikev.dirian"
 private let androidAppComponent = "\(androidAppPackage)/.MainActivity"
 private struct AndroidAppMissing: Error { let client: AdbClient }
+private struct SelectedDeviceGone: Error, CustomStringConvertible {
+    let description = "The device you're browsing isn't connected. Plug it back in, or pick another device in the sidebar."
+}
 
 /// Something the user needs to see after trying to start sharing.
 enum ShareNotice {
@@ -26,6 +29,8 @@ final class MacShareModel: ObservableObject {
     private var client: AdbClient?
     /// The device that was missing the app, so its install links can be opened there.
     private var deviceMissingApp: AdbClient?
+    /// The device chosen in the sidebar; nil until one is, when the first ready device is used.
+    var selectedSerial: @MainActor () -> String? = { nil }
 
     init() {
         if let saved = UserDefaults.standard.string(forKey: shareRootKey) {
@@ -68,11 +73,19 @@ final class MacShareModel: ObservableObject {
         notice = nil
         let root = rootURL
         let token = Self.makeToken()
+        let wanted = selectedSerial()
 
         Task {
             do {
                 let (server, client) = try await Task.detached { () throws -> (MacFileServer, AdbClient) in
-                    guard let serial = try AdbClient.listDeviceSerials().first else {
+                    let ready = try AdbClient.listDevices().filter(\.isReady)
+                    let serial: String
+                    if let wanted {
+                        guard ready.contains(where: { $0.serial == wanted }) else { throw SelectedDeviceGone() }
+                        serial = wanted
+                    } else if let first = ready.first {
+                        serial = first.serial
+                    } else {
                         throw AdbError.serverError("No device found. Plug in your Android device with USB debugging enabled.")
                     }
                     let client = AdbClient(serial: serial)

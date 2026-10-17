@@ -16,6 +16,15 @@ enum AdbError: Error, CustomStringConvertible {
     }
 }
 
+/// A device listed by the adb server. `state` is "device" when ready to use, otherwise
+/// e.g. "unauthorized" (waiting for the USB debugging prompt) or "offline".
+struct AdbDevice: Identifiable, Equatable {
+    let serial: String
+    let state: String
+    var id: String { serial }
+    var isReady: Bool { state == "device" }
+}
+
 /// A single TCP connection to the adb server (127.0.0.1:5037).
 ///
 /// Two framings share the connection, in sequence:
@@ -206,14 +215,17 @@ struct AdbDirEntry: Identifiable {
 struct AdbClient {
     let serial: String
 
-    static func listDeviceSerials() throws -> [String] {
+    /// Every device the adb server knows about, ready or not.
+    static func listDevices() throws -> [AdbDevice] {
         let conn = try AdbConnection()
         defer { conn.close() }
         try conn.sendHostMessage("host:devices")
         try conn.readHostStatus()
         let text = try conn.readHostMessageText()
         return text.split(separator: "\n").compactMap { line in
-            line.split(separator: "\t").first.map(String.init)
+            let parts = line.split(separator: "\t")
+            guard let serial = parts.first else { return nil }
+            return AdbDevice(serial: String(serial), state: parts.count > 1 ? String(parts[1]) : "unknown")
         }
     }
 

@@ -9,6 +9,8 @@ struct ConnectionProblem {
     var command: String?
 }
 
+private let selectedDeviceKey = "selectedDeviceSerial"
+
 @MainActor
 final class FileBrowserModel: ObservableObject {
     /// Where `/sdcard` resolves to.
@@ -21,12 +23,19 @@ final class FileBrowserModel: ObservableObject {
     @Published private(set) var connectionProblem: ConnectionProblem?
     /// The sidebar category being shown (a search across the whole storage), or nil when browsing a folder.
     @Published private(set) var category: FileCategory?
-    /// The connected device's name, for the sidebar's root entry.
-    @Published private(set) var deviceName = "Internal Storage"
+    /// Every device adb lists, kept current while the app runs.
+    @Published private(set) var devices: [AdbDevice] = []
+    /// Display names of ready devices, by serial.
+    @Published private(set) var deviceNames: [String: String] = [:]
+    /// The device being browsed, and the one Share Mac to Android targets.
+    @Published private(set) var selectedSerial: String?
+    /// The selected device's name, for the sidebar's root entry.
+    var deviceName: String { selectedSerial.flatMap { deviceNames[$0] } ?? "Internal Storage" }
     /// Names of the visible folders directly under `rootPath`, for the sidebar.
     @Published private(set) var sidebarFolders: [String] = []
 
     private var client: AdbClient?
+    private var watchTask: Task<Void, Never>?
 
     /// Dismisses the error without touching `currentPath` or `entries`.
     func clearError() {
@@ -66,20 +75,27 @@ final class FileBrowserModel: ObservableObject {
         if let category { await loadCategory(category) } else { await load(path: currentPath) }
     }
 
+    /// Lists the devices, picks one (the user's last choice if it's connected, else the first ready one),
+    /// and opens its root folder.
     func connectAndLoadRoot() {
         Task {
             connectionProblem = nil
             do {
-                let serials = try await Task.detached { try AdbClient.listDeviceSerials() }.value
-                guard let serial = serials.first else {
-                    connectionProblem = ConnectionProblem(
-                        title: "No device found",
-                        detail: "Plug in your Android device with USB debugging enabled, then press refresh.")
+                let found = try await Task.detached { try AdbClient.listDevices() }.value
+                devices = found
+                guard let serial = Self.chooseSerial(from: found) else {
+                    selectedSerial = nil
+                    connectionProblem = found.contains { $0.state == "unauthorized" }
+                        ? Self.unauthorizedProblem
+                        : ConnectionProblem(
+                            title: "No device found",
+                            detail: "Plug in your Android device with USB debugging enabled, then press refresh.")
                     return
                 }
-                let newClient = AdbClient(serial: serial)
-                client = newClient
-                deviceName = (try? await Task.detached { try newClient.deviceName() }.value) ?? "Internal Storage"
+                selectedSerial = serial
+                client = AdbClient(serial: serial)
+                await fetchNames(for: found.filter { $0.serial == serial })
+                Task { await fetchNames(for: found) }
                 await load(path: Self.rootPath)
             } catch AdbError.connectionFailed(_) {
                 connectionProblem = ConnectionProblem(
@@ -90,6 +106,67 @@ final class FileBrowserModel: ObservableObject {
                 errorMessage = "\(error)"
             }
         }
+    }
+
+    private static let unauthorizedProblem = ConnectionProblem(
+        title: "Allow USB debugging on your Android device",
+        detail: "Tap Allow on the prompt on your Android device, then press refresh. If no prompt appears, run this in Terminal, replug the device, then press refresh.",
+        command: "adb kill-server")
+
+    /// The device to use: the last one the user picked if it's ready, else the first ready one.
+    private static func chooseSerial(from devices: [AdbDevice]) -> String? {
+        let ready = devices.filter(\.isReady)
+        if let preferred = UserDefaults.standard.string(forKey: selectedDeviceKey),
+           ready.contains(where: { $0.serial == preferred }) {
+            return preferred
+        }
+        return ready.first?.serial
+    }
+
+    /// Reads the names of ready `list` devices that don't have one yet.
+    private func fetchNames(for list: [AdbDevice]) async {
+        for device in list where device.isReady && deviceNames[device.serial] == nil {
+            let serial = device.serial
+            if let name = try? await Task.detached(operation: { try AdbClient(serial: serial).deviceName() }).value {
+                deviceNames[serial] = name
+            }
+        }
+    }
+
+    /// How `device` appears in the picker: its name, with the serial added when two devices share a
+    /// name or the name is unknown, and its state when it isn't ready.
+    func label(for device: AdbDevice) -> String {
+        let name = deviceNames[device.serial]
+        let shared = name != nil && devices.contains { $0.serial != device.serial && deviceNames[$0.serial] == name }
+        var text = name.map { shared ? "\($0) (\(device.serial))" : $0 } ?? device.serial
+        if !device.isReady { text += " (\(device.state))" }
+        return text
+    }
+
+    /// Switches to `serial` and reloads from its root. Remembered across launches.
+    func selectDevice(_ serial: String) {
+        guard serial != selectedSerial, devices.first(where: { $0.serial == serial })?.isReady == true else { return }
+        UserDefaults.standard.set(serial, forKey: selectedDeviceKey)
+        connectAndLoadRoot()
+    }
+
+    /// Keeps `devices` current while the app runs, so a device plugged in or out shows in the picker.
+    func startWatchingDevices() {
+        guard watchTask == nil else { return }
+        watchTask = Task { [weak self] in
+            while !Task.isCancelled {
+                try? await Task.sleep(for: .seconds(3))
+                guard let self else { return }
+                await self.refreshDevices()
+            }
+        }
+    }
+
+    private func refreshDevices() async {
+        guard let found = try? await Task.detached(operation: { try AdbClient.listDevices() }).value,
+              found != devices else { return }
+        devices = found
+        await fetchNames(for: found)
     }
 
     func load(path: String) async {
@@ -109,10 +186,7 @@ final class FileBrowserModel: ObservableObject {
                 sidebarFolders = entries.filter { $0.isDirectory && !$0.name.hasPrefix(".") }.map(\.name)
             }
         } catch AdbError.serverError(let message) where message.contains("unauthorized") {
-            connectionProblem = ConnectionProblem(
-                title: "Allow USB debugging on your Android device",
-                detail: "Tap Allow on the prompt on your Android device, then press refresh. If no prompt appears, run this in Terminal, replug the device, then press refresh.",
-                command: "adb kill-server")
+            connectionProblem = Self.unauthorizedProblem
         } catch {
             errorMessage = "\(error)"
         }
