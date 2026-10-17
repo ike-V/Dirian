@@ -129,10 +129,6 @@ open Dirian.app
 - The first time, you'll get a prompt on the Android device itself asking to authorize this computer for USB debugging; accept it (check "always allow" to skip this next time).
 - If you unplug/replug while the app is already open, hit the refresh (↻) button.
 
-## Credits
-
-The Android robot in the app icon is reproduced or modified from work created and shared by Google and used according to terms described in the [Creative Commons 3.0 Attribution License](https://creativecommons.org/licenses/by/3.0/).
-
 ## License
 
 All rights reserved. See [LICENSE](LICENSE).
