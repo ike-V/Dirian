@@ -1,0 +1,118 @@
+{
+  "fill": {
+    "solid": "display-p3:0.71916,0.66014,0.55322,1.00000"
+  },
+  "groups": [
+    {
+      "layers": [
+        {
+          "blend-mode": "normal",
+          "fill": {
+            "linear-gradient": [
+              "display-p3:0.99378,1.00000,0.97711,1.00000",
+              "display-p3:0.00000,0.00000,0.00000,1.00000"
+            ],
+            "orientation": {
+              "start": {
+                "x": 1,
+                "y": 0
+              },
+              "stop": {
+                "x": 0.5,
+                "y": 0.5
+              }
+            }
+          },
+          "glass": true,
+          "hidden": false,
+          "image-name": "6-eye-right.svg",
+          "name": "6-eye-right",
+          "opacity": 1
+        },
+        {
+          "blend-mode": "normal",
+          "fill": {
+            "linear-gradient": [
+              "display-p3:0.96484,0.96558,1.00000,1.00000",
+              "display-p3:0.00000,0.00000,0.00000,1.00000"
+            ],
+            "orientation": {
+              "start": {
+                "x": 1,
+                "y": 0
+              },
+              "stop": {
+                "x": 0.5,
+                "y": 0.5
+              }
+            }
+          },
+          "glass": true,
+          "hidden": false,
+          "image-name": "5-eye-left.svg",
+          "name": "5-eye-left",
+          "opacity": 1
+        },
+        {
+          "image-name": "4-stem-outline.svg",
+          "name": "4-stem-outline"
+        },
+        {
+          "fill": {
+            "linear-gradient": [
+              "display-p3:0.71583,0.48270,0.29748,1.00000",
+              "display-p3:0.39087,0.24915,0.13928,1.00000"
+            ],
+            "orientation": {
+              "start": {
+                "x": 1,
+                "y": 0.33289219179130364
+              },
+              "stop": {
+                "x": 0.5000000000000006,
+                "y": 0.5
+              }
+            }
+          },
+          "image-name": "3-stem-fill.svg",
+          "name": "3-stem-fill"
+        },
+        {
+          "image-name": "2-body-outline.svg",
+          "name": "2-body-outline"
+        },
+        {
+          "fill": {
+            "linear-gradient": [
+              "display-p3:0.35018,0.69927,0.45893,1.00000",
+              "display-p3:0.11336,0.23033,0.15145,1.00000"
+            ],
+            "orientation": {
+              "start": {
+                "x": 0.5757267928954424,
+                "y": 0.3920364185750636
+              },
+              "stop": {
+                "x": 0.46307621131640514,
+                "y": 0.951774459954615
+              }
+            }
+          },
+          "image-name": "1-body-fill.svg",
+          "name": "1-body-fill"
+        }
+      ],
+      "shadow": {
+        "kind": "neutral",
+        "opacity": 0.5
+      },
+      "translucency": {
+        "enabled": false,
+        "value": 0.5
+      }
+    }
+  ],
+  "supported-platforms": {
+    "squares": "shared"
+  }
+}

@@ -1,6 +1,7 @@
 .DS_Store
 /.build
 /Diroid.app
+/Dirian.app
 /Packages
 xcuserdata/
 DerivedData/

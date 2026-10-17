@@ -7,9 +7,13 @@
     <key>CFBundleIdentifier</key>
     <string>com.local.diroid</string>
     <key>CFBundleIconFile</key>
-    <string>Diroid.icns</string>
+    <string>Dirian</string>
+    <key>CFBundleIconName</key>
+    <string>Dirian</string>
     <key>CFBundleName</key>
-    <string>Diroid</string>
+    <string>Dirian</string>
+    <key>CFBundleDisplayName</key>
+    <string>Dirian</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
