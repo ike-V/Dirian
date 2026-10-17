@@ -18,7 +18,7 @@ vtool -set-build-version macos 13.0 "$(xcrun --show-sdk-version)" -replace \
 cp Resources/Info.plist "$APP/Contents/Info.plist"
 # Compiles the Icon Composer icon into Assets.car (macOS 26+) and a Dirian.icns fallback.
 ICON_OUT="$(mktemp -d)"
-xcrun actool Resources/Dirian.icon --compile "$ICON_OUT" --platform macosx \
+xcrun actool "$PWD/Resources/Dirian.icon" --compile "$ICON_OUT" --platform macosx \
     --minimum-deployment-target 26.0 --app-icon Dirian \
     --output-partial-info-plist "$ICON_OUT/partial.plist" > /dev/null
 cp "$ICON_OUT/Assets.car" "$ICON_OUT/Dirian.icns" "$APP/Contents/Resources/"

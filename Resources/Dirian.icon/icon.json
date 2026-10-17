@@ -1,118 +1,191 @@
 {
-  "fill": {
-    "solid": "display-p3:0.71916,0.66014,0.55322,1.00000"
+  "fill" : {
+    "linear-gradient" : [
+      "display-p3:1.00000,0.84641,0.65518,1.00000",
+      "display-p3:0.43700,0.36988,0.28631,1.00000"
+    ]
   },
-  "groups": [
+  "groups" : [
     {
-      "layers": [
+      "layers" : [
         {
-          "blend-mode": "normal",
-          "fill": {
-            "linear-gradient": [
-              "display-p3:0.99378,1.00000,0.97711,1.00000",
+          "image-name" : "df-stemoutline.svg",
+          "name" : "df-stemoutline"
+        },
+        {
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:0.70589,0.47342,0.28257,1.00000",
+              "display-p3:0.32166,0.20441,0.11405,1.00000"
+            ],
+            "orientation" : {
+              "start" : {
+                "x" : 1,
+                "y" : 0.1473586988633667
+              },
+              "stop" : {
+                "x" : 0,
+                "y" : 0.5
+              }
+            }
+          },
+          "image-name" : "df-stemfill.svg",
+          "name" : "df-stemfill"
+        },
+        {
+          "fill" : "none",
+          "image-name" : "df-bodyoutline.svg",
+          "name" : "df-bodyoutline"
+        },
+        {
+          "blend-mode" : "darken",
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:0.96748,1.00000,0.97561,1.00000",
               "display-p3:0.00000,0.00000,0.00000,1.00000"
             ],
-            "orientation": {
-              "start": {
-                "x": 1,
-                "y": 0
+            "orientation" : {
+              "start" : {
+                "x" : 1,
+                "y" : 0
               },
-              "stop": {
-                "x": 0.5,
-                "y": 0.5
+              "stop" : {
+                "x" : 0.5,
+                "y" : 0.49999999999999895
               }
             }
           },
-          "glass": true,
-          "hidden": false,
-          "image-name": "6-eye-right.svg",
-          "name": "6-eye-right",
-          "opacity": 1
+          "image-name" : "df-eyeright.svg",
+          "name" : "df-eyeright"
         },
         {
-          "blend-mode": "normal",
-          "fill": {
-            "linear-gradient": [
-              "display-p3:0.96484,0.96558,1.00000,1.00000",
+          "blend-mode" : "darken",
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:0.96954,1.00000,0.99091,1.00000",
               "display-p3:0.00000,0.00000,0.00000,1.00000"
             ],
-            "orientation": {
-              "start": {
-                "x": 1,
-                "y": 0
+            "orientation" : {
+              "start" : {
+                "x" : 1,
+                "y" : 0
               },
-              "stop": {
-                "x": 0.5,
-                "y": 0.5
+              "stop" : {
+                "x" : 0.5,
+                "y" : 0.49999999999999895
               }
             }
           },
-          "glass": true,
-          "hidden": false,
-          "image-name": "5-eye-left.svg",
-          "name": "5-eye-left",
-          "opacity": 1
+          "image-name" : "df-eyeleft.svg",
+          "name" : "df-eyeleft"
         },
         {
-          "image-name": "4-stem-outline.svg",
-          "name": "4-stem-outline"
-        },
-        {
-          "fill": {
-            "linear-gradient": [
-              "display-p3:0.71583,0.48270,0.29748,1.00000",
-              "display-p3:0.39087,0.24915,0.13928,1.00000"
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:0.40648,0.69970,0.50128,1.00000",
+              "display-p3:0.56061,1.00000,0.73249,1.00000"
             ],
-            "orientation": {
-              "start": {
-                "x": 1,
-                "y": 0.33289219179130364
+            "orientation" : {
+              "start" : {
+                "x" : 0.49999999999999944,
+                "y" : 0.4999999999999998
               },
-              "stop": {
-                "x": 0.5000000000000006,
-                "y": 0.5
+              "stop" : {
+                "x" : 0.2009683286497491,
+                "y" : 0.9243825217737844
               }
             }
           },
-          "image-name": "3-stem-fill.svg",
-          "name": "3-stem-fill"
+          "image-name" : "df-facet2.svg",
+          "name" : "df-facet2"
         },
         {
-          "image-name": "2-body-outline.svg",
-          "name": "2-body-outline"
-        },
-        {
-          "fill": {
-            "linear-gradient": [
-              "display-p3:0.35018,0.69927,0.45893,1.00000",
-              "display-p3:0.11336,0.23033,0.15145,1.00000"
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:0.26595,0.54202,0.36414,1.00000",
+              "display-p3:0.60553,1.00000,0.72718,1.00000"
             ],
-            "orientation": {
-              "start": {
-                "x": 0.5757267928954424,
-                "y": 0.3920364185750636
+            "orientation" : {
+              "start" : {
+                "x" : 0.42013620791347256,
+                "y" : 0.3189839787409808
               },
-              "stop": {
-                "x": 0.46307621131640514,
-                "y": 0.951774459954615
+              "stop" : {
+                "x" : 1.2151085859500048,
+                "y" : 0.7081737193154232
               }
             }
           },
-          "image-name": "1-body-fill.svg",
-          "name": "1-body-fill"
+          "image-name" : "df-facet1.svg",
+          "name" : "df-facet1",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              -0.0009999999999195097,
+              -0.0030000000000427463
+            ]
+          }
+        },
+        {
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:0.18206,0.35936,0.24573,1.00000",
+              "display-p3:0.44784,0.84264,0.58540,1.00000"
+            ],
+            "orientation" : {
+              "start" : {
+                "x" : 0.6842123337637191,
+                "y" : -0.06310118644283898
+              },
+              "stop" : {
+                "x" : 0.6267226978384568,
+                "y" : 0.49999999999999967
+              }
+            }
+          },
+          "image-name" : "df-facet3.svg",
+          "name" : "df-facet3"
+        },
+        {
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:0.23560,0.47534,0.30078,1.00000",
+              "display-p3:0.53362,0.91856,0.65807,1.00000"
+            ],
+            "orientation" : {
+              "start" : {
+                "x" : 0.12093067323505392,
+                "y" : 0.12256762831954586
+              },
+              "stop" : {
+                "x" : 0.376699233515708,
+                "y" : 0.5000000000000008
+              }
+            }
+          },
+          "image-name" : "df-facet4.svg",
+          "name" : "df-facet4"
+        },
+        {
+          "hidden" : true,
+          "image-name" : "df-bodyunderlay.svg",
+          "name" : "df-bodyunderlay"
         }
       ],
-      "shadow": {
-        "kind": "neutral",
-        "opacity": 0.5
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
       },
-      "translucency": {
-        "enabled": false,
-        "value": 0.5
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.3
       }
     }
   ],
-  "supported-platforms": {
-    "squares": "shared"
+  "supported-platforms" : {
+    "circles" : [
+      "watchOS"
+    ],
+    "squares" : "shared"
   }
 }
