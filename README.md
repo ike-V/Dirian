@@ -108,10 +108,10 @@ Dirian isn't signed with an Apple Developer ID or notarized yet, so macOS blocks
 
 ### Dirian for Android
 
-This is optional. Only [Share Mac to Android](#share-mac-to-android) needs it, and everything else in Dirian works without it. Neither link works yet:
+This is optional. Only [Share Mac to Android](#share-mac-to-android) needs it, and everything else in Dirian works without it. It needs Android 8.0 or later. Get it from one of these:
 
-- [Google Play](https://play.google.com/store/apps/details?id=com.ikev.dirian): not published yet
-- [GitHub Releases](https://github.com/ike-V/Dirian/releases/latest): APK, first release pending
+- **Google Play:** [not published yet](https://play.google.com/store/apps/details?id=com.ikev.dirian).
+- **GitHub Releases:** download `Dirian-for-Android-0.1.0.apk` from the [v0.3.3 release](https://github.com/ike-V/Dirian/releases/tag/v0.3.3) on your Android device, open it, and allow your browser to install unknown apps if Android asks. The APK is signed, and its SHA-256 is listed in the release notes.
 
 Or build it (Android SDK and Gradle, or Android Studio) and install it:
 
