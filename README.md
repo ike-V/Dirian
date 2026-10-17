@@ -4,6 +4,8 @@
   <img src="Screenshots/hero.png" width="640" alt="Dirian's app icon over its file browser window">
 </p>
 
+<p align="center"><em>Pronounced "dir-ee-an"</em></p>
+
 A native macOS app for browsing your Android device's storage over USB, and for sharing a Mac folder back to it
 - no MTP
 - no kernel extension
