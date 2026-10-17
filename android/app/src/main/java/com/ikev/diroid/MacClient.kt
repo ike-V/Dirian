@@ -10,7 +10,7 @@ import java.net.URL
 
 class MacException(val status: Int, message: String) : Exception(message)
 
-/** Client for Diroid's file server on the Mac, reached through `adb reverse` at 127.0.0.1. */
+/** Client for Dirian's file server on the Mac, reached through `adb reverse` at 127.0.0.1. */
 class MacClient(private val token: String, private val port: Int) {
 
     private fun open(method: String, endpoint: String, vararg query: Pair<String, String>): HttpURLConnection {

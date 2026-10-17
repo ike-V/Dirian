@@ -27,7 +27,7 @@ class Problem(val title: String, val detail: String)
 
 private val notConnected = Problem(
     "Not connected to your Mac",
-    "Plug in the cable and open Diroid on your Mac. Click Share Mac to Android… at the bottom of its window, then press Start Sharing.",
+    "Plug in the cable and open Dirian on your Mac. Click Share Mac to Android… at the bottom of its window, then press Start Sharing.",
 )
 
 class BrowserModel(private val app: Application) : AndroidViewModel(app) {
@@ -64,7 +64,7 @@ class BrowserModel(private val app: Application) : AndroidViewModel(app) {
         if (client == null) problem = notConnected else load("")
     }
 
-    /** Called with the token Diroid on the Mac passes when it opens this app. */
+    /** Called with the token Dirian on the Mac passes when it opens this app. */
     fun connect(token: String, port: Int) {
         generation++
         prefs.edit().putString("token", token).putInt("port", port).apply()
@@ -101,7 +101,7 @@ class BrowserModel(private val app: Application) : AndroidViewModel(app) {
         when {
             e is MacException && e.status == 401 -> problem = Problem(
                 "Sharing was restarted",
-                "Press Start Sharing in Diroid on your Mac again.",
+                "Press Start Sharing in Dirian on your Mac again.",
             )
             e is IOException -> problem = notConnected
             e is ActivityNotFoundException -> error = "No app on this device can open that file. Use Save to… instead."

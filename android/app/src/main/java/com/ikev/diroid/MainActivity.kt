@@ -59,7 +59,7 @@ class MainActivity : ComponentActivity() {
         acceptToken(intent)
     }
 
-    /** Diroid on the Mac opens this app with the access token for the current sharing session. */
+    /** Dirian on the Mac opens this app with the access token for the current sharing session. */
     private fun acceptToken(intent: Intent) {
         val token = intent.getStringExtra("token") ?: return
         model.connect(token, intent.getIntExtra("port", 47615))

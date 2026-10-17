@@ -56,7 +56,7 @@ private fun sizeBucket(entry: Entry): String {
     }
 }
 
-/** Rolling day windows, like Diroid on the Mac, rather than calendar weeks/months. */
+/** Rolling day windows, like Dirian on the Mac, rather than calendar weeks/months. */
 private fun dateBucket(entry: Entry): String {
     val zone = ZoneId.systemDefault()
     val day = Instant.ofEpochSecond(entry.modified).atZone(zone).toLocalDate()

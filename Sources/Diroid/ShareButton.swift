@@ -49,7 +49,7 @@ struct ShareAlerts: ViewModifier {
     }
 
     private var alertTitle: String {
-        if case .appMissing = share.notice { return "Diroid Isn't Installed on Your Android Device" }
+        if case .appMissing = share.notice { return "Dirian Isn't Installed on Your Android Device" }
         return "Couldn't Start Sharing"
     }
 
