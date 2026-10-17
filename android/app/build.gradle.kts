@@ -6,9 +6,28 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose")
 }
 
-// Release signing details come from android/keystore.properties (untracked, see keystore.properties.example).
+// Release signing: android/keystore.properties (untracked, see keystore.properties.example) if its storeFile exists,
+// otherwise ~/.android/dirian-release.jks with its password from the macOS Keychain item "Dirian Android keystore".
 val keystoreProperties = Properties().apply {
     rootProject.file("keystore.properties").takeIf { it.exists() }?.inputStream()?.use { load(it) }
+}
+val releaseRequested = gradle.startParameter.taskNames.any { it.contains("release", ignoreCase = true) }
+val releaseStoreFile = File(
+    keystoreProperties.getProperty("storeFile")?.takeIf { File(it).exists() }
+        ?: "${System.getProperty("user.home")}/.android/dirian-release.jks"
+)
+val usePropertiesFile = keystoreProperties.getProperty("storeFile")?.let { File(it).exists() } == true
+
+fun keychainPassword(): String? = runCatching {
+    val process = ProcessBuilder("security", "find-generic-password", "-a", "dirian", "-s", "Dirian Android keystore", "-w").start()
+    val password = process.inputStream.bufferedReader().readText().trim()
+    password.takeIf { process.waitFor() == 0 && it.isNotEmpty() }
+}.getOrNull()
+
+val releaseStorePassword: String? = when {
+    !releaseRequested || !releaseStoreFile.exists() -> null
+    usePropertiesFile -> keystoreProperties.getProperty("storePassword")
+    else -> keychainPassword()
 }
 
 android {
@@ -24,12 +43,12 @@ android {
     }
 
     signingConfigs {
-        if (keystoreProperties.isNotEmpty()) {
+        if (releaseStorePassword != null) {
             create("release") {
-                storeFile = file(keystoreProperties.getProperty("storeFile"))
-                storePassword = keystoreProperties.getProperty("storePassword")
-                keyAlias = keystoreProperties.getProperty("keyAlias")
-                keyPassword = keystoreProperties.getProperty("keyPassword")
+                storeFile = releaseStoreFile
+                storePassword = releaseStorePassword
+                keyAlias = keystoreProperties.getProperty("keyAlias")?.takeIf { usePropertiesFile } ?: "dirian"
+                keyPassword = keystoreProperties.getProperty("keyPassword")?.takeIf { usePropertiesFile } ?: releaseStorePassword
             }
         }
     }
