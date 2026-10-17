@@ -77,10 +77,8 @@ Browsing the Android device from the Mac doesn't need the Android app.
 With [Homebrew](https://brew.sh) (Apple silicon Macs):
 
 ```bash
-brew install --cask ike-V/diroid/diroid
+brew install --cask ike-V/dirian/dirian
 ```
-
-Version 0.2.0 renames the app from Diroid to Dirian. `brew upgrade --cask diroid` replaces the old app.
 
 ### First launch: macOS blocks it
 
