@@ -6,35 +6,11 @@
 
 <p align="center"><em>Pronounced "dir-ee-an"</em></p>
 
-A native macOS app for browsing your Android device's storage over USB, and for sharing a Mac folder back to it
-- no MTP
-- no kernel extension
-- no background daemon
+Dirian is a native macOS app for browsing an Android device's files over USB. It can also share a selected directory back to the Android device.
 
-## What is this?
+It needs no MTP, no kernel extension and no background process of its own.
 
-- macOS has no built-in way to see an Android device's files when you plug it in over USB. 
-Every existing solution wraps `libmtp` in a FUSE filesystem, which means a kernel extension, kernel-level trust, and (in practice) a lot of flakiness getting it to actually mount.
-- Dirian uses Android's USB debugging protocol (ADB) directly to the local `adb` server the same way Android Studio's "Device File Explorer" does but reimplemented from scratch in Swift.
-- No `adb` binary shelled out to, no third-party libraries, no elevated privileges, no daemons running in the background.
-
-## Features
-
-- Browse your Android device's storage like a Finder window.
-- A sidebar with your device's name, its top-level folders (collapsible), and Recent, Images, Videos, Audio, Documents and Downloads shortcuts that list matching files from the device's common folders, newest first (Recent covers the last 7 days)
-- List and Grid views (toggle in the toolbar), groupable by Name, Size, or Date Modified
-- Double-click a file to pull it and open it in the default app macOS would use for that file type
-- Right-click → **Save to…** to copy a file to a folder you choose, without opening it
-- Right-click → **Rename…** to rename or move a file or folder
-- Right-click → **Delete** to remove a file, or a folder and everything in it (with a confirmation prompt first)
-- **New Folder…** toolbar button to create a folder in the current directory
-- **Upload Files…** toolbar button to push local files onto the Android device
-- The path bar at the bottom shows where you are; click any segment to jump to that folder
-- The whole filesystem is browsable (permission-restricted system folders show an error)
-- **Refresh** (↻) toolbar button to reconnect after unplugging/replugging your Android device
-- If the `adb` server isn't running, Dirian says so and shows the command to start it, with a copy button for pasting into Terminal
-
-### Screenshots
+## Screenshots
 
 <img src="Screenshots/recent.png" width="700" alt="Dirian's Recent view: files from the last 7 days grouped by date, with the sidebar's Recent, Images, Videos, Audio, Documents and Downloads shortcuts and the Folders list">
 
@@ -56,23 +32,58 @@ The right-click menu on a file.
 
 List view, and the New Folder dialog.
 
+## Why Dirian?
+
+macOS can't show an Android device's files when you plug it in over USB. Existing tools wrap `libmtp` in a FUSE filesystem, which needs a kernel extension and is often unreliable to mount.
+
+Dirian talks to the `adb` server you already run, using Android's USB debugging protocol, the same way Android Studio's Device File Explorer does. It's written from scratch in Swift. It doesn't run the `adb` binary, uses no third-party libraries and needs no elevated privileges.
+
+## Features
+
+### Browse
+
+- Browse your Android device's storage like a Finder window. The whole filesystem is browsable, and permission-restricted system folders show an error.
+- A sidebar shows the device's name and its top-level folders, which you can collapse.
+- The sidebar shortcuts Recent, Images, Videos, Audio, Documents and Downloads list matching files from the device's common folders, newest first. Recent covers the last 7 days.
+- List and Grid views, groupable by Name, Size or Date Modified.
+- The path bar at the bottom shows where you are. Click any segment to jump to that folder.
+
+### Manage files
+
+- Double-click a file to pull it and open it in the default Mac app for its type.
+- Right-click → **Save to…** copies a file to a folder you choose, without opening it.
+- Right-click → **Rename…** renames or moves a file or folder.
+- Right-click → **Delete** removes a file, or a folder and everything in it, after a confirmation prompt.
+- **New Folder…** creates a folder in the current directory.
+- **Upload Files…** pushes local files onto the Android device.
+
+### Connection
+
+- **Refresh** (↻) reconnects after you unplug and replug the device.
+- If the `adb` server isn't running, Dirian says so and shows the command to start it, with a copy button for pasting into Terminal.
+
+Dirian can also share a Mac folder back to the device. See [Share Mac to Android](#share-mac-to-android).
+
 ## Share Mac to Android
 
-Browse a Mac folder from the Android device, over the same USB cable.
+Dirian can share a Mac folder to the Android device over the same USB cable, so you can browse it from the device. Browsing the Android device from the Mac doesn't need Dirian for Android. Sharing does.
 
-1. Install the Dirian app on the Android device (see [Install](#install)).
+1. Install Dirian for Android on the device (see [Dirian for Android](#dirian-for-android)).
 2. In Dirian, click **Share Mac to Android** in the toolbar and choose the folder to share. The picker opens in iCloud Drive the first time, then at your last folder. Sharing starts when you pick it.
-3. The Dirian app opens on the Android device showing that folder: list or grid, group by, open files, **Save to…** or **Move to this device…**, **Upload** (copy or move), rename, new folder, delete.
+3. Dirian for Android opens on the device showing that folder: list or grid, group by, open files, **Save to…** or **Move to this device…**, **Upload** (copy or move), rename, new folder and delete.
 
-While sharing, the button turns green and reads **Stop Sharing**; click it to end. To share a different folder, stop and click again.
+While sharing, the button turns green and reads **Stop Sharing**. Click it to end. To share a different folder, stop and click again.
 
-- **How it works:** Dirian serves the folder from a small HTTP server on the Mac's loopback address (127.0.0.1:47615) and exposes it to the Android device with `adb reverse`, over the same adb server connection. No network or Wi-Fi involved.
-- **Locked down:** `adb reverse` opens the port to every app on the Android device, so each request needs a random token that Dirian passes to the app when it launches it, and a new one is made every time sharing starts. Only the chosen folder is served; symlinks leading outside it are hidden.
+### How it works
+
+- **Serving:** Dirian serves the folder from a small HTTP server on the Mac's loopback address (127.0.0.1:47615) and exposes it to the Android device with `adb reverse`, over the same adb server connection. No network or Wi-Fi is involved.
+- **Security:** `adb reverse` opens the port to every app on the Android device, so each request needs a random token that Dirian passes to Dirian for Android when it launches it. A new token is made every time sharing starts. Only the chosen folder is served, and symlinks that lead outside it are hidden.
+
+### Good to know
+
 - **Nothing is overwritten:** an upload with a taken name is renamed ("name (1)"). Deleting from the Android device moves the item to the Mac's Trash.
-- **App not installed:** Dirian says so and offers to open the app's Google Play page or the APK download on the Android device.
+- **App not installed:** if Dirian for Android isn't installed, Dirian says so and offers to open its Google Play page or the APK download on the Android device.
 - **Limits:** USB only, one device at a time (the first one adb lists), and sharing stops when Dirian quits or the cable is unplugged.
-
-Browsing the Android device from the Mac doesn't need the Android app.
 
 ## Install
 
@@ -82,6 +93,8 @@ With [Homebrew](https://brew.sh) (Apple silicon Macs):
 brew install --cask ike-V/dirian/dirian
 ```
 
+Dirian also needs an `adb` server running. See [Requirements](#requirements).
+
 ### First launch: macOS blocks it
 
 Dirian isn't signed with an Apple Developer ID or notarized yet, so macOS blocks it the first time ("Apple could not verify Dirian is free of malware"). Do one of these, once:
@@ -89,9 +102,7 @@ Dirian isn't signed with an Apple Developer ID or notarized yet, so macOS blocks
 - **Terminal:** `xattr -dr com.apple.quarantine /Applications/Dirian.app`
 - **System Settings:** try to open Dirian, then go to System Settings → Privacy & Security, scroll to **Security**, and click **Open Anyway**.
 
-Dirian also needs an `adb` server running — see Requirements.
-
-### Android app
+### Dirian for Android
 
 Only needed for [Share Mac to Android](#share-mac-to-android). Neither link works yet:
 
@@ -108,13 +119,20 @@ adb install -r app/build/outputs/apk/debug/app-debug.apk
 
 ## Requirements
 
-- macOS 13 (Ventura) or later
-- An Android device with **USB debugging** enabled: Settings → About phone (or About tablet) → tap "Build number" 7 times to unlock Developer options → Developer options → USB debugging
-- The `adb` server running on your Mac — easiest way is Homebrew: `brew install --cask android-platform-tools`. Dirian talks to this same background server; it doesn't shell out to the `adb` binary itself.
-- For Share Mac to Android: the Dirian app on the Android device (Android 8.0 or later)
-- To build from source: Xcode, set as the active developer directory: `sudo xcode-select -s /Applications/Xcode.app` (the Command Line Tools alone can't build SwiftUI's `@State` macro on the macOS 27 SDK)
+- macOS 13 (Ventura) or later.
+- An Android device with **USB debugging** enabled: Settings → About phone (or About tablet) → tap "Build number" 7 times to unlock Developer options → Developer options → USB debugging.
+- The `adb` server running on your Mac. The easiest way is Homebrew: `brew install --cask android-platform-tools`. Dirian talks to this same server directly and doesn't run the `adb` binary itself.
+- For Share Mac to Android: Dirian for Android on the device (Android 8.0 or later).
+
+## Connecting your device
+
+- Plug in your Android device before or after launching Dirian.
+- The first time, a prompt on the device asks you to authorize this computer for USB debugging. Accept it, and check "always allow" to skip it next time.
+- If you unplug and replug while Dirian is open, click Refresh (↻).
 
 ## Build from source
+
+You need Xcode, set as the active developer directory: `sudo xcode-select -s /Applications/Xcode.app`. The Command Line Tools alone can't build SwiftUI's `@State` macro on the macOS 27 SDK.
 
 ```bash
 git clone https://github.com/ike-V/Dirian.git
@@ -122,12 +140,6 @@ cd Dirian
 ./build.sh
 open Dirian.app
 ```
-
-## First run
-
-- Plug in your Android device before or after launching 
-- The first time, you'll get a prompt on the Android device itself asking to authorize this computer for USB debugging; accept it (check "always allow" to skip this next time).
-- If you unplug/replug while the app is already open, hit the refresh (↻) button.
 
 ## License
 
