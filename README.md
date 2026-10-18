@@ -68,9 +68,9 @@ List view, and the New Folder dialog.
 - **Accent color.** Settings → Appearance (⌘,) picks the color of icons, folders and highlights from Finder's tag colors: Red, Orange, Yellow, Green, Blue, Purple or Gray. Green is the default. Dirian for Android uses the same color when you share a folder to it.
 - **Sidebar.** Settings → Sidebar chooses which shortcuts and which of the device's folders appear in the sidebar. A hidden folder is still there. Open the device's root folder to browse to it.
 
-<img src="Screenshots/accent-purple.png" width="700" alt="Dirian recolored with the Purple accent: purple folders, sidebar icons and highlights">
+<img src="Screenshots/colors.png" width="700" alt="Dirian in six accent colors: Blue, Gray, Purple, Red, Orange and Yellow">
 
-Dirian with the Purple accent.
+Dirian in Blue, Gray, Purple, Red, Orange and Yellow. Green is the default.
 
 <p align="center">
   <img src="Screenshots/settings-appearance.png" width="320" alt="Dirian's Appearance settings: a list of accent colors, Red, Orange, Yellow, Green, Blue, Purple and Gray, with radio buttons">
@@ -103,6 +103,12 @@ Dirian can share a Mac folder to the Android device over the same USB cable, so 
 </p>
 
 Dirian for Android showing a shared Mac folder: list view, grid view, the Group By menu and a file's menu.
+
+<p align="center">
+  <img src="Screenshots/colors-android.png" width="520" alt="Dirian for Android in six accent colors: Blue, Gray, Purple, Red, Orange and Yellow">
+</p>
+
+Dirian for Android follows the accent color chosen on the Mac: Blue, Gray, Purple, Red, Orange and Yellow here, and Green by default. It takes the color when sharing starts, so after changing it on the Mac, stop sharing and share again.
 
 While sharing, the button turns green and reads **Stop Sharing**. Click it to end. To share a different folder, stop and click again.
 
@@ -139,7 +145,7 @@ Dirian isn't signed with an Apple Developer ID or notarized yet, so macOS blocks
 This is optional. Only [Share Mac to Android](#share-mac-to-android) needs it, and everything else in Dirian works without it. It needs Android 8.0 or later. Get it from one of these:
 
 - **Google Play:** [not published yet](https://play.google.com/store/apps/details?id=com.ikev.dirian).
-- **GitHub Releases:** download `Dirian-for-Android-0.1.0.apk` from the [v0.3.3 release](https://github.com/ike-V/Dirian/releases/tag/v0.3.3) on your Android device, open it, and allow your browser to install unknown apps if Android asks. The APK is signed, and its SHA-256 is listed in the release notes.
+- **GitHub Releases:** download `Dirian-for-Android-0.2.0.apk` from the [v0.3.6 release](https://github.com/ike-V/Dirian/releases/tag/v0.3.6) on your Android device, open it, and allow your browser to install unknown apps if Android asks. The APK is signed, and its SHA-256 is listed in the release notes.
 
 Or build it (Android SDK and Gradle, or Android Studio) and install it:
 
