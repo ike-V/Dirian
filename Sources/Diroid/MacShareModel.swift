@@ -31,6 +31,8 @@ final class MacShareModel: ObservableObject {
     private var deviceMissingApp: AdbClient?
     /// The device chosen in the sidebar; nil until one is, when the first ready device is used.
     var selectedSerial: @MainActor () -> String? = { nil }
+    /// The accent color ("#RRGGBB") to hand to the Android app, so it matches the Mac.
+    var accentHex: @MainActor () -> String? = { nil }
 
     init() {
         if let saved = UserDefaults.standard.string(forKey: shareRootKey) {
@@ -74,6 +76,7 @@ final class MacShareModel: ObservableObject {
         let root = rootURL
         let token = Self.makeToken()
         let wanted = selectedSerial()
+        let accent = accentHex()
 
         Task {
             do {
@@ -96,7 +99,7 @@ final class MacShareModel: ObservableObject {
                         try client.reverse(port: MacFileServer.port)
                         try client.startActivity(
                             androidAppComponent,
-                            stringExtras: ["token": token],
+                            stringExtras: accent.map { ["token": token, "accent": $0] } ?? ["token": token],
                             intExtras: ["port": Int(MacFileServer.port)])
                     } catch {
                         server.stop()

@@ -10,6 +10,8 @@ struct FileBrowserView: View {
     @State private var layout = Layout.list
     @State private var groupBy = GroupByOption.none
     @AppStorage("sidebarFoldersExpanded") private var foldersExpanded = true
+    @EnvironmentObject private var prefs: AppPrefs
+    @Environment(\.accent) private var accent
 
     private var groups: [EntryGroup] {
         groupedEntries(model.entries, by: groupBy)
@@ -24,8 +26,11 @@ struct FileBrowserView: View {
         }
         .frame(minWidth: 720, minHeight: 420)
         .modifier(ShareAlerts(share: share))
+        .onChange(of: model.sidebarFolders) { names in prefs.noteFolders(names) }
         .onAppear {
-            share.selectedSerial = { [weak model] in model?.selectedSerial }
+            let browser = model, preferences = prefs
+            share.selectedSerial = { [weak browser] in browser?.selectedSerial }
+            share.accentHex = { [weak preferences] in preferences?.accent.hexString }
             model.connectAndLoadRoot()
             model.startWatchingDevices()
         }
@@ -44,17 +49,19 @@ struct FileBrowserView: View {
         List {
             deviceRow
             Section {
-                ForEach(FileCategory.allCases) { category in
+                ForEach(FileCategory.allCases.filter { !prefs.hiddenShortcuts.contains($0.rawValue) }) { category in
                     sidebarItem(category.rawValue, symbol: category.symbol, selected: model.category == category) {
                         groupBy = .dateModified
                         Task { await model.loadCategory(category) }
                     }
                 }
-                sidebarRow("Downloads", symbol: "arrow.down.circle", path: "\(FileBrowserModel.rootPath)/Download")
+                if !prefs.hiddenShortcuts.contains("Downloads") {
+                    sidebarRow("Downloads", symbol: "arrow.down.circle", path: "\(FileBrowserModel.rootPath)/Download")
+                }
             }
             Section {
                 if foldersExpanded {
-                    ForEach(model.sidebarFolders, id: \.self) { name in
+                    ForEach(model.sidebarFolders.filter { !prefs.hiddenFolders.contains($0) }, id: \.self) { name in
                         sidebarRow(name, symbol: "folder", path: "\(FileBrowserModel.rootPath)/\(name)")
                     }
                 }
@@ -112,12 +119,12 @@ struct FileBrowserView: View {
         Label {
             Text(title)
         } icon: {
-            Image(systemName: symbol).foregroundStyle(Color.androidGreen)
+            Image(systemName: symbol).foregroundStyle(accent.color)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.vertical, 3)
         .padding(.horizontal, 6)
-        .background(selected ? Color.androidGreen.opacity(0.18) : .clear, in: RoundedRectangle(cornerRadius: 6))
+        .background(selected ? accent.color.opacity(0.18) : .clear, in: RoundedRectangle(cornerRadius: 6))
         .contentShape(Rectangle())
         .onTapGesture(perform: action)
     }
@@ -148,7 +155,7 @@ struct FileBrowserView: View {
                 if let category = model.category {
                     Text(category.rawValue)
                         .font(.system(.callout, design: .monospaced))
-                        .foregroundStyle(Color.androidGreen)
+                        .foregroundStyle(accent.color)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 } else {
                     breadcrumbView
@@ -243,7 +250,7 @@ struct FileBrowserView: View {
                     Image(systemName: "chevron.down").font(.system(size: 8, weight: .bold))
                 }
             }
-            .foregroundStyle(groupBy == .none ? Color.primary : Color.androidGreen)
+            .foregroundStyle(groupBy == .none ? Color.primary : accent.color)
         }
         .menuIndicator(.hidden)
         .help("Group By")
@@ -252,13 +259,13 @@ struct FileBrowserView: View {
     private func layoutButton(_ symbol: String, _ value: Layout) -> some View {
         Button { layout = value } label: {
             Label(value == .list ? "List" : "Grid", systemImage: symbol)
-                .foregroundStyle(layout == value ? Color.androidGreen : Color.primary)
+                .foregroundStyle(layout == value ? accent.color : Color.primary)
         }
         .help(value == .list ? "List View" : "Grid View")
     }
 
     private func iconStyle(for entry: AdbDirEntry) -> AnyShapeStyle {
-        entry.isDirectory ? AnyShapeStyle(LinearGradient.androidFolder) : AnyShapeStyle(Color.androidGreen)
+        entry.isDirectory ? AnyShapeStyle(accent.folderGradient) : AnyShapeStyle(accent.color)
     }
 
     /// The size, plus the folder a category result is in.
@@ -349,6 +356,7 @@ struct FileBrowserView: View {
 private struct CommandBox: View {
     let command: String
     @State private var copied = false
+    @Environment(\.accent) private var accent
 
     var body: some View {
         HStack(spacing: 12) {
@@ -365,7 +373,7 @@ private struct CommandBox: View {
                 }
             } label: {
                 Image(systemName: copied ? "checkmark" : "doc.on.doc")
-                    .foregroundStyle(Color.androidGreen)
+                    .foregroundStyle(accent.color)
             }
             .buttonStyle(.plain)
             .help("Copy command")
@@ -381,6 +389,7 @@ private struct CommandBox: View {
 private struct RowNameText: View {
     let name: String
     @State private var isHovering = false
+    @Environment(\.accent) private var accent
 
     init(_ name: String) { self.name = name }
 
@@ -388,7 +397,7 @@ private struct RowNameText: View {
         Text(name)
             .font(.system(size: 12.5))
             .lineLimit(1)
-            .foregroundStyle(isHovering ? Color.androidGreen : .primary)
+            .foregroundStyle(isHovering ? accent.color : .primary)
             .onHover { isHovering = $0 }
     }
 }
@@ -399,10 +408,11 @@ private struct BreadcrumbSegment: View {
     let isCurrent: Bool
     let action: () -> Void
     @State private var isHovering = false
+    @Environment(\.accent) private var accent
 
     var body: some View {
         Text(label)
-            .foregroundStyle(isCurrent || isHovering ? Color.androidGreen : .secondary)
+            .foregroundStyle(isCurrent || isHovering ? accent.color : .secondary)
             .onHover { isHovering = $0 }
             .onTapGesture(perform: action)
     }

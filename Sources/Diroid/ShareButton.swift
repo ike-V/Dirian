@@ -8,6 +8,7 @@ private let androidAppURL = URL(string: "https://github.com/ike-V/Dirian#dirian-
 /// green while sharing.
 struct ShareButton: View {
     @ObservedObject var share: MacShareModel
+    @Environment(\.accent) private var accent
 
     private var folderName: String {
         FileManager.default.displayName(atPath: share.rootURL.path)
@@ -17,7 +18,7 @@ struct ShareButton: View {
         Button { share.toggle() } label: {
             Label(share.isSharing ? "Stop Sharing" : "Share Mac to Android", systemImage: "laptopcomputer")
                 .symbolRenderingMode(.monochrome)
-                .foregroundStyle(share.isSharing ? Color.androidGreen : Color.primary)
+                .foregroundStyle(share.isSharing ? accent.color : Color.primary)
         }
         .disabled(share.isBusy)
         .help(share.isSharing

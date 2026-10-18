@@ -1,0 +1,45 @@
+import SwiftUI
+
+/// Settings shared by the browser window and the Settings window, saved in UserDefaults.
+@MainActor
+final class AppPrefs: ObservableObject {
+    private enum Key {
+        static let accent = "accentColor"
+        static let hiddenShortcuts = "hiddenSidebarShortcuts"
+        static let hiddenFolders = "hiddenSidebarFolders"
+        static let knownFolders = "knownSidebarFolders"
+    }
+
+    /// The sidebar shortcuts that can be hidden.
+    static let shortcuts: [(name: String, symbol: String)] =
+        FileCategory.allCases.map { ($0.rawValue, $0.symbol) } + [("Downloads", "arrow.down.circle")]
+
+    private let defaults = UserDefaults.standard
+
+    @Published var accent: AccentChoice {
+        didSet { defaults.set(accent.rawValue, forKey: Key.accent) }
+    }
+    @Published var hiddenShortcuts: Set<String> {
+        didSet { defaults.set(hiddenShortcuts.sorted(), forKey: Key.hiddenShortcuts) }
+    }
+    /// Top-level device folders hidden from the sidebar, by name; they stay reachable by browsing.
+    @Published var hiddenFolders: Set<String> {
+        didSet { defaults.set(hiddenFolders.sorted(), forKey: Key.hiddenFolders) }
+    }
+    /// Every top-level device folder name seen so far, so Settings can list them without a device.
+    @Published private(set) var knownFolders: [String]
+
+    init() {
+        accent = defaults.string(forKey: Key.accent).flatMap(AccentChoice.init(rawValue:)) ?? .green
+        hiddenShortcuts = Set(defaults.stringArray(forKey: Key.hiddenShortcuts) ?? [])
+        hiddenFolders = Set(defaults.stringArray(forKey: Key.hiddenFolders) ?? [])
+        knownFolders = defaults.stringArray(forKey: Key.knownFolders) ?? []
+    }
+
+    func noteFolders(_ names: [String]) {
+        let merged = Set(knownFolders).union(names)
+        guard merged.count != knownFolders.count else { return }
+        knownFolders = merged.sorted { $0.localizedCaseInsensitiveCompare($1) == .orderedAscending }
+        defaults.set(knownFolders, forKey: Key.knownFolders)
+    }
+}
