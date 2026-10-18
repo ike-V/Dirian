@@ -63,6 +63,22 @@ List view, and the New Folder dialog.
 
 - **Upload Files…** pushes local files onto the Android device.
 
+### Make it yours
+
+- **Accent color.** Settings → Appearance (⌘,) picks the color of icons, folders and highlights from Finder's tag colors: Red, Orange, Yellow, Green, Blue, Purple or Gray. Green is the default. Dirian for Android uses the same color when you share a folder to it.
+- **Sidebar.** Settings → Sidebar chooses which shortcuts and which of the device's folders appear in the sidebar. A hidden folder is still there. Open the device's root folder to browse to it.
+
+<img src="Screenshots/accent-purple.png" width="700" alt="Dirian recolored with the Purple accent: purple folders, sidebar icons and highlights">
+
+Dirian with the Purple accent.
+
+<p align="center">
+  <img src="Screenshots/settings-appearance.png" width="320" alt="Dirian's Appearance settings: a list of accent colors, Red, Orange, Yellow, Green, Blue, Purple and Gray, with radio buttons">
+  <img src="Screenshots/settings-sidebar.png" width="320" alt="Dirian's Sidebar settings: checkboxes for the shortcuts and the device's folders">
+</p>
+
+The Appearance and Sidebar settings.
+
 ### Connection
 
 - With more than one device connected, a switcher beside the device name in the sidebar chooses which one to browse and share to. Dirian remembers your choice.
