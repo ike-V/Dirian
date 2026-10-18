@@ -35,6 +35,10 @@ class BrowserModel(private val app: Application) : AndroidViewModel(app) {
     private var client: MacClient? = prefs.getString("token", null)
         ?.let { MacClient(it, prefs.getInt("port", 47615)) }
 
+    /** The accent color Dirian on the Mac is set to; the last one it sent, or the default green. */
+    var accent by mutableStateOf(parseAccent(prefs.getString("accent", null)))
+        private set
+
     /** Current folder, relative to the shared folder ("" is the root). */
     var path by mutableStateOf("")
         private set
@@ -65,9 +69,13 @@ class BrowserModel(private val app: Application) : AndroidViewModel(app) {
     }
 
     /** Called with the token Dirian on the Mac passes when it opens this app. */
-    fun connect(token: String, port: Int) {
+    fun connect(token: String, port: Int, accentHex: String? = null) {
         generation++
         prefs.edit().putString("token", token).putInt("port", port).apply()
+        if (accentHex != null) {
+            prefs.edit().putString("accent", accentHex).apply()
+            accent = parseAccent(accentHex)
+        }
         client = MacClient(token, port)
         load("")
     }

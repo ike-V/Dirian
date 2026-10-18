@@ -74,13 +74,17 @@ import java.util.Date
 val AndroidGreen = Color(0xFF3DDC84)
 private val Background = Color(0xFF1A1A1A)
 
+/** "#RRGGBB" sent by Dirian on the Mac, or the default green when it's missing or malformed. */
+fun parseAccent(hex: String?): Color =
+    hex?.let { runCatching { Color(android.graphics.Color.parseColor(it)) }.getOrNull() } ?: AndroidGreen
+
 @Composable
-fun DirianTheme(content: @Composable () -> Unit) {
+fun DirianTheme(accent: Color = AndroidGreen, content: @Composable () -> Unit) {
     MaterialTheme(
         colorScheme = darkColorScheme(
-            primary = AndroidGreen,
+            primary = accent,
             onPrimary = Color.Black,
-            primaryContainer = AndroidGreen,
+            primaryContainer = accent,
             onPrimaryContainer = Color.Black,
             background = Background,
             onBackground = Color(0xFFEDEDED),
@@ -153,9 +157,9 @@ fun BrowserScreen(
                         Text(model.rootName, maxLines = 1, overflow = TextOverflow.Ellipsis)
                         if (model.connected) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                Box(Modifier.size(8.dp).background(AndroidGreen, CircleShape))
+                                Box(Modifier.size(8.dp).background(MaterialTheme.colorScheme.primary, CircleShape))
                                 Spacer(Modifier.width(6.dp))
-                                Text("Connected over USB", fontSize = 12.sp, color = AndroidGreen)
+                                Text("Connected over USB", fontSize = 12.sp, color = MaterialTheme.colorScheme.primary)
                             }
                         }
                     }
@@ -171,7 +175,7 @@ fun BrowserScreen(
                             GroupBy.entries.forEach { option ->
                                 DropdownMenuItem(
                                     text = {
-                                        Text(option.label, color = if (option == groupBy) AndroidGreen else Color.Unspecified)
+                                        Text(option.label, color = if (option == groupBy) MaterialTheme.colorScheme.primary else Color.Unspecified)
                                     },
                                     onClick = {
                                         groupBy = option
@@ -246,7 +250,7 @@ fun BrowserScreen(
                 if (model.busy) {
                     LinearProgressIndicator(
                         modifier = Modifier.fillMaxWidth().align(Alignment.TopCenter),
-                        color = AndroidGreen,
+                        color = MaterialTheme.colorScheme.primary,
                     )
                 }
             }
@@ -316,7 +320,7 @@ private fun Breadcrumb(rootName: String, path: String, onNavigate: (String) -> U
             if (index > 0) Text("/", color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(horizontal = 4.dp))
             Text(
                 label,
-                color = if (index == segments.lastIndex) AndroidGreen else MaterialTheme.colorScheme.onSurface,
+                color = if (index == segments.lastIndex) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
                 fontSize = 14.sp,
                 modifier = Modifier.clickable { onNavigate(target) }.padding(vertical = 8.dp),
             )
@@ -362,11 +366,11 @@ private fun GroupHeader(title: String) {
 @Composable
 private fun EntryIcon(entry: Entry, size: androidx.compose.ui.unit.Dp) {
     if (entry.isDirectory) {
-        Icon(Icons.Filled.Folder, null, tint = AndroidGreen, modifier = Modifier.size(size))
+        Icon(Icons.Filled.Folder, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(size))
     } else {
         Icon(
             Icons.AutoMirrored.Filled.InsertDriveFile, null,
-            tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(size),
+            tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(size),
         )
     }
 }
@@ -471,7 +475,7 @@ private fun ProblemView(problem: Problem, onRetry: () -> Unit) {
             textAlign = TextAlign.Center,
         )
         Spacer(Modifier.size(16.dp))
-        TextButton(onClick = onRetry) { Text("Try again", color = AndroidGreen) }
+        TextButton(onClick = onRetry) { Text("Try again", color = MaterialTheme.colorScheme.primary) }
     }
 }
 

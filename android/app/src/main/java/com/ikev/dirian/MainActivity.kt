@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
         )
         acceptToken(intent)
         setContent {
-            DirianTheme {
+            DirianTheme(model.accent) {
                 BrowserScreen(
                     model = model,
                     onPickUpload = { deleteAfter ->
@@ -59,10 +59,10 @@ class MainActivity : ComponentActivity() {
         acceptToken(intent)
     }
 
-    /** Dirian on the Mac opens this app with the access token for the current sharing session. */
+    /** Dirian on the Mac opens this app with the access token for the current sharing session, and its accent color. */
     private fun acceptToken(intent: Intent) {
         val token = intent.getStringExtra("token") ?: return
-        model.connect(token, intent.getIntExtra("port", 47615))
+        model.connect(token, intent.getIntExtra("port", 47615), intent.getStringExtra("accent"))
         intent.removeExtra("token")
     }
 }
