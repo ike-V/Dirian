@@ -70,10 +70,6 @@ private struct SidebarSettings: View {
                             Label(name, systemImage: "folder")
                         }
                     }
-                    Text("A hidden folder is still there. Open the device's root folder to browse to it.")
-                        .font(.callout)
-                        .foregroundStyle(.secondary)
-                        .padding(.top, 6)
                 }
             }
             .padding(20)
