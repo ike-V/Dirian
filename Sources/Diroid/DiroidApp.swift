@@ -9,6 +9,12 @@ struct DiroidApp: App {
             FileBrowserView()
                 .environmentObject(prefs)
                 .environment(\.accent, prefs.accent)
+                .onAppear { UpdateChecker.shared.checkAtLaunch() }
+        }
+        .commands {
+            CommandGroup(after: .appInfo) {
+                Button("Check for Updates…") { UpdateChecker.shared.checkNow() }
+            }
         }
         Settings {
             SettingsView()

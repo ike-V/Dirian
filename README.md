@@ -79,10 +79,17 @@ Dirian in Blue, Gray, Purple, Red, Orange and Yellow. Green is the default.
 
 The Appearance and Sidebar settings.
 
+### Updates
+
+- When Dirian opens, it reads the latest release number from GitHub, at most once a day, and shows a message when a newer version is out. Nothing from your device or your files is sent.
+- **Dirian → Check for Updates…** checks right away. Turn the automatic check off in Settings → General.
+- With Homebrew, update with `brew upgrade --cask dirian`. Otherwise download the new version from the [releases page](https://github.com/ike-V/Dirian/releases).
+
 ### Connection
 
 - With more than one device connected, a switcher beside the device name in the sidebar chooses which one to browse and share to. Dirian remembers your choice.
 - **Refresh** (↻) reconnects after you unplug and replug the device.
+- If the device says "unauthorized", unlock it and tap **Allow** on the USB debugging prompt. Dirian shows the steps to take when no prompt appears.
 - If the `adb` server isn't running, Dirian says so and shows the command to start it, with a copy button for pasting into Terminal.
 
 Dirian can also share a Mac folder back to the device. See [Share Mac to Android](#share-mac-to-android).

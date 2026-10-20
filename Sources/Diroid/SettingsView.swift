@@ -6,12 +6,32 @@ struct SettingsView: View {
 
     var body: some View {
         TabView {
+            GeneralSettings()
+                .tabItem { Label("General", systemImage: "gearshape") }
             AppearanceSettings()
                 .tabItem { Label("Appearance", systemImage: "paintpalette") }
             SidebarSettings()
                 .tabItem { Label("Sidebar", systemImage: "sidebar.left") }
         }
         .tint(accent.color)
+    }
+}
+
+/// Whether Dirian looks for a newer release when it opens.
+private struct GeneralSettings: View {
+    @EnvironmentObject private var prefs: AppPrefs
+
+    var body: some View {
+        Form {
+            Toggle("Check for updates automatically", isOn: $prefs.checkForUpdates)
+
+            Text("When Dirian opens, it reads the latest release number from GitHub, at most once a day. You can also check any time from Dirian > Check for Updates.")
+                .font(.callout)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(20)
+        .frame(width: 460, height: 120, alignment: .topLeading)
     }
 }
 

@@ -10,6 +10,8 @@ final class AppPrefs: ObservableObject {
         static let knownFolders = "knownSidebarFolders"
     }
 
+    static let checkForUpdatesKey = "checkForUpdates"
+
     /// The sidebar shortcuts that can be hidden.
     static let shortcuts: [(name: String, symbol: String)] =
         FileCategory.allCases.map { ($0.rawValue, $0.symbol) } + [("Downloads", "arrow.down.circle")]
@@ -18,6 +20,9 @@ final class AppPrefs: ObservableObject {
 
     @Published var accent: AccentChoice {
         didSet { defaults.set(accent.rawValue, forKey: Key.accent) }
+    }
+    @Published var checkForUpdates: Bool {
+        didSet { defaults.set(checkForUpdates, forKey: Self.checkForUpdatesKey) }
     }
     @Published var hiddenShortcuts: Set<String> {
         didSet { defaults.set(hiddenShortcuts.sorted(), forKey: Key.hiddenShortcuts) }
@@ -31,6 +36,7 @@ final class AppPrefs: ObservableObject {
 
     init() {
         accent = defaults.string(forKey: Key.accent).flatMap(AccentChoice.init(rawValue:)) ?? .green
+        checkForUpdates = defaults.object(forKey: Self.checkForUpdatesKey) as? Bool ?? true
         hiddenShortcuts = Set(defaults.stringArray(forKey: Key.hiddenShortcuts) ?? [])
         hiddenFolders = Set(defaults.stringArray(forKey: Key.hiddenFolders) ?? [])
         knownFolders = defaults.stringArray(forKey: Key.knownFolders) ?? []
