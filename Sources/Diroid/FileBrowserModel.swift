@@ -110,8 +110,8 @@ final class FileBrowserModel: ObservableObject {
 
     private static let unauthorizedProblem = ConnectionProblem(
         title: "Allow USB debugging on your Android device",
-        detail: "Tap Allow on the prompt on your Android device, then press refresh. If no prompt appears, run this in Terminal, replug the device, then press refresh.",
-        command: "adb kill-server")
+        detail: "Unlock your Android device and tap Allow on the USB debugging prompt, then press refresh. No prompt? Run this in Terminal to ask again. Still nothing? On the device, open Developer options and tap “Revoke USB debugging authorizations”, then replug it. On Samsung, also turn off “Block commands and software updates by USB cable” in Auto Blocker.",
+        command: "adb reconnect")
 
     /// The device to use: the last one the user picked if it's ready, else the first ready one.
     private static func chooseSerial(from devices: [AdbDevice]) -> String? {
