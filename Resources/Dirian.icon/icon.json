@@ -112,39 +112,6 @@
           }
         },
         {
-          "hidden" : true,
-          "image-name" : "Stemoutline.svg",
-          "name" : "Stemoutline"
-        },
-        {
-          "fill" : {
-            "linear-gradient" : [
-              "display-p3:1.00000,0.66017,0.39016,1.00000",
-              "display-p3:0.57812,0.38354,0.22937,1.00000"
-            ],
-            "orientation" : {
-              "start" : {
-                "x" : 1.8697359262542876,
-                "y" : 0
-              },
-              "stop" : {
-                "x" : 0.4999999999999985,
-                "y" : 0.622705119008303
-              }
-            }
-          },
-          "hidden" : true,
-          "image-name" : "stemfill.svg",
-          "name" : "stemfill",
-          "position" : {
-            "scale" : 1,
-            "translation-in-points" : [
-              0,
-              0
-            ]
-          }
-        },
-        {
           "image-name" : "bodyoutline.svg",
           "name" : "bodyoutline"
         },
