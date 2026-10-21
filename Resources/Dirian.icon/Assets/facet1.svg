@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:affinity="https://www.affinity.studio/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g id="body-underlay">
+    </g>
+    <g transform="matrix(0.925722,-0.378204,0.378204,0.925722,-155.449233,232.231923)">
+        <g id="facet-1">
+            <path d="M500,590C434.87,463.433 468.852,282.61 538.27,223.4C498.326,216.294 454.299,189.054 419.77,160.49L418.55,159.38L418.39,159.24L418.3,159.46C406.177,190.101 361.04,254.18 361.04,254.18C361.04,254.18 382.295,323.312 379.54,355.83L378.09,369.98L375.72,383.83L372.46,397.37L368.34,410.55L363.39,423.35L357.64,435.73L351.12,447.66L343.87,459.11C343.87,459.11 376.235,553.209 500,590Z" style="fill:url(#_Linear1);"/>
+        </g>
+    </g>
+    <defs>
+        <linearGradient id="_Linear1" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(-195.9,477.4,-477.4,-195.9,531.2,159.2)"><stop offset="0" style="stop-color:rgb(111,227,160);stop-opacity:1"/><stop offset="1" style="stop-color:rgb(23,121,74);stop-opacity:1"/></linearGradient>
+    </defs>
+</svg>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:affinity="https://www.affinity.studio/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g id="body-underlay">
+    </g>
+    <g transform="matrix(0.925722,-0.378204,0.378204,0.925722,-155.449233,232.231923)">
+        <g id="facet-8">
+            <path d="M501,590.151C456.352,549.919 440.242,263.911 512,227.141C512,227.141 610.334,199.119 623,195.25C627.982,197.291 676.408,286.561 676.408,286.561C621.458,264.847 484.675,474.262 501,590.151Z" style="fill:rgb(70,181,119);"/>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:affinity="https://www.affinity.studio/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g id="body-underlay">
+    </g>
+    <g id="facet-5">
+    </g>
+    <g id="facet-3">
+    </g>
+    <g id="facet-4">
+    </g>
+    <g id="facet-2">
+    </g>
+    <g id="facet-7">
+    </g>
+    <g id="facet-10">
+    </g>
+    <g id="facet-9">
+    </g>
+    <g id="Facet-6">
+    </g>
+    <g id="facet-1">
+    </g>
+    <g id="facet-8">
+    </g>
+    <g id="body-outline">
+    </g>
+    <g id="stem-fill">
+    </g>
+    <g id="stem-outline">
+    </g>
+    <g id="eye-left">
+    </g>
+    <g id="eye-right">
+    </g>
+    <g transform="matrix(0.969764,-0.244044,0.244044,0.969764,-98.13979,105.999317)">
+        <g transform="matrix(-0.492962,0.748862,-0.61253,-0.403217,1094.316611,501.512257)">
+            <path d="M410,260L425,230L439,259" style="fill:none;stroke:black;stroke-width:7.33px;"/>
+        </g>
+        <g transform="matrix(-0.492962,0.748862,-0.61253,-0.403217,1108.200185,541.779265)">
+            <path d="M410,260L425,230L439,259" style="fill:none;stroke:black;stroke-width:7.33px;"/>
+        </g>
+        <g transform="matrix(-0.492962,0.748862,-0.61253,-0.403217,1072.872774,534.087736)">
+            <path d="M410,260L425,230L439,259" style="fill:none;stroke:black;stroke-width:7.33px;"/>
+        </g>
+    </g>
+</svg>

@@ -1,47 +1,62 @@
 {
   "fill" : {
     "linear-gradient" : [
-      "display-p3:1.00000,0.84641,0.65518,1.00000",
-      "display-p3:0.43700,0.36988,0.28631,1.00000"
+      "display-p3:0.98673,0.84498,0.63631,1.00000",
+      "display-p3:0.65487,0.49511,0.30458,1.00000"
     ]
   },
   "groups" : [
     {
       "layers" : [
         {
-          "image-name" : "df-stemoutline.svg",
-          "name" : "df-stemoutline"
+          "image-name" : "stem-outline-tilt.svg",
+          "name" : "stem-outline-tilt"
         },
         {
           "fill" : {
             "linear-gradient" : [
-              "display-p3:0.70589,0.47342,0.28257,1.00000",
-              "display-p3:0.32166,0.20441,0.11405,1.00000"
+              "display-p3:1.00000,0.74457,0.41062,1.00000",
+              "display-p3:0.56450,0.41796,0.22948,1.00000"
             ],
             "orientation" : {
               "start" : {
                 "x" : 1,
-                "y" : 0.1473586988633667
+                "y" : 0.20832540821604723
               },
               "stop" : {
-                "x" : 0,
+                "x" : 0.5,
                 "y" : 0.5
               }
             }
           },
-          "image-name" : "df-stemfill.svg",
-          "name" : "df-stemfill"
+          "image-name" : "Stem-fill-tilt.svg",
+          "name" : "Stem-fill-tilt"
         },
         {
-          "fill" : "none",
-          "image-name" : "df-bodyoutline.svg",
-          "name" : "df-bodyoutline"
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:0.03320,0.03320,0.03320,1.00000",
+              "display-p3:0.72374,0.76734,0.74054,1.00000"
+            ],
+            "orientation" : {
+              "start" : {
+                "x" : 0.5,
+                "y" : 0.687467307035245
+              },
+              "stop" : {
+                "x" : 1.2303096017670454,
+                "y" : 0.2854719896117546
+              }
+            }
+          },
+          "image-name" : "spike11.svg",
+          "name" : "spike11"
         },
         {
           "blend-mode" : "darken",
           "fill" : {
             "linear-gradient" : [
-              "display-p3:0.96748,1.00000,0.97561,1.00000",
+              "display-p3:0.72374,0.76734,0.74054,1.00000",
               "display-p3:0.00000,0.00000,0.00000,1.00000"
             ],
             "orientation" : {
@@ -51,125 +66,492 @@
               },
               "stop" : {
                 "x" : 0.5,
-                "y" : 0.49999999999999895
+                "y" : 0.49999999999999917
               }
             }
           },
-          "image-name" : "df-eyeright.svg",
-          "name" : "df-eyeright"
-        },
-        {
-          "blend-mode" : "darken",
-          "fill" : {
-            "linear-gradient" : [
-              "display-p3:0.96954,1.00000,0.99091,1.00000",
-              "display-p3:0.00000,0.00000,0.00000,1.00000"
-            ],
-            "orientation" : {
-              "start" : {
-                "x" : 1,
-                "y" : 0
-              },
-              "stop" : {
-                "x" : 0.5,
-                "y" : 0.49999999999999895
-              }
-            }
-          },
-          "image-name" : "df-eyeleft.svg",
-          "name" : "df-eyeleft"
-        },
-        {
-          "fill" : {
-            "linear-gradient" : [
-              "display-p3:0.40648,0.69970,0.50128,1.00000",
-              "display-p3:0.56061,1.00000,0.73249,1.00000"
-            ],
-            "orientation" : {
-              "start" : {
-                "x" : 0.49999999999999944,
-                "y" : 0.4999999999999998
-              },
-              "stop" : {
-                "x" : 0.2009683286497491,
-                "y" : 0.9243825217737844
-              }
-            }
-          },
-          "image-name" : "df-facet2.svg",
-          "name" : "df-facet2"
-        },
-        {
-          "fill" : {
-            "linear-gradient" : [
-              "display-p3:0.26595,0.54202,0.36414,1.00000",
-              "display-p3:0.60553,1.00000,0.72718,1.00000"
-            ],
-            "orientation" : {
-              "start" : {
-                "x" : 0.42013620791347256,
-                "y" : 0.3189839787409808
-              },
-              "stop" : {
-                "x" : 1.2151085859500048,
-                "y" : 0.7081737193154232
-              }
-            }
-          },
-          "image-name" : "df-facet1.svg",
-          "name" : "df-facet1",
+          "glass" : true,
+          "hidden" : false,
+          "image-name" : "eyeR.svg",
+          "name" : "eyeR",
           "position" : {
             "scale" : 1,
             "translation-in-points" : [
-              -0.0009999999999195097,
-              -0.0030000000000427463
+              -5,
+              0
+            ]
+          }
+        },
+        {
+          "blend-mode" : "darken",
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:0.72374,0.76734,0.74054,1.00000",
+              "display-p3:0.00000,0.00000,0.00000,1.00000"
+            ],
+            "orientation" : {
+              "start" : {
+                "x" : 1,
+                "y" : 0
+              },
+              "stop" : {
+                "x" : 0.5000000000000017,
+                "y" : 0.49999999999999917
+              }
+            }
+          },
+          "hidden" : false,
+          "image-name" : "eyeL.svg",
+          "name" : "eyeL",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              -5,
+              0
+            ]
+          }
+        },
+        {
+          "hidden" : true,
+          "image-name" : "Stemoutline.svg",
+          "name" : "Stemoutline"
+        },
+        {
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:1.00000,0.66017,0.39016,1.00000",
+              "display-p3:0.57812,0.38354,0.22937,1.00000"
+            ],
+            "orientation" : {
+              "start" : {
+                "x" : 1.8697359262542876,
+                "y" : 0
+              },
+              "stop" : {
+                "x" : 0.4999999999999985,
+                "y" : 0.622705119008303
+              }
+            }
+          },
+          "hidden" : true,
+          "image-name" : "stemfill.svg",
+          "name" : "stemfill",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "image-name" : "bodyoutline.svg",
+          "name" : "bodyoutline"
+        },
+        {
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:0.00000,0.00000,0.00000,1.00000",
+              "display-p3:0.72374,0.76734,0.74054,1.00000"
+            ],
+            "orientation" : {
+              "start" : {
+                "x" : 1,
+                "y" : 1
+              },
+              "stop" : {
+                "x" : 1.9632305274223543,
+                "y" : -0.8463035002887644
+              }
+            }
+          },
+          "glass" : true,
+          "image-name" : "spikes8.svg",
+          "name" : "spikes8"
+        },
+        {
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:0.72374,0.76734,0.74054,1.00000",
+              "display-p3:0.00000,0.00000,0.00000,1.00000"
+            ],
+            "orientation" : {
+              "start" : {
+                "x" : 1.164285529157634,
+                "y" : 0.17517539741277968
+              },
+              "stop" : {
+                "x" : 0.5,
+                "y" : 0.5
+              }
+            }
+          },
+          "glass" : true,
+          "image-name" : "spikes7.svg",
+          "name" : "spikes7",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              12.763615272030165,
+              -20.717409940482526
             ]
           }
         },
         {
           "fill" : {
             "linear-gradient" : [
-              "display-p3:0.18206,0.35936,0.24573,1.00000",
-              "display-p3:0.44784,0.84264,0.58540,1.00000"
+              "display-p3:0.72374,0.76734,0.74054,1.00000",
+              "display-p3:0.00000,0.00000,0.00000,1.00000"
             ],
             "orientation" : {
               "start" : {
-                "x" : 0.6842123337637191,
-                "y" : -0.06310118644283898
+                "x" : 1,
+                "y" : -0.9049456187304
               },
               "stop" : {
-                "x" : 0.6267226978384568,
-                "y" : 0.49999999999999967
+                "x" : 0.5,
+                "y" : 1
               }
             }
           },
-          "image-name" : "df-facet3.svg",
-          "name" : "df-facet3"
+          "glass" : true,
+          "image-name" : "spikes6.svg",
+          "name" : "spikes6"
         },
         {
           "fill" : {
             "linear-gradient" : [
-              "display-p3:0.23560,0.47534,0.30078,1.00000",
-              "display-p3:0.53362,0.91856,0.65807,1.00000"
+              "display-p3:0.72374,0.76734,0.74054,1.00000",
+              "display-p3:0.00000,0.00000,0.00000,1.00000"
             ],
             "orientation" : {
               "start" : {
-                "x" : 0.16773692768843357,
-                "y" : 0.0561807936234844
+                "x" : 0.5,
+                "y" : -0.203635182639195
               },
               "stop" : {
-                "x" : 0.376699233515708,
-                "y" : 0.5000000000000008
+                "x" : 0.5,
+                "y" : 0.5
               }
             }
           },
-          "image-name" : "df-facet4.svg",
-          "name" : "df-facet4"
+          "glass" : true,
+          "image-name" : "spikes5.svg",
+          "name" : "spikes5",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              -3.138914076997935,
+              8
+            ]
+          }
         },
         {
-          "hidden" : true,
-          "image-name" : "df-bodyunderlay.svg",
-          "name" : "df-bodyunderlay"
+          "blend-mode" : "normal",
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:0.72374,0.76734,0.74054,1.00000",
+              "display-p3:0.00000,0.00000,0.00000,1.00000"
+            ],
+            "orientation" : {
+              "start" : {
+                "x" : 2.165809400659696,
+                "y" : 0
+              },
+              "stop" : {
+                "x" : 0.5,
+                "y" : 1
+              }
+            }
+          },
+          "glass" : true,
+          "image-name" : "spikes4.svg",
+          "name" : "spikes4"
+        },
+        {
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:0.00000,0.00000,0.00000,1.00000",
+              "display-p3:0.72374,0.76734,0.74054,1.00000"
+            ],
+            "orientation" : {
+              "start" : {
+                "x" : 0.5,
+                "y" : 1
+              },
+              "stop" : {
+                "x" : 1,
+                "y" : -1.2081947224594014
+              }
+            }
+          },
+          "glass" : true,
+          "image-name" : "spikes3.svg",
+          "name" : "spikes3"
+        },
+        {
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:0.93937,0.96783,0.92501,1.00000",
+              "display-p3:0.00000,0.00000,0.00000,1.00000"
+            ],
+            "orientation" : {
+              "start" : {
+                "x" : -0.1916516491160683,
+                "y" : 0
+              },
+              "stop" : {
+                "x" : 0.49999999999999867,
+                "y" : 0.4999999999999985
+              }
+            }
+          },
+          "glass" : true,
+          "image-name" : "spikes2.svg",
+          "name" : "spikes2"
+        },
+        {
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:0.72374,0.76734,0.74054,1.00000",
+              "display-p3:0.00017,0.00080,0.00286,1.00000"
+            ],
+            "orientation" : {
+              "start" : {
+                "x" : 0.22568006941014404,
+                "y" : 0
+              },
+              "stop" : {
+                "x" : 0.5000000000000016,
+                "y" : 0.49999999999999867
+              }
+            }
+          },
+          "glass" : true,
+          "image-name" : "spikes1.svg",
+          "name" : "spikes1",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              -4.881017712451467,
+              -9
+            ]
+          }
+        },
+        {
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:0.60010,0.92920,0.68604,1.00000",
+              "display-p3:0.38818,0.76465,0.45093,1.00000"
+            ],
+            "orientation" : {
+              "start" : {
+                "x" : -0.2947464900370008,
+                "y" : 0.5
+              },
+              "stop" : {
+                "x" : 0.9436720791499613,
+                "y" : 0.9757228542728611
+              }
+            }
+          },
+          "image-name" : "facet1.svg",
+          "name" : "facet1",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              2.108967600000142,
+              4.501246079999987
+            ]
+          }
+        },
+        {
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:0.60010,0.92920,0.68604,1.00000",
+              "display-p3:0.38818,0.76465,0.45093,1.00000"
+            ],
+            "orientation" : {
+              "start" : {
+                "x" : 0.5,
+                "y" : 0
+              },
+              "stop" : {
+                "x" : 0.6679778287757343,
+                "y" : 1
+              }
+            }
+          },
+          "image-name" : "facet8.svg",
+          "name" : "facet8",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              3.2030523397392017,
+              6.201142286740719
+            ]
+          }
+        },
+        {
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:0.60010,0.92920,0.68604,1.00000",
+              "display-p3:0.38818,0.76465,0.45093,1.00000"
+            ],
+            "orientation" : {
+              "start" : {
+                "x" : 0.5000000000000007,
+                "y" : 0
+              },
+              "stop" : {
+                "x" : 0.1258076893578978,
+                "y" : 1
+              }
+            }
+          },
+          "image-name" : "facet10.svg",
+          "name" : "facet10"
+        },
+        {
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:0.61137,0.94628,0.70963,1.00000",
+              "display-p3:0.38818,0.76465,0.45093,1.00000"
+            ],
+            "orientation" : {
+              "start" : {
+                "x" : 0.6512245036446309,
+                "y" : 0
+              },
+              "stop" : {
+                "x" : 0.4999999999999983,
+                "y" : 1
+              }
+            }
+          },
+          "image-name" : "facet9.svg",
+          "name" : "facet9"
+        },
+        {
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:0.63969,0.95746,0.68231,1.00000",
+              "display-p3:0.38818,0.76465,0.45093,1.00000"
+            ],
+            "orientation" : {
+              "start" : {
+                "x" : 0.8136575222651459,
+                "y" : 1
+              },
+              "stop" : {
+                "x" : 0.5000000000000012,
+                "y" : 0
+              }
+            }
+          },
+          "glass" : true,
+          "image-name" : "facet7.svg",
+          "name" : "facet7"
+        },
+        {
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:0.59422,0.91973,0.68972,1.00000",
+              "display-p3:0.38818,0.76465,0.45093,1.00000"
+            ],
+            "orientation" : {
+              "start" : {
+                "x" : 1,
+                "y" : 0
+              },
+              "stop" : {
+                "x" : -0.16052155794117193,
+                "y" : 1
+              }
+            }
+          },
+          "image-name" : "facet6.svg",
+          "name" : "facet6"
+        },
+        {
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:0.60010,0.92920,0.68604,1.00000",
+              "display-p3:0.38818,0.76465,0.45093,1.00000"
+            ],
+            "orientation" : {
+              "start" : {
+                "x" : 1,
+                "y" : 0.49999999999999933
+              },
+              "stop" : {
+                "x" : 0,
+                "y" : 1
+              }
+            }
+          },
+          "image-name" : "facet5.svg",
+          "name" : "facet5"
+        },
+        {
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:0.57212,0.88553,0.66407,1.00000",
+              "display-p3:0.38818,0.76465,0.45093,1.00000"
+            ],
+            "orientation" : {
+              "start" : {
+                "x" : 0.8448055045502896,
+                "y" : 1
+              },
+              "stop" : {
+                "x" : 0.22545698735583383,
+                "y" : -0.4460670336583812
+              }
+            }
+          },
+          "image-name" : "facet4.svg",
+          "name" : "facet4"
+        },
+        {
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:0.60280,0.93301,0.69967,1.00000",
+              "display-p3:0.38818,0.76465,0.45093,1.00000"
+            ],
+            "orientation" : {
+              "start" : {
+                "x" : 1,
+                "y" : 0
+              },
+              "stop" : {
+                "x" : 0.28095269123082317,
+                "y" : 1
+              }
+            }
+          },
+          "image-name" : "facet3.svg",
+          "name" : "facet3"
+        },
+        {
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:0.61123,0.94606,0.70946,1.00000",
+              "display-p3:0.38818,0.76465,0.45093,1.00000"
+            ],
+            "orientation" : {
+              "start" : {
+                "x" : 0,
+                "y" : 0
+              },
+              "stop" : {
+                "x" : 0.7977121344164435,
+                "y" : 1
+              }
+            }
+          },
+          "image-name" : "facet2.svg",
+          "name" : "facet2"
         }
       ],
       "shadow" : {
