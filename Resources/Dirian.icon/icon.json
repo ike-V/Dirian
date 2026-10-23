@@ -1,540 +1,145 @@
 {
-  "fill" : {
-    "linear-gradient" : [
+  "fill": {
+    "linear-gradient": [
       "display-p3:0.98673,0.84498,0.63631,1.00000",
       "display-p3:0.65487,0.49511,0.30458,1.00000"
     ]
   },
-  "groups" : [
+  "groups": [
     {
-      "layers" : [
+      "layers": [
         {
-          "image-name" : "stem-outline-tilt.svg",
-          "name" : "stem-outline-tilt"
-        },
-        {
-          "fill" : {
-            "linear-gradient" : [
-              "display-p3:1.00000,0.74457,0.41062,1.00000",
-              "display-p3:0.56450,0.41796,0.22948,1.00000"
-            ],
-            "orientation" : {
-              "start" : {
-                "x" : 1,
-                "y" : 0.20832540821604723
-              },
-              "stop" : {
-                "x" : 0.5,
-                "y" : 0.5
-              }
-            }
-          },
-          "image-name" : "Stem-fill-tilt.svg",
-          "name" : "Stem-fill-tilt"
-        },
-        {
-          "fill" : {
-            "linear-gradient" : [
-              "display-p3:0.03320,0.03320,0.03320,1.00000",
-              "display-p3:0.72374,0.76734,0.74054,1.00000"
-            ],
-            "orientation" : {
-              "start" : {
-                "x" : 0.5,
-                "y" : 0.687467307035245
-              },
-              "stop" : {
-                "x" : 1.2303096017670454,
-                "y" : 0.2854719896117546
-              }
-            }
-          },
-          "image-name" : "spike11.svg",
-          "name" : "spike11"
-        },
-        {
-          "blend-mode" : "darken",
-          "fill" : {
-            "linear-gradient" : [
-              "display-p3:0.72374,0.76734,0.74054,1.00000",
-              "display-p3:0.00000,0.00000,0.00000,1.00000"
-            ],
-            "orientation" : {
-              "start" : {
-                "x" : 1,
-                "y" : 0
-              },
-              "stop" : {
-                "x" : 0.5,
-                "y" : 0.49999999999999917
-              }
-            }
-          },
-          "glass" : true,
-          "hidden" : false,
-          "image-name" : "eyeR.svg",
-          "name" : "eyeR",
-          "position" : {
-            "scale" : 1,
-            "translation-in-points" : [
-              -5,
+          "fill": "none",
+          "image-name": "stem-outline.svg",
+          "name": "stem-outline",
+          "position": {
+            "scale": 1,
+            "translation-in-points": [
+              0.5887357598270455,
               0
             ]
           }
         },
         {
-          "blend-mode" : "darken",
-          "fill" : {
-            "linear-gradient" : [
-              "display-p3:0.72374,0.76734,0.74054,1.00000",
-              "display-p3:0.00000,0.00000,0.00000,1.00000"
+          "fill": {
+            "linear-gradient": [
+              "display-p3:0.70724,0.43510,0.14489,1.00000",
+              "srgb:0.57875,0.32152,0.00000,1.00000"
             ],
-            "orientation" : {
-              "start" : {
-                "x" : 1,
-                "y" : 0
+            "orientation": {
+              "start": {
+                "x": 1.0795880663632946,
+                "y": 0.39506329311991856
               },
-              "stop" : {
-                "x" : 0.5000000000000017,
-                "y" : 0.49999999999999917
+              "stop": {
+                "x": 0.5,
+                "y": 0.5656251761951214
               }
             }
           },
-          "hidden" : false,
-          "image-name" : "eyeL.svg",
-          "name" : "eyeL",
-          "position" : {
-            "scale" : 1,
-            "translation-in-points" : [
-              -5,
+          "image-name": "stem-fill.svg",
+          "name": "stem-fill",
+          "position": {
+            "scale": 1,
+            "translation-in-points": [
+              0.5887357598270455,
               0
             ]
           }
         },
         {
-          "image-name" : "bodyoutline.svg",
-          "name" : "bodyoutline"
-        },
-        {
-          "fill" : {
-            "linear-gradient" : [
+          "fill": {
+            "linear-gradient": [
               "display-p3:0.00000,0.00000,0.00000,1.00000",
-              "display-p3:0.72374,0.76734,0.74054,1.00000"
+              "display-p3:0.09020,0.07451,0.05882,1.00000"
             ],
-            "orientation" : {
-              "start" : {
-                "x" : 1,
-                "y" : 1
+            "orientation": {
+              "start": {
+                "x": 0.499999999999999,
+                "y": 0
               },
-              "stop" : {
-                "x" : 1.9632305274223543,
-                "y" : -0.8463035002887644
+              "stop": {
+                "x": 0.499999999999999,
+                "y": 1
               }
             }
           },
-          "glass" : true,
-          "image-name" : "spikes8.svg",
-          "name" : "spikes8"
+          "glass": true,
+          "image-name": "eye-right.svg",
+          "name": "eye-right"
         },
         {
-          "fill" : {
-            "linear-gradient" : [
-              "display-p3:0.72374,0.76734,0.74054,1.00000",
-              "display-p3:0.00000,0.00000,0.00000,1.00000"
-            ],
-            "orientation" : {
-              "start" : {
-                "x" : 1.164285529157634,
-                "y" : 0.17517539741277968
-              },
-              "stop" : {
-                "x" : 0.5,
-                "y" : 0.5
-              }
-            }
-          },
-          "glass" : true,
-          "image-name" : "spikes7.svg",
-          "name" : "spikes7",
-          "position" : {
-            "scale" : 1,
-            "translation-in-points" : [
-              12.763615272030165,
-              -20.717409940482526
+          "fill": {
+            "linear-gradient": [
+              "display-p3:0.09020,0.07451,0.05882,1.00000",
+              "display-p3:0.09020,0.07451,0.05882,1.00000"
             ]
-          }
+          },
+          "image-name": "eye-left.svg",
+          "name": "eye-left"
         },
         {
-          "fill" : {
-            "linear-gradient" : [
-              "display-p3:0.72374,0.76734,0.74054,1.00000",
-              "display-p3:0.00000,0.00000,0.00000,1.00000"
+          "fill": "none",
+          "glass": true,
+          "image-name": "body-outline.svg",
+          "name": "body-outline"
+        },
+        {
+          "fill": {
+            "linear-gradient": [
+              "display-p3:0.44706,0.89804,0.65098,1.00000",
+              "display-p3:0.36703,0.74110,0.54667,1.00000"
             ],
-            "orientation" : {
-              "start" : {
-                "x" : 1,
-                "y" : -0.9049456187304
+            "orientation": {
+              "start": {
+                "x": 0.8131007247735939,
+                "y": 0
               },
-              "stop" : {
-                "x" : 0.5,
-                "y" : 1
+              "stop": {
+                "x": 0.05926579301075269,
+                "y": 0.938086709486166
               }
             }
           },
-          "glass" : true,
-          "image-name" : "spikes6.svg",
-          "name" : "spikes6"
+          "image-name": "body-lit.svg",
+          "name": "body-lit"
         },
         {
-          "fill" : {
-            "linear-gradient" : [
-              "display-p3:0.72374,0.76734,0.74054,1.00000",
-              "display-p3:0.00000,0.00000,0.00000,1.00000"
+          "fill": {
+            "linear-gradient": [
+              "display-p3:0.18431,0.64706,0.40784,1.00000",
+              "display-p3:0.13232,0.46151,0.29334,1.00000"
             ],
-            "orientation" : {
-              "start" : {
-                "x" : 0.5,
-                "y" : -0.203635182639195
+            "orientation": {
+              "start": {
+                "x": 0.6379445467149314,
+                "y": 0.3335608390622559
               },
-              "stop" : {
-                "x" : 0.5,
-                "y" : 0.5
+              "stop": {
+                "x": 0.23855426747311828,
+                "y": 1
               }
             }
           },
-          "glass" : true,
-          "image-name" : "spikes5.svg",
-          "name" : "spikes5",
-          "position" : {
-            "scale" : 1,
-            "translation-in-points" : [
-              -3.138914076997935,
-              8
-            ]
-          }
-        },
-        {
-          "blend-mode" : "normal",
-          "fill" : {
-            "linear-gradient" : [
-              "display-p3:0.72374,0.76734,0.74054,1.00000",
-              "display-p3:0.00000,0.00000,0.00000,1.00000"
-            ],
-            "orientation" : {
-              "start" : {
-                "x" : 2.165809400659696,
-                "y" : 0
-              },
-              "stop" : {
-                "x" : 0.5,
-                "y" : 1
-              }
-            }
-          },
-          "glass" : true,
-          "image-name" : "spikes4.svg",
-          "name" : "spikes4"
-        },
-        {
-          "fill" : {
-            "linear-gradient" : [
-              "display-p3:0.00000,0.00000,0.00000,1.00000",
-              "display-p3:0.72374,0.76734,0.74054,1.00000"
-            ],
-            "orientation" : {
-              "start" : {
-                "x" : 0.5,
-                "y" : 1
-              },
-              "stop" : {
-                "x" : 1,
-                "y" : -1.2081947224594014
-              }
-            }
-          },
-          "glass" : true,
-          "image-name" : "spikes3.svg",
-          "name" : "spikes3"
-        },
-        {
-          "fill" : {
-            "linear-gradient" : [
-              "display-p3:0.93937,0.96783,0.92501,1.00000",
-              "display-p3:0.00000,0.00000,0.00000,1.00000"
-            ],
-            "orientation" : {
-              "start" : {
-                "x" : -0.1916516491160683,
-                "y" : 0
-              },
-              "stop" : {
-                "x" : 0.49999999999999867,
-                "y" : 0.4999999999999985
-              }
-            }
-          },
-          "glass" : true,
-          "image-name" : "spikes2.svg",
-          "name" : "spikes2"
-        },
-        {
-          "fill" : {
-            "linear-gradient" : [
-              "display-p3:0.72374,0.76734,0.74054,1.00000",
-              "display-p3:0.00017,0.00080,0.00286,1.00000"
-            ],
-            "orientation" : {
-              "start" : {
-                "x" : 0.22568006941014404,
-                "y" : 0
-              },
-              "stop" : {
-                "x" : 0.5000000000000016,
-                "y" : 0.49999999999999867
-              }
-            }
-          },
-          "glass" : true,
-          "image-name" : "spikes1.svg",
-          "name" : "spikes1",
-          "position" : {
-            "scale" : 1,
-            "translation-in-points" : [
-              -4.881017712451467,
-              -9
-            ]
-          }
-        },
-        {
-          "fill" : {
-            "linear-gradient" : [
-              "display-p3:0.60010,0.92920,0.68604,1.00000",
-              "display-p3:0.38818,0.76465,0.45093,1.00000"
-            ],
-            "orientation" : {
-              "start" : {
-                "x" : -0.2947464900370008,
-                "y" : 0.5
-              },
-              "stop" : {
-                "x" : 0.9436720791499613,
-                "y" : 0.9757228542728611
-              }
-            }
-          },
-          "image-name" : "facet1.svg",
-          "name" : "facet1",
-          "position" : {
-            "scale" : 1,
-            "translation-in-points" : [
-              2.108967600000142,
-              4.501246079999987
-            ]
-          }
-        },
-        {
-          "fill" : {
-            "linear-gradient" : [
-              "display-p3:0.60010,0.92920,0.68604,1.00000",
-              "display-p3:0.38818,0.76465,0.45093,1.00000"
-            ],
-            "orientation" : {
-              "start" : {
-                "x" : 0.5,
-                "y" : 0
-              },
-              "stop" : {
-                "x" : 0.6679778287757343,
-                "y" : 1
-              }
-            }
-          },
-          "image-name" : "facet8.svg",
-          "name" : "facet8",
-          "position" : {
-            "scale" : 1,
-            "translation-in-points" : [
-              3.2030523397392017,
-              6.201142286740719
-            ]
-          }
-        },
-        {
-          "fill" : {
-            "linear-gradient" : [
-              "display-p3:0.60010,0.92920,0.68604,1.00000",
-              "display-p3:0.38818,0.76465,0.45093,1.00000"
-            ],
-            "orientation" : {
-              "start" : {
-                "x" : 0.5000000000000007,
-                "y" : 0
-              },
-              "stop" : {
-                "x" : 0.1258076893578978,
-                "y" : 1
-              }
-            }
-          },
-          "image-name" : "facet10.svg",
-          "name" : "facet10"
-        },
-        {
-          "fill" : {
-            "linear-gradient" : [
-              "display-p3:0.61137,0.94628,0.70963,1.00000",
-              "display-p3:0.38818,0.76465,0.45093,1.00000"
-            ],
-            "orientation" : {
-              "start" : {
-                "x" : 0.6512245036446309,
-                "y" : 0
-              },
-              "stop" : {
-                "x" : 0.4999999999999983,
-                "y" : 1
-              }
-            }
-          },
-          "image-name" : "facet9.svg",
-          "name" : "facet9"
-        },
-        {
-          "fill" : {
-            "linear-gradient" : [
-              "display-p3:0.63969,0.95746,0.68231,1.00000",
-              "display-p3:0.38818,0.76465,0.45093,1.00000"
-            ],
-            "orientation" : {
-              "start" : {
-                "x" : 0.8136575222651459,
-                "y" : 1
-              },
-              "stop" : {
-                "x" : 0.5000000000000012,
-                "y" : 0
-              }
-            }
-          },
-          "glass" : true,
-          "image-name" : "facet7.svg",
-          "name" : "facet7"
-        },
-        {
-          "fill" : {
-            "linear-gradient" : [
-              "display-p3:0.59422,0.91973,0.68972,1.00000",
-              "display-p3:0.38818,0.76465,0.45093,1.00000"
-            ],
-            "orientation" : {
-              "start" : {
-                "x" : 1,
-                "y" : 0
-              },
-              "stop" : {
-                "x" : -0.16052155794117193,
-                "y" : 1
-              }
-            }
-          },
-          "image-name" : "facet6.svg",
-          "name" : "facet6"
-        },
-        {
-          "fill" : {
-            "linear-gradient" : [
-              "display-p3:0.60010,0.92920,0.68604,1.00000",
-              "display-p3:0.38818,0.76465,0.45093,1.00000"
-            ],
-            "orientation" : {
-              "start" : {
-                "x" : 1,
-                "y" : 0.49999999999999933
-              },
-              "stop" : {
-                "x" : 0,
-                "y" : 1
-              }
-            }
-          },
-          "image-name" : "facet5.svg",
-          "name" : "facet5"
-        },
-        {
-          "fill" : {
-            "linear-gradient" : [
-              "display-p3:0.57212,0.88553,0.66407,1.00000",
-              "display-p3:0.38818,0.76465,0.45093,1.00000"
-            ],
-            "orientation" : {
-              "start" : {
-                "x" : 0.8448055045502896,
-                "y" : 1
-              },
-              "stop" : {
-                "x" : 0.22545698735583383,
-                "y" : -0.4460670336583812
-              }
-            }
-          },
-          "image-name" : "facet4.svg",
-          "name" : "facet4"
-        },
-        {
-          "fill" : {
-            "linear-gradient" : [
-              "display-p3:0.60280,0.93301,0.69967,1.00000",
-              "display-p3:0.38818,0.76465,0.45093,1.00000"
-            ],
-            "orientation" : {
-              "start" : {
-                "x" : 1,
-                "y" : 0
-              },
-              "stop" : {
-                "x" : 0.28095269123082317,
-                "y" : 1
-              }
-            }
-          },
-          "image-name" : "facet3.svg",
-          "name" : "facet3"
-        },
-        {
-          "fill" : {
-            "linear-gradient" : [
-              "display-p3:0.61123,0.94606,0.70946,1.00000",
-              "display-p3:0.38818,0.76465,0.45093,1.00000"
-            ],
-            "orientation" : {
-              "start" : {
-                "x" : 0,
-                "y" : 0
-              },
-              "stop" : {
-                "x" : 0.7977121344164435,
-                "y" : 1
-              }
-            }
-          },
-          "image-name" : "facet2.svg",
-          "name" : "facet2"
+          "image-name": "body-shade.svg",
+          "name": "body-shade"
         }
       ],
-      "shadow" : {
-        "kind" : "neutral",
-        "opacity" : 0.5
+      "shadow": {
+        "kind": "neutral",
+        "opacity": 0.5
       },
-      "translucency" : {
-        "enabled" : true,
-        "value" : 0.3
+      "specular": false,
+      "translucency": {
+        "enabled": false,
+        "value": 0.3
       }
     }
   ],
-  "supported-platforms" : {
-    "circles" : [
+  "supported-platforms": {
+    "circles": [
       "watchOS"
     ],
-    "squares" : "shared"
+    "squares": "shared"
   }
 }
