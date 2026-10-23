@@ -380,27 +380,27 @@ private fun EntryIcon(entry: Entry, size: androidx.compose.ui.unit.Dp) {
 private fun EntryRow(entry: Entry, actions: EntryActions) {
     var menu by remember { mutableStateOf(false) }
     val context = LocalContext.current
-    Box {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .combinedClickable(onClick = { actions.open(entry) }, onLongClick = { menu = true })
-                .padding(start = 16.dp, top = 8.dp, bottom = 8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            EntryIcon(entry, 28.dp)
-            Spacer(Modifier.width(16.dp))
-            Column(Modifier.weight(1f)) {
-                Text(entry.name, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                val date = DateFormat.getDateInstance(DateFormat.MEDIUM).format(Date(entry.modified * 1000))
-                val detail = if (entry.isDirectory) date else "${Formatter.formatShortFileSize(context, entry.size)} · $date"
-                Text(detail, fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            }
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .combinedClickable(onClick = { actions.open(entry) }, onLongClick = { menu = true })
+            .padding(start = 16.dp, top = 8.dp, bottom = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        EntryIcon(entry, 28.dp)
+        Spacer(Modifier.width(16.dp))
+        Column(Modifier.weight(1f)) {
+            Text(entry.name, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            val date = DateFormat.getDateInstance(DateFormat.MEDIUM).format(Date(entry.modified * 1000))
+            val detail = if (entry.isDirectory) date else "${Formatter.formatShortFileSize(context, entry.size)} · $date"
+            Text(detail, fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+        Box {
             IconButton(onClick = { menu = true }) {
                 Icon(Icons.Filled.MoreVert, "Actions", tint = MaterialTheme.colorScheme.onSurfaceVariant)
             }
+            EntryMenu(menu, entry, actions) { menu = false }
         }
-        EntryMenu(menu, entry, actions) { menu = false }
     }
 }
 
