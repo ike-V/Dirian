@@ -107,6 +107,10 @@ Dirian can share a Mac folder to the Android device over the same USB cable, so 
 3. Dirian for Android opens on the device showing that folder: list or grid, group by, open files, **Save to…** or **Move to this device…**, **Upload** (copy or move), rename, new folder and delete.
 
 <p align="center">
+  <img src="Screenshots/demo-share.gif" width="800" alt="Sharing a Mac folder to an Android device: click Share Mac to Android, choose a folder, it opens in Dirian for Android over USB, then browse it and open the file menu">
+</p>
+
+<p align="center">
   <img src="Screenshots/android-menus.png" width="700" alt="Dirian for Android showing a shared Mac folder: list view, the Group By menu, a file's menu and grid view">
 </p>
 
