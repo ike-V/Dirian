@@ -9,7 +9,7 @@ Dirian is a native macOS app for browsing an Android device's files over USB. It
 It needs no MTP, no kernel extension and no background process of its own.
 
 <p align="center">
-  <img src="Screenshots/demo.gif" width="720" alt="Dirian browsing an Android device: Recent files, the Documents shortcut, a folder, then the grid view, ending with the brew install command">
+  <img src="Screenshots/demo.gif" width="800" alt="Dirian browsing an Android device: Recent files, the Documents shortcut, a folder, then the grid view, ending with the brew install command">
 </p>
 
 ## What you need
