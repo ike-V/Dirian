@@ -24,6 +24,8 @@ macOS can't show an Android device's files when you plug it in over USB. Existin
 
 Dirian talks to the `adb` server you already run, using Android's USB debugging protocol, the same way Android Studio's Device File Explorer does. It's written from scratch in Swift. It doesn't run the `adb` binary, uses no third-party libraries and needs no elevated privileges.
 
+It's a native SwiftUI app, not a cross-platform port. It has the standard Mac menu bar, Settings on ⌘, and an icon with a dark appearance.
+
 ## Features
 
 ### Browse
@@ -213,6 +215,10 @@ cd Dirian
 ./build.sh
 open Dirian.app
 ```
+
+## Feedback
+
+What should Dirian do next? Share ideas and questions in [Discussions](https://github.com/ike-V/Dirian/discussions), and report bugs in [Issues](https://github.com/ike-V/Dirian/issues).
 
 ## License
 
