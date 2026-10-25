@@ -85,7 +85,7 @@
   <img src="Screenshots/settings-appearance.png" width="320" alt="Dirian's Appearance settings: a list of accent colors, Red, Orange, Yellow, Green, Blue, Purple and Gray, and an App icon choice between Outline and Classic Durian">
   <img src="Screenshots/settings-sidebar.png" width="320" alt="Dirian's Sidebar settings: checkboxes for the shortcuts and the device's folders">
 </p>
-<p align="center">The Appearance and Sidebar settings.</p>
+<p align="center">Appearance and Sidebar settings.</p>
 
 ### Updates
 
