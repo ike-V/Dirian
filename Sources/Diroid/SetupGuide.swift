@@ -94,12 +94,13 @@ struct SetupGuideView: View {
     }
 
     private var steps: [Step] {
-        [
+        let adb = AdbSetup.current
+        return [
             Step(
                 title: "Install and start adb",
-                detail: "Dirian reads your phone through adb, the Android Debug Bridge. It comes with Android Studio, or install it on its own and start it by running these in Terminal:",
+                detail: adb.detail + " Then wait a moment and this step ticks itself.",
                 done: status != .unknown && status != .noServer,
-                commands: ["brew install --cask android-platform-tools", "adb start-server"]
+                commands: [adb.command]
             ),
             Step(
                 title: "Turn on USB debugging and plug in your phone",

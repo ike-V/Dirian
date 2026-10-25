@@ -98,10 +98,8 @@ final class FileBrowserModel: ObservableObject {
                 Task { await fetchNames(for: found) }
                 await load(path: Self.rootPath)
             } catch AdbError.connectionFailed(_) {
-                connectionProblem = ConnectionProblem(
-                    title: "The adb server isn't running",
-                    detail: "Dirian needs adb, the Android Debug Bridge. It's included with Android Studio (in the SDK's platform-tools), or install it with: brew install --cask android-platform-tools. Then run this in Terminal and press refresh.",
-                    command: "adb start-server")
+                let step = AdbSetup.current
+                connectionProblem = ConnectionProblem(title: step.title, detail: step.detail + " Then press refresh.", command: step.command)
             } catch {
                 errorMessage = "\(error)"
             }

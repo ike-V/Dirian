@@ -364,6 +364,7 @@ struct CommandBox: View {
             Text(command)
                 .font(.system(.callout, design: .monospaced))
                 .textSelection(.enabled)
+                .fixedSize(horizontal: false, vertical: true)
             Button {
                 NSPasteboard.general.clearContents()
                 NSPasteboard.general.setString(command, forType: .string)
