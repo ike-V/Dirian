@@ -18,6 +18,11 @@ final class AppPrefs: ObservableObject {
 
     private let defaults = UserDefaults.standard
 
+    /// The saved accent color, for windows that don't share the prefs object.
+    static var savedAccent: AccentChoice {
+        UserDefaults.standard.string(forKey: Key.accent).flatMap(AccentChoice.init(rawValue:)) ?? .green
+    }
+
     @Published var accent: AccentChoice {
         didSet { defaults.set(accent.rawValue, forKey: Key.accent) }
     }
@@ -35,7 +40,7 @@ final class AppPrefs: ObservableObject {
     @Published private(set) var knownFolders: [String]
 
     init() {
-        accent = defaults.string(forKey: Key.accent).flatMap(AccentChoice.init(rawValue:)) ?? .green
+        accent = Self.savedAccent
         checkForUpdates = defaults.object(forKey: Self.checkForUpdatesKey) as? Bool ?? true
         hiddenShortcuts = Set(defaults.stringArray(forKey: Key.hiddenShortcuts) ?? [])
         hiddenFolders = Set(defaults.stringArray(forKey: Key.hiddenFolders) ?? [])

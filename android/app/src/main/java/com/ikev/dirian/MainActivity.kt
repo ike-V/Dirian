@@ -10,6 +10,13 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
     private val model: BrowserModel by viewModels()
@@ -37,6 +44,15 @@ class MainActivity : ComponentActivity() {
         acceptToken(intent)
         setContent {
             DirianTheme(model.accent) {
+                var showGuide by remember { mutableStateOf(!GuidePrefs.seen(this) && model.problem != null) }
+                var tick by remember { mutableIntStateOf(0) }
+                // Re-reads the phone's state while the guide is open, so its steps tick by themselves.
+                LaunchedEffect(showGuide) {
+                    while (showGuide) {
+                        delay(1_500)
+                        tick++
+                    }
+                }
                 BrowserScreen(
                     model = model,
                     onPickUpload = { deleteAfter ->
@@ -48,7 +64,36 @@ class MainActivity : ComponentActivity() {
                         model.pendingSaveMoves = move
                         save.launch(entry.name)
                     },
+                    onSetupGuide = { showGuide = true },
                 )
+                if (showGuide) {
+                    tick.let {
+                        SetupGuide(
+                            listOf(
+                                SetupStep(
+                                    "Turn on USB debugging",
+                                    "Open Developer options and turn on USB debugging. If Developer options is missing, open Settings → About phone and tap Build number 7 times.",
+                                    done = usbDebuggingOn(this), action = "Open Developer options",
+                                    onAction = { openDeveloperSettings(this) },
+                                ),
+                                SetupStep(
+                                    "Plug the phone into your Mac",
+                                    "Use a USB cable. If the phone asks to allow USB debugging, tap Allow.",
+                                    done = usbPlugged(this),
+                                ),
+                                SetupStep(
+                                    "Share a folder from Dirian",
+                                    "Open Dirian on your Mac, click Share Mac to Android in its toolbar and choose a folder to share.",
+                                    done = model.connected,
+                                ),
+                            ),
+                            onClose = {
+                                GuidePrefs.markSeen(this)
+                                showGuide = false
+                            },
+                        )
+                    }
+                }
             }
         }
     }

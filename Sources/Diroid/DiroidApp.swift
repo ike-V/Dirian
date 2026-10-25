@@ -2,6 +2,7 @@ import SwiftUI
 
 @main
 struct DiroidApp: App {
+    @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @StateObject private var prefs = AppPrefs()
 
     var body: some Scene {
@@ -14,6 +15,7 @@ struct DiroidApp: App {
         .commands {
             CommandGroup(after: .appInfo) {
                 Button("Check for Updates…") { UpdateChecker.shared.checkNow() }
+                Button("Setup Guide…") { SetupGuideWindow.show() }
             }
         }
         Settings {

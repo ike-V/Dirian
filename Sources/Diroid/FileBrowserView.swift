@@ -27,6 +27,7 @@ struct FileBrowserView: View {
         .frame(minWidth: 720, minHeight: 420)
         .modifier(ShareAlerts(share: share))
         .onChange(of: model.sidebarFolders) { names in prefs.noteFolders(names) }
+        .onReceive(NotificationCenter.default.publisher(for: .deviceBecameReady)) { _ in model.connectAndLoadRoot() }
         .onAppear {
             let browser = model, preferences = prefs
             share.selectedSerial = { [weak browser] in browser?.selectedSerial }
@@ -353,7 +354,7 @@ struct FileBrowserView: View {
 }
 
 /// A command in monospaced text with a button that copies exactly that command.
-private struct CommandBox: View {
+struct CommandBox: View {
     let command: String
     @State private var copied = false
     @Environment(\.accent) private var accent

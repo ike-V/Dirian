@@ -201,6 +201,7 @@ Use one copy of adb. When two copies of different versions are installed (for ex
 
 ## Connecting your device
 
+- The first time Dirian opens without a ready device, a setup guide walks through adb, USB debugging and allowing the Mac, and ticks each step off itself. Reopen it from **Dirian → Setup Guide…**.
 - Plug in your Android device before or after launching Dirian.
 - The first time, a prompt on the device asks you to authorize this computer for USB debugging. Accept it, and check "always allow" to skip it next time.
 - If you unplug and replug while Dirian is open, click Refresh (↻).

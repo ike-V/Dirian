@@ -113,6 +113,7 @@ fun BrowserScreen(
     model: BrowserModel,
     onPickUpload: (deleteAfter: Boolean) -> Unit,
     onPickSave: (Entry, move: Boolean) -> Unit,
+    onSetupGuide: () -> Unit,
 ) {
     var grid by rememberSaveable { mutableStateOf(false) }
     var groupBy by rememberSaveable { mutableStateOf(GroupBy.None) }
@@ -201,6 +202,13 @@ fun BrowserScreen(
                                 onClick = {
                                     overflow = false
                                     creatingFolder = true
+                                },
+                            )
+                            DropdownMenuItem(
+                                text = { Text("Setup Guide") },
+                                onClick = {
+                                    overflow = false
+                                    onSetupGuide()
                                 },
                             )
                         }
