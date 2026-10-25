@@ -1,54 +1,59 @@
 # Dirian
 
+<p align="center"> </p>
+
+<p align="center">A native macOS app for browsing an Android device's files over USB.</p>
 <p align="center">
   <img src="Screenshots/hero.png" width="640" alt="Dirian's app icon over its file browser window">
 </p>
 
-Dirian is a native macOS app for browsing an Android device's files over USB. It can also share a selected directory back to the Android device.
 
-It needs no MTP, no kernel extension and no background process of its own.
-
+<p align="center">No MTP, no kernel extension, no additional background processes</p>
 <p align="center">
   <img src="Screenshots/demo.gif" width="800" alt="Dirian browsing an Android device: Recent files, the Documents shortcut, a folder, then the grid view, ending with the brew install command">
+</p>
+
+<p align="center">share a selected directory back to Android.</p>
+
+<p align="center">
+  <img src="Screenshots/demo-share.gif" width="800" alt="Sharing a Mac folder to an Android device: click Share Mac to Android, choose a folder, it opens in Dirian for Android over USB, then browse it and open the file menu">
 </p>
 
 ## What you need
 
 - **adb (required).** Dirian reads your Android device through the adb server, so adb (the Android Debug Bridge) must be installed and running on your Mac. It comes with Android Studio, in the SDK's platform-tools. You can also install it on its own with `brew install --cask android-platform-tools`. See [adb](#adb) for details.
 - **An Android device with USB debugging turned on**, plugged in over USB.
-- **Dirian for Android (optional).** There is an Android app, and only [Share Mac to Android](#share-mac-to-android) needs it. Browsing, uploading, downloading, renaming, deleting and everything else in Dirian work without it.
+- **Dirian for Android (optional).** [Share Mac to Android](#share-mac-to-android) needs the Dirian for Android app installed. Browsing, uploading, downloading, renaming, deleting and everything else in Dirian works with just the macOS application.
 
 ## Why Dirian?
 
-macOS can't show an Android device's files when you plug it in over USB. Existing tools wrap `libmtp` in a FUSE filesystem, which needs a kernel extension and is often unreliable to mount.
-
-Dirian talks to the `adb` server you already run, using Android's USB debugging protocol, the same way Android Studio's Device File Explorer does. It's written from scratch in Swift. It doesn't run the `adb` binary, uses no third-party libraries and needs no elevated privileges.
-
-It's a native SwiftUI app, not a cross-platform port.
+- macOS can't show an Android device's files when you plug it in over USB. 
+- Existing tools wrap `libmtp` in a FUSE filesystem, which needs a kernel extension and is often unreliable to mount.
+- Leveraging `android-platform-tools`, Dirian talks to the `adb` server, using Android's USB debugging protocol, the same way Android Studio's Device File Explorer does.
+- It doesn't run the `adb` binary, uses no third-party libraries and needs no elevated privileges.
+- A native SwiftUI app, not a cross-platform port.
 
 ## Features
 
 ### Browse
 
-- Browse your Android device's storage like a Finder window. The whole filesystem is browsable, and permission-restricted system folders show an error.
-- A sidebar shows the device's name and its top-level folders, which you can collapse.
-- The sidebar shortcuts Recent, Images, Videos, Audio, Documents and Downloads list matching files from the device's common folders, newest first. Recent covers the last 7 days.
+- Browse your Android device's storage like a Finder window.
+- The whole filesystem is browsable, and permission-restricted system folders show an error.
+- Sidebar shows the device's name and top-level folders, which you can collapse.
+- The sidebar shows Recent, Images, Videos, Audio, Documents and Downloads list matching files from Android's common folders.
+<p align="center"> <img src="Screenshots/recent.png" width="700" alt="Dirian's Recent view: files from the last 7 days grouped by date, with the sidebar's Recent, Images, Videos, Audio, Documents and Downloads shortcuts and the Folders list"></p>
+<p align="center">Recent, grouped by date.</p>
 
-<img src="Screenshots/recent.png" width="700" alt="Dirian's Recent view: files from the last 7 days grouped by date, with the sidebar's Recent, Images, Videos, Audio, Documents and Downloads shortcuts and the Folders list">
+- List and Grid views, grouped by Name, Size or Date Modified
 
-The sidebar shortcuts, here Recent, grouped by date.
+<p align="center"> </p><p align="center"><img src="Screenshots/camera-grid.png" width="700" alt="Dirian's grid view of an Android device's DCIM/Camera folder grouped by date, with the path bar at the bottom"> </p>
+<p align="center">Grid view, and path bar</p>
 
-- List and Grid views, groupable by Name, Size or Date Modified.
+<p align="center"><img src="Screenshots/group-by.png" width="700" alt="Dirian's Group By menu (None, Name, Size, Date Modified) open from the toolbar"> </p>
 
-<img src="Screenshots/camera-grid.png" width="700" alt="Dirian's grid view of an Android device's DCIM/Camera folder grouped by date, with the path bar at the bottom">
+<p align="center">The Group By menu in the toolbar. </p>
 
-Grid view, and the path bar at the bottom.
-
-<img src="Screenshots/group-by.png" width="700" alt="Dirian's Group By menu (None, Name, Size, Date Modified) open from the toolbar">
-
-The Group By menu in the toolbar.
-
-- The path bar at the bottom shows where you are. Click any segment to jump to that folder.
+- Click any path segment to jump to that parent directory
 
 ### Manage files
 
@@ -57,34 +62,30 @@ The Group By menu in the toolbar.
 - Right-click → **Rename…** renames or moves a file or folder.
 - Right-click → **Delete** removes a file, or a folder and everything in it, after a confirmation prompt.
 
-<img src="Screenshots/context-menu.png" width="700" alt="Dirian's right-click menu on a file, showing Rename, Save to and Delete">
-
-The right-click menu on a file.
+<p align="center"><img src="Screenshots/context-menu.png" width="700" alt="Dirian's right-click menu on a file, showing Rename, Save to and Delete"></p>
+<p align="center">Right-click menu on a file.</p>
 
 - **New Folder…** creates a folder in the current directory.
 
-<img src="Screenshots/new-folder.png" width="700" alt="Dirian's list view of the Documents folder with the New Folder dialog open">
+<p align="center"><img src="Screenshots/new-folder.png" width="700" alt="Dirian's list view of the Documents folder with the New Folder dialog open"></p>
+<p align="center">List view, and the New Folder dialog.</p>
 
-List view, and the New Folder dialog.
-
-- **Upload Files…** pushes local files onto the Android device.
+- **Upload Files…** pushes local files to the Android device.
 
 ### Make it yours
 
-- **Accent color.** Settings → Appearance (⌘,) picks the color of icons, folders and highlights from Finder's tag colors: Red, Orange, Yellow, Green, Blue, Purple or Gray. Green is the default. Dirian for Android uses the same color when you share a folder to it.
-- **App icon.** The icon is a green outline of the durian that follows light and dark mode. Settings → Appearance → App icon switches the Dock icon to the classic filled durian while Dirian is open. Finder and Launchpad always show the outline.
-- **Sidebar.** Settings → Sidebar chooses which shortcuts and which of the device's folders appear in the sidebar. A hidden folder is still there. Open the device's root folder to browse to it.
+- **Accent color.** Settings → Appearance (⌘,) picks the color of icons, folders and highlights from Finder's tag colors. Android uses the same color when you share a folder to it.
+- **App icon.** The Dirian icon can be changed in Settings → Appearance → App icon *(switches the Dock icon only)*
+- **Sidebar.** Settings → Sidebar chooses shortcuts and which folders appear in the sidebar. A hidden folder is still there. Open the device's root folder to browse to it.
 
-<img src="Screenshots/colors.png" width="700" alt="Dirian in six accent colors: Blue, Gray, Purple, Red, Orange and Yellow">
-
-Dirian in Blue, Gray, Purple, Red, Orange and Yellow. Green is the default.
+<p align="center"><img src="Screenshots/colors.png" width="700" alt="Dirian in six accent colors: Blue, Gray, Purple, Red, Orange and Yellow"></p>
+<p align="center">Dirian in Blue, Gray, Purple, Red, Orange and Yellow. Green is the default.</p>
 
 <p align="center">
   <img src="Screenshots/settings-appearance.png" width="320" alt="Dirian's Appearance settings: a list of accent colors, Red, Orange, Yellow, Green, Blue, Purple and Gray, and an App icon choice between Outline and Classic Durian">
   <img src="Screenshots/settings-sidebar.png" width="320" alt="Dirian's Sidebar settings: checkboxes for the shortcuts and the device's folders">
 </p>
-
-The Appearance and Sidebar settings.
+<p align="center">The Appearance and Sidebar settings.</p>
 
 ### Updates
 
@@ -109,23 +110,17 @@ Dirian can share a Mac folder to the Android device over the same USB cable, so 
 2. In Dirian, click **Share Mac to Android** in the toolbar and choose the folder to share. The picker opens in iCloud Drive the first time, then at your last folder. Sharing starts when you pick it.
 3. Dirian for Android opens on the device showing that folder: list or grid, group by, open files, **Save to…** or **Move to this device…**, **Upload** (copy or move), rename, new folder and delete.
 
-<p align="center">
-  <img src="Screenshots/demo-share.gif" width="800" alt="Sharing a Mac folder to an Android device: click Share Mac to Android, choose a folder, it opens in Dirian for Android over USB, then browse it and open the file menu">
-</p>
+
 
 <p align="center">
   <img src="Screenshots/android-menus.png" width="700" alt="Dirian for Android showing a shared Mac folder: list view, the Group By menu, a file's menu and grid view">
 </p>
-
-Dirian for Android showing a shared Mac folder: list view, the Group By menu, a file's menu and grid view.
+<p align="center">Dirian for Android shared from Mac folder</p>
 
 <p align="center">
   <img src="Screenshots/colors-android.png" width="520" alt="Dirian for Android in six accent colors: Blue, Gray, Purple, Red, Orange and Yellow">
 </p>
-
-Dirian for Android follows the accent color chosen on the Mac: Blue, Gray, Purple, Red, Orange and Yellow here, and Green by default. It takes the color when sharing starts, so after changing it on the Mac, stop sharing and share again.
-
-While sharing, the button turns green and reads **Stop Sharing**. Click it to end. To share a different folder, stop and click again.
+<p align="center">Dirian for Android accent color chosen on Mac</p>
 
 ### How it works
 
@@ -135,8 +130,8 @@ While sharing, the button turns green and reads **Stop Sharing**. Click it to en
 ### Good to know
 
 - **Nothing is overwritten:** an upload with a taken name is renamed ("name (1)"). Deleting from the Android device moves the item to the Mac's Trash.
-- **App not installed:** if Dirian for Android isn't installed, Dirian says so and offers to open its Google Play page or the APK download on the Android device.
-- **Limits:** USB only, one device at a time (the one selected in the sidebar), and sharing stops when Dirian quits or the cable is unplugged.
+- **App not installed:** if Dirian for Android isn't installed, Dirian offers to open its Google Play page or the APK download on the Android device.
+- **Limits:** USB only, one device at a time and sharing stops on quit or the cable is unplugged.
 
 ## Install
 
@@ -148,9 +143,9 @@ brew install --cask ike-V/dirian/dirian
 
 Dirian requires adb, which comes with Android Studio's platform-tools (or install it on its own: `brew install --cask android-platform-tools`). Without a running adb server, Dirian shows an error instead of your files. See [adb](#adb).
 
-### First launch: macOS blocks it
+### First launch: macOS blocks
 
-Dirian isn't signed with an Apple Developer ID or notarized yet, so macOS blocks it the first time ("Apple could not verify Dirian is free of malware"). Do one of these, once:
+Dirian isn't signed with an Apple Developer ID or notarized, so macOS blocks it the first time ("Apple could not verify Dirian is free of malware"). Do one of these:
 
 - **Terminal:** `xattr -dr com.apple.quarantine /Applications/Dirian.app`
 - **System Settings:** try to open Dirian, then go to System Settings → Privacy & Security, scroll to **Security**, and click **Open Anyway**.
@@ -202,9 +197,9 @@ Use one copy of adb. When two copies of different versions are installed (for ex
 
 ## Connecting your device
 
-- The first time Dirian opens without a ready device, a setup guide walks through adb, USB debugging and allowing the Mac, and ticks each step off itself. Reopen it from **Dirian → Setup Guide…**.
+- On first launch without a ready device, a setup guide walks through adb, USB debugging and allowing the Mac. Reopen it from **Dirian → Setup Guide…**.
 - Plug in your Android device before or after launching Dirian.
-- The first time, a prompt on the device asks you to authorize this computer for USB debugging. Accept it, and check "always allow" to skip it next time.
+- The first time, a prompt on Android asks you to authorize this computer for USB debugging. Accept it, and check "always allow".
 - If you unplug and replug while Dirian is open, click Refresh (↻).
 
 ## Build from source
