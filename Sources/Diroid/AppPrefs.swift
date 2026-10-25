@@ -5,6 +5,7 @@ import SwiftUI
 final class AppPrefs: ObservableObject {
     private enum Key {
         static let accent = "accentColor"
+        static let appIcon = "appIcon"
         static let hiddenShortcuts = "hiddenSidebarShortcuts"
         static let hiddenFolders = "hiddenSidebarFolders"
         static let knownFolders = "knownSidebarFolders"
@@ -16,6 +17,10 @@ final class AppPrefs: ObservableObject {
     static let shortcuts: [(name: String, symbol: String)] =
         FileCategory.allCases.map { ($0.rawValue, $0.symbol) } + [("Downloads", "arrow.down.circle")]
 
+    static var savedAppIcon: AppIconChoice {
+        UserDefaults.standard.string(forKey: Key.appIcon).flatMap(AppIconChoice.init(rawValue:)) ?? .standard
+    }
+
     private let defaults = UserDefaults.standard
 
     /// The saved accent color, for windows that don't share the prefs object.
@@ -25,6 +30,12 @@ final class AppPrefs: ObservableObject {
 
     @Published var accent: AccentChoice {
         didSet { defaults.set(accent.rawValue, forKey: Key.accent) }
+    }
+    @Published var appIcon: AppIconChoice {
+        didSet {
+            defaults.set(appIcon.rawValue, forKey: Key.appIcon)
+            appIcon.apply()
+        }
     }
     @Published var checkForUpdates: Bool {
         didSet { defaults.set(checkForUpdates, forKey: Self.checkForUpdatesKey) }
@@ -41,6 +52,7 @@ final class AppPrefs: ObservableObject {
 
     init() {
         accent = Self.savedAccent
+        appIcon = Self.savedAppIcon
         checkForUpdates = defaults.object(forKey: Self.checkForUpdatesKey) as? Bool ?? true
         hiddenShortcuts = Set(defaults.stringArray(forKey: Key.hiddenShortcuts) ?? [])
         hiddenFolders = Set(defaults.stringArray(forKey: Key.hiddenFolders) ?? [])

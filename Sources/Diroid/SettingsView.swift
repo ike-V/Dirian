@@ -35,9 +35,10 @@ private struct GeneralSettings: View {
     }
 }
 
-/// Pick the accent color from the same colors as Finder's tags.
+/// Pick the accent color from the same colors as Finder's tags, and the Dock icon.
 private struct AppearanceSettings: View {
     @EnvironmentObject private var prefs: AppPrefs
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         Form {
@@ -57,9 +58,28 @@ private struct AppearanceSettings: View {
                 .font(.callout)
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
+
+            Divider().padding(.vertical, 6)
+
+            Picker("App icon:", selection: $prefs.appIcon) {
+                ForEach(AppIconChoice.allCases) { choice in
+                    Label {
+                        Text(choice.name)
+                    } icon: {
+                        if let image = choice.image(dark: colorScheme == .dark) { Image(nsImage: image).resizable().frame(width: 24, height: 24) }
+                    }
+                    .tag(choice)
+                }
+            }
+            .pickerStyle(.radioGroup)
+
+            Text("Changes the Dock icon while Dirian is open. Finder and Launchpad keep the outline.")
+                .font(.callout)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
         }
         .padding(20)
-        .frame(width: 460, height: 280, alignment: .topLeading)
+        .frame(width: 460, height: 330, alignment: .topLeading)
     }
 }
 

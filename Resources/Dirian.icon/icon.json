@@ -1,138 +1,50 @@
 {
   "fill": {
     "linear-gradient": [
-      "display-p3:0.98673,0.84498,0.63631,1.00000",
-      "display-p3:0.65487,0.49511,0.30458,1.00000"
+      "srgb:0.96863,0.97647,0.98824,1.00000",
+      "srgb:0.78431,0.82353,0.88627,1.00000"
     ]
   },
+  "fill-specializations": [
+    {
+      "appearance": "dark",
+      "value": {
+        "linear-gradient": [
+          "srgb:0.10588,0.10588,0.12157,1.00000",
+          "srgb:0.04314,0.04314,0.05098,1.00000"
+        ]
+      }
+    }
+  ],
   "groups": [
     {
       "layers": [
         {
-          "fill": "none",
-          "image-name": "stem-outline.svg",
-          "name": "stem-outline",
-          "position": {
-            "scale": 1,
-            "translation-in-points": [
-              0.5887357598270455,
-              0
-            ]
-          }
-        },
-        {
-          "fill": {
-            "linear-gradient": [
-              "display-p3:0.70724,0.43510,0.14489,1.00000",
-              "srgb:0.57875,0.32152,0.00000,1.00000"
-            ],
-            "orientation": {
-              "start": {
-                "x": 1.0795880663632946,
-                "y": 0.39506329311991856
-              },
-              "stop": {
-                "x": 0.5,
-                "y": 0.5656251761951214
+          "fill-specializations": [
+            {
+              "value": {
+                "solid": "srgb:0.15294,0.76863,0.45490,1.00000"
+              }
+            },
+            {
+              "appearance": "dark",
+              "value": {
+                "solid": "srgb:0.23922,0.86275,0.51765,1.00000"
               }
             }
-          },
-          "image-name": "stem-fill.svg",
-          "name": "stem-fill",
-          "position": {
-            "scale": 1,
-            "translation-in-points": [
-              0.5887357598270455,
-              0
-            ]
-          }
-        },
-        {
-          "fill": {
-            "linear-gradient": [
-              "display-p3:0.00000,0.00000,0.00000,1.00000",
-              "display-p3:0.09020,0.07451,0.05882,1.00000"
-            ],
-            "orientation": {
-              "start": {
-                "x": 0.499999999999999,
-                "y": 0
-              },
-              "stop": {
-                "x": 0.499999999999999,
-                "y": 1
-              }
-            }
-          },
-          "glass": true,
-          "image-name": "eye-right.svg",
-          "name": "eye-right"
-        },
-        {
-          "fill": {
-            "linear-gradient": [
-              "display-p3:0.09020,0.07451,0.05882,1.00000",
-              "display-p3:0.09020,0.07451,0.05882,1.00000"
-            ]
-          },
-          "image-name": "eye-left.svg",
-          "name": "eye-left"
-        },
-        {
-          "fill": "none",
-          "glass": true,
-          "image-name": "body-outline.svg",
-          "name": "body-outline"
-        },
-        {
-          "fill": {
-            "linear-gradient": [
-              "display-p3:0.44706,0.89804,0.65098,1.00000",
-              "display-p3:0.36703,0.74110,0.54667,1.00000"
-            ],
-            "orientation": {
-              "start": {
-                "x": 0.8131007247735939,
-                "y": 0
-              },
-              "stop": {
-                "x": 0.05926579301075269,
-                "y": 0.938086709486166
-              }
-            }
-          },
-          "image-name": "body-lit.svg",
-          "name": "body-lit"
-        },
-        {
-          "fill": {
-            "linear-gradient": [
-              "display-p3:0.18431,0.64706,0.40784,1.00000",
-              "display-p3:0.13232,0.46151,0.29334,1.00000"
-            ],
-            "orientation": {
-              "start": {
-                "x": 0.6379445467149314,
-                "y": 0.3335608390622559
-              },
-              "stop": {
-                "x": 0.23855426747311828,
-                "y": 1
-              }
-            }
-          },
-          "image-name": "body-shade.svg",
-          "name": "body-shade"
+          ],
+          "image-name": "outline.svg",
+          "name": "outline"
         }
       ],
       "shadow": {
-        "kind": "neutral",
-        "opacity": 0.5
+        "kind": "none",
+        "opacity": 0
       },
       "specular": false,
       "translucency": {
         "enabled": false,
-        "value": 0.3
+        "value": 0
       }
     }
   ],

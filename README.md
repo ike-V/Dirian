@@ -72,6 +72,7 @@ List view, and the New Folder dialog.
 ### Make it yours
 
 - **Accent color.** Settings → Appearance (⌘,) picks the color of icons, folders and highlights from Finder's tag colors: Red, Orange, Yellow, Green, Blue, Purple or Gray. Green is the default. Dirian for Android uses the same color when you share a folder to it.
+- **App icon.** The icon is a green outline of the durian that follows light and dark mode. Settings → Appearance → App icon switches the Dock icon to the classic filled durian while Dirian is open. Finder and Launchpad always show the outline.
 - **Sidebar.** Settings → Sidebar chooses which shortcuts and which of the device's folders appear in the sidebar. A hidden folder is still there. Open the device's root folder to browse to it.
 
 <img src="Screenshots/colors.png" width="700" alt="Dirian in six accent colors: Blue, Gray, Purple, Red, Orange and Yellow">
@@ -79,7 +80,7 @@ List view, and the New Folder dialog.
 Dirian in Blue, Gray, Purple, Red, Orange and Yellow. Green is the default.
 
 <p align="center">
-  <img src="Screenshots/settings-appearance.png" width="320" alt="Dirian's Appearance settings: a list of accent colors, Red, Orange, Yellow, Green, Blue, Purple and Gray, with radio buttons">
+  <img src="Screenshots/settings-appearance.png" width="320" alt="Dirian's Appearance settings: a list of accent colors, Red, Orange, Yellow, Green, Blue, Purple and Gray, and an App icon choice between Outline and Classic Durian">
   <img src="Screenshots/settings-sidebar.png" width="320" alt="Dirian's Sidebar settings: checkboxes for the shortcuts and the device's folders">
 </p>
 
@@ -159,7 +160,7 @@ Dirian isn't signed with an Apple Developer ID or notarized yet, so macOS blocks
 This is optional. Only [Share Mac to Android](#share-mac-to-android) needs it, and everything else in Dirian works without it. It needs Android 8.0 or later. Get it from one of these:
 
 - **Google Play:** [not published yet](https://play.google.com/store/apps/details?id=com.ikev.dirian).
-- **GitHub Releases:** download `Dirian-for-Android-0.2.3.apk` from the [v0.3.9 release](https://github.com/ike-V/Dirian/releases/tag/v0.3.9) on your Android device, open it, and allow your browser to install unknown apps if Android asks. The APK is signed, and its SHA-256 is listed in the release notes.
+- **GitHub Releases:** download `Dirian-for-Android-0.2.4.apk` from the [v0.3.10 release](https://github.com/ike-V/Dirian/releases/tag/v0.3.10) on your Android device, open it, and allow your browser to install unknown apps if Android asks. The APK is signed, and its SHA-256 is listed in the release notes.
 
 Or build it (Android SDK and Gradle, or Android Studio) and install it:
 

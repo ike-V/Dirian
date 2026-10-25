@@ -22,6 +22,7 @@ xcrun actool "$PWD/Resources/Dirian.icon" --compile "$ICON_OUT" --platform macos
     --minimum-deployment-target 26.0 --app-icon Dirian \
     --output-partial-info-plist "$ICON_OUT/partial.plist" > /dev/null
 cp "$ICON_OUT/Assets.car" "$ICON_OUT/Dirian.icns" "$APP/Contents/Resources/"
+cp Resources/DirianClassic.png Resources/DirianClassicDark.png "$APP/Contents/Resources/"
 rm -rf "$ICON_OUT"
 
 echo "==> Code-signing (ad-hoc)..."

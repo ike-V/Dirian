@@ -1,4 +1,5 @@
 import AppKit
+import Combine
 import SwiftUI
 
 extension Notification.Name {
@@ -55,9 +56,10 @@ enum SetupGuideWindow {
     }
 }
 
-/// Opens the guide at launch on the first run.
+/// Applies the chosen Dock icon at launch and opens the guide on the first run.
 final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
+        MainActor.assumeIsolated { AppPrefs.savedAppIcon.apply() }
         // After the browser window has had its first look for a device.
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             MainActor.assumeIsolated { SetupGuideWindow.showIfFirstRun() }
