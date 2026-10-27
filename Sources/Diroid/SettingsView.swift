@@ -29,9 +29,21 @@ private struct GeneralSettings: View {
                 Button("Setup Guide…") { SetupGuideWindow.show() }
                 Button("Check for Updates…") { UpdateChecker.shared.checkNow() }
             }
+            .buttonStyle(SettingsButtonStyle())
         }
         .padding(20)
         .frame(width: 460, height: 100, alignment: .topLeading)
+    }
+}
+
+/// A plain rounded button that looks the same whether or not the window is in front, and ignores the accent tint.
+private struct SettingsButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .foregroundStyle(.primary)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 5)
+            .background(Color.primary.opacity(configuration.isPressed ? 0.2 : 0.1), in: RoundedRectangle(cornerRadius: 6))
     }
 }
 
@@ -80,9 +92,6 @@ private struct SidebarSettings: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 6) {
-                Text("Show these items in the sidebar:")
-                    .padding(.bottom, 4)
-
                 header("Shortcuts")
                 ForEach(AppPrefs.shortcuts, id: \.name) { shortcut in
                     Toggle(isOn: shown($prefs.hiddenShortcuts, shortcut.name)) {

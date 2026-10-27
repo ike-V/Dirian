@@ -5,7 +5,7 @@ enum AppIconChoice: String, CaseIterable, Identifiable {
     case standard, classic
 
     var id: String { rawValue }
-    var name: String { self == .standard ? "Outline" : "Classic Durian" }
+    var name: String { self == .standard ? "Outline" : "Classic" }
 
     /// The icon's artwork for light or dark mode: the bundle's own icon, or an image in Resources.
     func image(dark: Bool) -> NSImage? {
