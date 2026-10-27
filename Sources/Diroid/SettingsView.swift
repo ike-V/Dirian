@@ -29,21 +29,10 @@ private struct GeneralSettings: View {
                 Button("Setup Guide…") { SetupGuideWindow.show() }
                 Button("Check for Updates…") { UpdateChecker.shared.checkNow() }
             }
-            .buttonStyle(SettingsButtonStyle())
+            .tint(.primary)   // otherwise the accent colours the button text while the window is in front
         }
         .padding(20)
         .frame(width: 460, height: 100, alignment: .topLeading)
-    }
-}
-
-/// A plain rounded button that looks the same whether or not the window is in front, and ignores the accent tint.
-private struct SettingsButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .foregroundStyle(.primary)
-            .padding(.horizontal, 12)
-            .padding(.vertical, 5)
-            .background(Color.primary.opacity(configuration.isPressed ? 0.2 : 0.1), in: RoundedRectangle(cornerRadius: 6))
     }
 }
 
