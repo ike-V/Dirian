@@ -12,12 +12,6 @@ struct DiroidApp: App {
                 .environment(\.accent, prefs.accent)
                 .onAppear { UpdateChecker.shared.checkAtLaunch() }
         }
-        .commands {
-            CommandGroup(after: .appInfo) {
-                Button("Check for Updates…") { UpdateChecker.shared.checkNow() }
-                Button("Setup Guide…") { SetupGuideWindow.show() }
-            }
-        }
         Settings {
             SettingsView()
                 .environmentObject(prefs)

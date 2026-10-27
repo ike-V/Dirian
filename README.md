@@ -90,7 +90,7 @@
 ### Updates
 
 - When Dirian opens, it reads the latest release number from GitHub, at most once a day, and shows a message when a newer version is out. Nothing from your device or your files is sent.
-- **Dirian → Check for Updates…** checks right away. Turn the automatic check off in Settings → General.
+- **Settings → General → Check for Updates…** checks right away. The same page turns the automatic check off.
 - With Homebrew, update with `brew upgrade --cask dirian`. Otherwise download the new version from the [releases page](https://github.com/ike-V/Dirian/releases).
 
 ### Connection
@@ -197,7 +197,7 @@ Use one copy of adb. When two copies of different versions are installed (for ex
 
 ## Connecting your device
 
-- On first launch without a ready device, a setup guide walks through adb, USB debugging and allowing the Mac. Reopen it from **Dirian → Setup Guide…**.
+- On first launch without a ready device, a setup guide walks through adb, USB debugging and allowing the Mac. Reopen it from **Settings → General → Setup Guide…**.
 - Plug in your Android device before or after launching Dirian.
 - The first time, a prompt on Android asks you to authorize this computer for USB debugging. Accept it, and check "always allow".
 - If you unplug and replug while Dirian is open, click Refresh (↻).

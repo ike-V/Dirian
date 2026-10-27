@@ -17,7 +17,7 @@ struct SettingsView: View {
     }
 }
 
-/// Whether Dirian looks for a newer release when it opens.
+/// Whether Dirian looks for a newer release when it opens, and the setup guide and update check.
 private struct GeneralSettings: View {
     @EnvironmentObject private var prefs: AppPrefs
 
@@ -25,13 +25,13 @@ private struct GeneralSettings: View {
         Form {
             Toggle("Check for updates automatically", isOn: $prefs.checkForUpdates)
 
-            Text("When Dirian opens, it reads the latest release number from GitHub, at most once a day. You can also check any time from Dirian > Check for Updates.")
-                .font(.callout)
-                .foregroundStyle(.secondary)
-                .fixedSize(horizontal: false, vertical: true)
+            HStack {
+                Button("Setup Guide…") { SetupGuideWindow.show() }
+                Button("Check for Updates…") { UpdateChecker.shared.checkNow() }
+            }
         }
         .padding(20)
-        .frame(width: 460, height: 120, alignment: .topLeading)
+        .frame(width: 460, height: 100, alignment: .topLeading)
     }
 }
 
@@ -54,11 +54,6 @@ private struct AppearanceSettings: View {
             }
             .pickerStyle(.radioGroup)
 
-            Text("Used for icons, folders and highlights. Dirian for Android uses the same color when you share a folder to it.")
-                .font(.callout)
-                .foregroundStyle(.secondary)
-                .fixedSize(horizontal: false, vertical: true)
-
             Divider().padding(.vertical, 6)
 
             Picker("App icon:", selection: $prefs.appIcon) {
@@ -72,14 +67,9 @@ private struct AppearanceSettings: View {
                 }
             }
             .pickerStyle(.radioGroup)
-
-            Text("Changes the Dock icon while Dirian is open. Finder and Launchpad keep the outline.")
-                .font(.callout)
-                .foregroundStyle(.secondary)
-                .fixedSize(horizontal: false, vertical: true)
         }
         .padding(20)
-        .frame(width: 460, height: 330, alignment: .topLeading)
+        .frame(width: 460, height: 265, alignment: .topLeading)
     }
 }
 

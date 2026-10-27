@@ -103,13 +103,13 @@ struct SetupGuideView: View {
                 commands: [adb.command]
             ),
             Step(
-                title: "Turn on USB debugging and plug in your phone",
-                detail: "On the phone, open Settings → About phone and tap Build number 7 times. Then open Developer options, turn on USB debugging and connect the phone with a USB cable.",
+                title: "Turn on USB debugging & connect device",
+                detail: "On Android open Settings > About phone > Locate Build number & tap 7 times.\nOpen Developer options > turn on USB debugging > connect device to USB.",
                 done: status == .needsAllow || status == .ready
             ),
             Step(
-                title: "Allow this Mac",
-                detail: "Unlock the phone and tap Allow on the USB debugging prompt, and tick “Always allow” so it doesn't ask again. On Samsung, also turn off “Block commands and software updates by USB cable” in Auto Blocker.",
+                title: "Allow USB debugging",
+                detail: "Unlock Android and tap Allow on USB debugging prompt (\"Always allow\" to save connection).\nOn Samsung devices turn off \"Auto Blocker\" in Security & Privacy",
                 done: status == .ready
             ),
         ]
