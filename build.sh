@@ -13,7 +13,8 @@ mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 
 cp .build/release/Diroid "$APP/Contents/MacOS/Diroid"
 # Sets the minimum macOS (13.0) and the SDK version (the installed one).
-vtool -set-build-version macos 13.0 "$(xcrun --show-sdk-version)" -replace \
+SDK_VERSION="$(xcrun --sdk macosx --show-sdk-version)"
+vtool -set-build-version macos 13.0 "$SDK_VERSION" -replace \
     -output "$APP/Contents/MacOS/Diroid" "$APP/Contents/MacOS/Diroid"
 cp Resources/Info.plist "$APP/Contents/Info.plist"
 # Compiles the Icon Composer icon into Assets.car (macOS 26+) and a Dirian.icns fallback.
