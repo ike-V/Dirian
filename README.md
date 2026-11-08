@@ -31,7 +31,7 @@
 - Existing tools wrap `libmtp` in a FUSE filesystem, which needs a kernel extension and is often unreliable to mount.
 - Leveraging `android-platform-tools`, Dirian talks to the `adb` server, using Android's USB debugging protocol, the same way Android Studio's Device File Explorer does.
 - It doesn't run the `adb` binary, uses no third-party libraries and needs no elevated privileges.
-- A native SwiftUI app, not a cross-platform port.
+- A native SwiftUI app.
 
 ## Features
 
@@ -72,7 +72,7 @@
 
 - **Upload Files…** pushes local files to the Android device.
 
-### Make it yours
+### Settings
 
 - **Accent color.** Settings → Appearance (⌘,) picks the color of icons, folders and highlights from Finder's tag colors. Android uses the same color when you share a folder to it.
 - **App icon.** The Dirian icon can be changed in Settings → Appearance → App icon *(switches the Dock icon only)*
@@ -89,7 +89,7 @@
 
 ### Updates
 
-- When Dirian opens, it reads the latest release number from GitHub, at most once a day, and shows a message when a newer version is out. Nothing from your device or your files is sent.
+- When Dirian opens, it reads the latest release number from GitHub, at most once a day, and shows a message when a newer version is out. No device data is sent.
 - **Settings → General → Check for Updates…** checks right away. The same page turns the automatic check off.
 - With Homebrew, update with `brew upgrade --cask dirian`. Otherwise download the new version from the [releases page](https://github.com/ike-V/Dirian/releases).
 
@@ -104,7 +104,7 @@ Dirian can also share a Mac folder back to the device. See [Share Mac to Android
 
 ## Share Mac to Android
 
-Dirian can share a Mac folder to the Android device over the same USB cable, so you can browse it from the device. This is the only feature that needs Dirian for Android. Everything else in Dirian, including browsing the device from your Mac, works without the Android app.
+Dirian can share a Mac folder to the Android device over the same USB cable, so you can browse it from the device. Only this feature needs Dirian for Android.
 
 1. Install Dirian for Android on the device (see [Dirian for Android](#dirian-for-android)).
 2. In Dirian, click **Share Mac to Android** in the toolbar and choose the folder to share. The picker opens in iCloud Drive the first time, then at your last folder. Sharing starts when you pick it.
@@ -127,9 +127,9 @@ Dirian can share a Mac folder to the Android device over the same USB cable, so 
 - **Serving:** Dirian serves the folder from a small HTTP server on the Mac's loopback address (127.0.0.1:47615) and exposes it to the Android device with `adb reverse`, over the same adb server connection. No network or Wi-Fi is involved.
 - **Security:** `adb reverse` opens the port to every app on the Android device, so each request needs a random token that Dirian passes to Dirian for Android when it launches it. A new token is made every time sharing starts. Only the chosen folder is served, and symlinks that lead outside it are hidden.
 
-### Good to know
+### Notes
 
-- **Nothing is overwritten:** an upload with a taken name is renamed ("name (1)"). Deleting from the Android device moves the item to the Mac's Trash.
+- **Name clashes:** a duplicate upload will rename files (“File (1)”). Deleting from the Android device moves the item to the Mac's Trash.
 - **App not installed:** if Dirian for Android isn't installed, Dirian offers to open its Google Play page or the APK download on the Android device.
 - **Limits:** USB only, one device at a time and sharing stops on quit or the cable is unplugged.
 
